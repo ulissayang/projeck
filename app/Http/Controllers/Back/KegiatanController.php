@@ -121,7 +121,14 @@ class KegiatanController extends Controller
     public function index(KegiatanDataTable $dataTable)
     {
         try {
-            return $dataTable->render('back.kegiatan.index');
+            $breadcrumbs = [
+                ['name' => 'Informasi'],
+                ['name' => 'Kegiatan'],
+            ];
+            return $dataTable->render('back.kegiatan.index', [
+                'title' => 'Tabel Kegiatan',
+                'breadcrumbs' => $breadcrumbs,
+            ]);
         } catch (Exception $e) {
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
@@ -133,7 +140,6 @@ class KegiatanController extends Controller
 
     public function store(KegiatanRequest $request): JsonResponse
     {
-        DB::beginTransaction();
         try {
             $data = $request->validated();
 
@@ -154,10 +160,8 @@ class KegiatanController extends Controller
                 $kegiatan->update(['image' => $finalImagePath]);
             }
 
-            DB::commit();
             return response()->json(['message' => 'Data Berhasil Ditambahkan'], 201);
         } catch (\Throwable $e) {
-            DB::rollBack();
             if ($tempImagePath) {
                 Storage::delete($tempImagePath);
             }
@@ -165,15 +169,21 @@ class KegiatanController extends Controller
         }
     }
 
-
-
     /**
      * Show the form for editing the specified resource.
      */
     public function show(Kegiatan $kegiatan)
     {
         try {
-            return view('back.kegiatan.kegiatan-show', compact('kegiatan'));
+            $breadcrumbs = [
+                ['name' => 'Informasi'],
+                ['name' => 'Kegiatan'],
+                ['name' => 'Show'],
+            ];
+            return view('back.kegiatan.kegiatan-show', compact('kegiatan'), [
+                'title' => 'Tabel Kegiatan',
+                'breadcrumbs' => $breadcrumbs,
+            ]);
         } catch (Exception $e) {
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
@@ -182,67 +192,38 @@ class KegiatanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function edit(string $slug): JsonResponse
+    public function edit(string $slug)
     {
-        try {
-            $kegiatan = Kegiatan::where('slug', $slug)->first();
-            return response()->json(['data' => $kegiatan]);
-        } catch (Exception $e) {
-            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
-        }
+        $kegiatan = Kegiatan::where('slug', $slug)->firstOrFail();
+        return response()->json(['data' => $kegiatan]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(KegiatanRequest $request, string $slug)
+    public function update(KegiatanRequest $request, string $slug): JsonResponse
     {
-        DB::beginTransaction();
         try {
             $data = $request->validated();
 
-            // Ambil kegiatan berdasarkan slug
-            $kegiatan = Kegiatan::where('slug', $slug)->firstOrFail();
-
-            // Simpan gambar sementara jika ada
             if ($request->file('image')) {
-                $tempImagePath = $request->file('image')->store('images-temp');
-                $data['image'] = basename($tempImagePath);
+                if ($request->oldImage) {
+                    Storage::delete($request->oldImage);
+                }
+                $data['image'] = $request->file('image')->store('kegiatan-images');
             }
 
             // Buat excerpt dari deskripsi
             $data['excerpt'] = Str::limit(strip_tags($request->description), 150);
 
-            // Update kegiatan
-            $kegiatan->update($data);
+            // Buat kegiatan
+            Kegiatan::where('slug', $slug)->update($data);
 
-            // Jika ada gambar baru, pindahkan dari temp ke lokasi akhir dan hapus gambar lama
-            if (isset($tempImagePath)) {
-                $finalImagePath = str_replace('images-temp', 'kegiatan-images', $tempImagePath);
-                Storage::move($tempImagePath, $finalImagePath);
-
-                // Hapus gambar lama jika ada
-                if ($kegiatan->image) {
-                    Storage::delete('kegiatan-images/' . $kegiatan->image);
-                }
-
-                // Update gambar baru di database
-                $kegiatan->update(['image' => $finalImagePath]);
-            }
-
-            DB::commit();
-            return response()->json(['message' => 'Data Berhasil Diubah'], 200);
+            return response()->json(['message' => 'Data Berhasil Diubah'], 201);
         } catch (\Throwable $e) {
-            DB::rollBack();
-            if (isset($tempImagePath)) {
-                Storage::delete($tempImagePath);
-            }
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
     }
-
-
-
     /**
      * Remove the specified resource from storage.
      */

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Back;
 
+use Exception;
 use App\Models\Pengumuman;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use App\DataTables\PengumumanDataTable;
 use App\Http\Requests\PengumumanRequest;
 
 class PengumumanController extends Controller
@@ -14,26 +15,20 @@ class PengumumanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(PengumumanDataTable $dataTable)
     {
-        $pengumuman = Pengumuman::where('user_id', Auth::id())->latest()->get();
-
-        return view('back.pengumuman.pengumuman', compact('pengumuman'));
-    }
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Pengumuman $pengumuman)
-    {
-        return view('back.pengumuman.pengumuman-form', [
-            'pengumuman' => $pengumuman,
-            'name' => 'Tambah Pengumuman',
-            'title' => 'Tambah Pengumuman',
-            'method' => 'post',
-            'route' => route('pengumuman.store')
-        ]);
+        try {
+            $breadcrumbs = [
+                ['name' => 'Informasi'],
+                ['name' => 'Pengumuman'],
+            ];
+            return $dataTable->render('back.pengumuman.pengumuman', [
+                'title' => 'Tabel Pengumuman',
+                'breadcrumbs' => $breadcrumbs,
+            ]);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -41,12 +36,15 @@ class PengumumanController extends Controller
      */
     public function store(PengumumanRequest $request)
     {
-        $data = $request->validated();
+        try {
+            $data = $request->validated();
 
-        $data['user_id'] = auth()->user()->id;
-        Pengumuman::create($data);
+            $request->user()->pengumuman()->create($data);
 
-        return to_route('pengumuman.index')->with('success', 'Pengumuman Berhasil Di Tambahkan!');
+            return response()->json(['message' => 'Data Berhasil Ditambahkan'], 201);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -54,47 +52,74 @@ class PengumumanController extends Controller
      */
     public function show(Pengumuman $pengumuman)
     {
-        return view('back.pengumuman.pengumuman-show', [
-            'pengumuman' => $pengumuman
-        ]);
+        try {
+            $breadcrumbs = [
+                ['name' => 'Informasi'],
+                ['name' => 'Pengumuman'],
+                ['name' => 'Show'],
+            ];
+            return view('back.pengumuman.pengumuman-show', compact('pengumuman'), [
+                'title' => 'Show Pengumuman',
+                'breadcrumbs' => $breadcrumbs,
+            ]);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pengumuman $pengumuman)
+    public function edit(string $slug)
     {
-        return view('back.pengumuman.pengumuman-form', [
-            'pengumuman' => $pengumuman,
-            'name' => 'Edit Pengumuman',
-            'title' => 'Edit Pengumuman : ' . $pengumuman->title,
-            'method' => 'put',
-            'route' => route('pengumuman.update', $pengumuman->slug)
-        ]);
+        $pengumuman = Pengumuman::where('slug', $slug)->firstOrFail();
+        return response()->json(['data' => $pengumuman]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(PengumumanRequest $request, string $id)
+    public function update(PengumumanRequest $request)
     {
-        $data = $request->validated();
+        try {
+            $data = $request->validated();
 
-        $data['user_id'] = auth()->user()->id;
+            $request->user()->pengumuman()->update($data);
 
-        Pengumuman::where('slug', $id)->update($data);
-
-        return to_route('pengumuman.index')->with('success', 'Pengumuman Berhasil Di Update!');
+            return response()->json(['message' => 'Data Berhasil Diubah'], 201);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Pengumuman $pengumuman)
     {
-        $pengumuman = Pengumuman::find($id);
+        try {
+            $pengumuman->delete();
+            return response()->json(['message' => 'Data Berhasil Di Hapus'], 201);
+        } catch (Exception $e) {
+            // Tangkap pengecualian dan kirim pesan error
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
+    }
 
-        Pengumuman::destroy($pengumuman->id);
-        return to_route('pengumuman.index')->with('success', 'Pengumuman Berhasil Di Hapus!');
+    public function bulkDelete(Request $request): JsonResponse
+    {
+        try {
+            $pengumumanIds = $request->input('ids');
+
+            $deleted = Pengumuman::whereIn('slug', $pengumumanIds)->delete();
+
+            if ($deleted) {
+                return response()->json(['success' => true, 'message' => 'Data berhasil dihapus.', 'icon' => 'success'], 201);
+            } else {
+                return response()->json(['error' => 'Gagal menghapus data.']);
+            }
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
     }
 }

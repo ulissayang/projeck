@@ -2,56 +2,67 @@
 
 namespace App\Http\Controllers\Back;
 
+use Exception;
 use App\Models\Prestasi;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use App\DataTables\PrestasiDataTable;
 use App\Http\Requests\PrestasiRequest;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Redirect;
+
 
 class PrestasiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(PrestasiDataTable $dataTable)
     {
-        return view('back.prestasi.prestasi', [
-            'prestasi' => Prestasi::where('user_id', auth()->user()->id)->latest()->get()
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Prestasi $prestasi)
-    {
-        return view('back.prestasi.prestasi-form', [
-            'prestasi' => $prestasi,
-            'name'     => 'Tambah Prestasi',
-            'title'    => 'Tambah Prestasi',
-            'method'   => 'post',
-            'route'    => route('prestasi.store'),
-        ]);
+        try {
+            $breadcrumbs = [
+                ['name' => 'Informasi'],
+                ['name' => 'Prestasi'],
+            ];
+            return $dataTable->render('back.prestasi.prestasi', [
+                'title' => 'Tabel Prestasi',
+                'breadcrumbs' => $breadcrumbs,
+            ]);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PrestasiRequest $request)
+    public function store(PrestasiRequest $request): JsonResponse
     {
-        $data = $request->validated();
+        try {
+            $data = $request->validated();
 
-        if ($request->file('foto')) {
-            $data['foto'] = $request->file('foto')->store('prestasi-images');
+            // Simpan gambar sementara jika ada
+            $tempImagePath = $request->file('image')?->store('images-temp');
+            $data['image'] = basename($tempImagePath);
+
+
+            // Buat prestasi
+            $prestasi = $request->user()->prestasi()->create($data);
+
+            // Jika transaksi berhasil, pindahkan gambar dari temp ke lokasi akhir
+            if ($tempImagePath) {
+                $finalImagePath = str_replace('images-temp', 'prestasi-images', $tempImagePath);
+                Storage::move($tempImagePath, $finalImagePath);
+                $prestasi->update(['image' => $finalImagePath]);
+            }
+
+            return response()->json(['message' => 'Data Berhasil Ditambahkan'], 201);
+        } catch (\Throwable $e) {
+            if ($tempImagePath) {
+                Storage::delete($tempImagePath);
+            }
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
-
-        $data['user_id'] = auth()->user()->id;
-
-        Prestasi::create($data);
-
-        return to_route('prestasi.index')->with('success', 'Prestasi Berhasil Di Tambahkan!');
     }
 
     /**
@@ -59,59 +70,98 @@ class PrestasiController extends Controller
      */
     public function show(Prestasi $prestasi)
     {
-        return view('back.prestasi.prestasi-show', [
-            'prestasi' => $prestasi
-        ]);
+        try {
+            $breadcrumbs = [
+                ['name' => 'Informasi'],
+                ['name' => 'Prestasi'],
+                ['name' => 'Show'],
+            ];
+            return view('back.prestasi.prestasi-show', compact('prestasi'), [
+                'title' => 'Tabel Prestasi',
+                'breadcrumbs' => $breadcrumbs,
+            ]);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Prestasi $prestasi)
+    public function edit(string $slug)
     {
-        return view('back.prestasi.prestasi-form', [
-            'prestasi' => $prestasi,
-            'name'     => 'Edit Prestasi',
-            'title'    => 'Edit Prestasi : ' . $prestasi->nama,
-            'method'   => 'put',
-            'route'    => route('prestasi.update', $prestasi->slug),
-        ]);
+        $prestasi = Prestasi::where('slug', $slug)->firstOrFail();
+        return response()->json(['data' => $prestasi]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(PrestasiRequest $request, string $id)
+    public function update(PrestasiRequest $request, string $slug)
     {
-        $data = $request->validated();
+        try {
+            $data = $request->validated();
 
-        if ($request->file('foto')) {
-            if ($request->oldImage) {
-                Storage::delete($request->oldImage);
+            if ($request->file('image')) {
+                if ($request->oldImage) {
+                    Storage::delete($request->oldImage);
+                }
+                $data['image'] = $request->file('image')->store('prestasi-images');
             }
-            $data['foto'] = $request->file('foto')->store('prestasi-images');
+
+            // Buat prestasi
+            Prestasi::where('slug', $slug)->update($data);
+
+            return response()->json(['message' => 'Data Berhasil Diubah'], 201);
+        } catch (\Throwable $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
-
-        $data['user_id'] = auth()->user()->id;
-
-
-        Prestasi::where('slug', $id)->update($data);
-
-        return to_route('prestasi.index')->with('success', 'Prestasi Berhasil Di Update!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Prestasi $prestasi)
     {
-        $prestasi = Prestasi::find($id);
+        try {
+            // Cek jika ada gambar yang terkait dengan data
+            if ($prestasi->image) {
+                // Hapus gambar dari penyimpanan
+                Storage::delete($prestasi->image);
+            }
 
-        if ($prestasi->foto) {
-            Storage::delete($prestasi->foto);
+            // Hapus data dari database
+            $prestasi->delete();
+
+            return response()->json(['message' => 'Data Berhasil Di Hapus']);
+        } catch (Exception $e) {
+            // Tangkap pengecualian dan kirim pesan error
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
+    }
 
-        Prestasi::destroy($prestasi->id);
-        return to_route('prestasi.index')->with('success', 'Prestasi Berhasil Di Hapus!');
+
+    public function bulkDelete(Request $request): JsonResponse
+    {
+        try {
+            $prestasiIds = $request->input('ids');
+            $prestasis = Prestasi::whereIn('slug', $prestasiIds)->get();
+
+            foreach ($prestasis as $prestasi) {
+                if ($prestasi->image) {
+                    Storage::delete($prestasi->image);
+                }
+            }
+
+            $deleted = Prestasi::whereIn('slug', $prestasiIds)->delete();
+
+            if ($deleted) {
+                return response()->json(['success' => true, 'message' => 'Data berhasil dihapus.', 'icon' => 'success']);
+            } else {
+                return response()->json(['error' => 'Gagal menghapus data.']);
+            }
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
     }
 }

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('slug');
             $table->string('judul');
             $table->text('deskripsi');
-            $table->string('video_url');
             $table->timestamps();
         });
     }

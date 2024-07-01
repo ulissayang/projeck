@@ -24,7 +24,8 @@ class GaleryFotoRequest extends FormRequest
         return [
             'judul' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
-            'foto.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'sometimes|array',
+            'image.*' => 'sometimes|image|mimes:jpeg,jpg,png,gif|max:2048',
         ];
     }
 }

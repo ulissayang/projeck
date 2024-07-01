@@ -410,6 +410,7 @@ $(document).ready(function () {
             ["height", ["height"]],
             ["table", ["table"]],
             ["insert", ["link", "picture", "video"]],
+            ["history", ["undo", "redo"]], // Menambahkan undo dan redo
         ],
     });
 });

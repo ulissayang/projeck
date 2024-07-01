@@ -6,7 +6,7 @@
     <main id="main" class="main">
         <div class="row justify-content-between align-items-center flex-wrap ">
 
-            <x-auth.title-head root="Home" title="Dashboard" />
+            <x-back.breadcrumb :title="$title" :breadcrumbs="$breadcrumbs" />
 
         </div>
 

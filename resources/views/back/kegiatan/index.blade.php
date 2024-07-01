@@ -6,16 +6,8 @@
     @slot('title', 'Kegiatan')
     <main id="main" class="main">
 
-        <div class="pagetitle">
-            <h1>Tabel Kegiatan</h1>
-            <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item">Informasi</li>
-                    <li class="breadcrumb-item active">Kegiatan</li>
-                </ol>
-            </nav>
-        </div><!-- End Page Title -->
+        <x-back.breadcrumb :title="$title" :breadcrumbs="$breadcrumbs" />
+        <!-- End Page Title -->
 
         <section class="section">
 
@@ -153,12 +145,14 @@
                     $('#location').val(result.location);
                     $('#slug').val(result.slug);
 
-                    // tampilkan image yang ada
-                    if (result.image) {
-                        $('#image-preview').attr('src', '/storage/' + result.image).show();
-                    } else {
-                        $('#image-preview').hide();
-                    }
+                    // Tampilkan gambar yang ada
+                if (result.image) {
+                    $('#image-preview').attr('src', '/storage/' + result.image).show();
+                    $('input[name="oldImage"]').val(result.image);
+                } else {
+                    $('#image-preview').hide();
+                }
+
 
                     $('#dataModal').modal('show'); // Show modal after data is loaded
                     $('.btnSubmit').text('Simpan');

@@ -2,37 +2,35 @@
 
 namespace App\Http\Controllers\Back;
 
+use Exception;
 use App\Models\GaleryFoto;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
+use App\DataTables\GaleryFotoDataTable;
 use App\Http\Requests\GaleryFotoRequest;
+use Illuminate\Support\Facades\Storage;
 
 class GaleryFotoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(GaleryFotoDataTable $dataTable)
     {
-        return view('back.galery-foto.galery-foto', [
-            'galery_foto' => GaleryFoto::where('user_id', auth()->user()->id)->latest()->get()
-        ]);
-    }
+        try {
+            $breadcrumbs = [
+                ['name' => 'Informasi'],
+                ['name' => 'Galeri Foto'],
+            ];
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(GaleryFoto $galery_foto)
-    {
-        return view('back.galery-foto.galery-form', [
-            'galery_foto'   => $galery_foto,
-            'name'          => 'Tambah Data',
-            'title'         => 'Tambah Data',
-            'method'        => 'post',
-            'route'         => route('galery-foto.store')
-        ]);
+            return $dataTable->render('back.galery-foto.galery-foto', [
+                'title' => 'Tabel Galeri Foto',
+                'breadcrumbs' => $breadcrumbs,
+            ]);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -40,19 +38,40 @@ class GaleryFotoController extends Controller
      */
     public function store(GaleryFotoRequest $request)
     {
-        $data = $request->validated();
+        try {
+            $data = $request->validated();
 
-        if ($request->file('foto')) {
-            $data['foto'] = json_encode(
-                collect($request->file('foto'))->map(fn ($image) => $image->store('galery-foto-images'))->all()
-            );
+            // Simpan gambar sementara jika ada
+            $tempImagePaths = [];
+            if ($request->hasFile('image')) {
+                foreach ($request->file('image') as $image) {
+                    $tempImagePaths[] = $image->store('images-temp');
+                }
+            }
+
+            // Buat galery image
+            $galery_foto = $request->user()->galery_foto()->create($data);
+
+            // Jika transaksi berhasil, pindahkan gambar dari temp ke lokasi akhir
+            if (!empty($tempImagePaths)) {
+                $finalImagePaths = [];
+                foreach ($tempImagePaths as $tempImagePath) {
+                    $finalImagePath = str_replace('images-temp', 'galery-images', $tempImagePath);
+                    Storage::move($tempImagePath, $finalImagePath);
+                    $finalImagePaths[] = $finalImagePath;
+                }
+                $galery_foto->update(['image' => json_encode($finalImagePaths)]);
+            }
+
+            return response()->json(['message' => 'Data Berhasil Ditambahkan'], 201);
+        } catch (\Throwable $e) {
+            if (!empty($tempImagePaths)) {
+                foreach ($tempImagePaths as $tempImagePath) {
+                    Storage::delete($tempImagePath);
+                }
+            }
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
-
-        $data['user_id'] = auth()->user()->id;
-
-        GaleryFoto::create($data);
-
-        return to_route('galery-foto.index')->with('success', 'Galeri berhasil ditambahkan!');
     }
 
     /**
@@ -60,90 +79,124 @@ class GaleryFotoController extends Controller
      */
     public function show(GaleryFoto $galery_foto)
     {
-        return view('back.galery-foto.galery-foto-show', [
-            'galery_foto'   => $galery_foto
-        ]);
+        try {
+            $breadcrumbs = [
+                ['name' => 'Informasi'],
+                ['name' => 'Galeri Foto'],
+                ['name' => 'Show'],
+            ];
+            return view('back.galery-foto.galery-foto-show', compact('galery_foto'), [
+                'title' => 'Tabel Galeri Foto',
+                'breadcrumbs' => $breadcrumbs,
+            ]);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(GaleryFoto $galery_foto)
+    public function edit(string $slug)
     {
-        return view('back.galery-foto.galery-form', [
-            'galery_foto'   => $galery_foto,
-            'name'          => 'Edit Data',
-            'title'         => 'Edit Data : ' . $galery_foto->judul,
-            'method'        => 'put',
-            'route'         => route('galery-foto.update', $galery_foto->slug)
-        ]);
+        $galery_foto = GaleryFoto::where('slug', $slug)->firstOrFail();
+        return response()->json(['data' => $galery_foto]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(GaleryFotoRequest $request, string $id)
+    public function update(GaleryFotoRequest $request, string $slug)
     {
-        $data = $request->validated();
+        try {
+            $data = $request->validated();
 
-        $oldImages = [];
-        if ($request->oldImage && is_string($request->oldImage)) {
-            $oldImages = json_decode($request->oldImage, true);
-            if (!is_array($oldImages)) {
-                $oldImages = [];
-            }
-        }
+            $galery_foto = GaleryFoto::where('slug', $slug)->firstOrFail();
 
-        if ($request->hasFile('foto')) {
-            // Delete old images
-            if (!empty($oldImages)) {
-                foreach ($oldImages as $image) {
-                    if (Storage::exists($image)) {
-                        Storage::delete($image);
+            if ($request->hasFile('image')) {
+                $tempImagePaths = [];
+                foreach ($request->file('image') as $image) {
+                    $tempImagePaths[] = $image->store('images-temp');
+                }
+
+                if ($galery_foto->image) {
+                    $oldImages = json_decode($galery_foto->image, true);
+                    foreach ($oldImages as $oldImage) {
+                        Storage::delete($oldImage);
                     }
                 }
+
+                $finalImagePaths = [];
+                foreach ($tempImagePaths as $tempImagePath) {
+                    $finalImagePath = str_replace('images-temp', 'galery-images', $tempImagePath);
+                    Storage::move($tempImagePath, $finalImagePath);
+                    $finalImagePaths[] = $finalImagePath;
+                }
+                $data['image'] = json_encode($finalImagePaths);
             }
 
-            // Upload new images
-            $newImages = [];
-            foreach ($request->file('foto') as $image) {
-                $newImages[] = $image->store('galery-foto-images');
-            }
+            $galery_foto->update($data);
 
-            // Use only new images
-            $data['foto'] = $newImages;
-        } else {
-            // If no new images are uploaded, retain the old images
-            $data['foto'] = $oldImages;
+            return response()->json(['message' => 'Data Berhasil Diubah'], 201);
+        } catch (\Throwable $e) {
+            if (!empty($tempImagePaths)) {
+                foreach ($tempImagePaths as $tempImagePath) {
+                    Storage::delete($tempImagePath);
+                }
+            }
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
-        
-        $data['user_id'] = auth()->user()->id;
-
-        GaleryFoto::where('slug', $id)->update($data);
-
-        return to_route('galery-foto.index')->with('success', 'Galeri berhasil diperbarui!');
     }
-
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(GaleryFoto $galery_foto)
     {
-        $galery_foto = GaleryFoto::find($id);
+        try {
+            // Cek jika ada gambar yang terkait dengan data
+            if ($galery_foto->image) {
+                $images = json_decode($galery_foto->image, true);
+                // Hapus gambar dari penyimpanan
+                foreach ($images as $image) {
+                    Storage::delete($image);
+                }
+            }
 
-        if ($galery_foto->foto) {
-            $foto = is_string($galery_foto->foto) ? json_decode($galery_foto->foto, true) : $galery_foto->foto;
-            if (is_array($foto)) {
-                foreach ($foto as $image) {
-                    if (Storage::exists($image)) {
+            // Hapus data dari database
+            $galery_foto->delete();
+
+            return response()->json(['message' => 'Data Berhasil Di Hapus']);
+        } catch (Exception $e) {
+            // Tangkap pengecualian dan kirim pesan error
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
+    }
+
+    public function bulkDelete(Request $request): JsonResponse
+    {
+        try {
+            $galery_fotoIds = $request->input('ids');
+            $galery_fotos = GaleryFoto::whereIn('slug', $galery_fotoIds)->get();
+
+            foreach ($galery_fotos as $galery_foto) {
+                if ($galery_foto->image) {
+                    $images = json_decode($galery_foto->image, true);
+                    foreach ($images as $image) {
                         Storage::delete($image);
                     }
                 }
             }
-        }
 
-        GaleryFoto::destroy($galery_foto->id);
-        return to_route('galery-foto.index')->with('success', 'Data Berhasil Di Hapus!');
+            $deleted = GaleryFoto::whereIn('slug', $galery_fotoIds)->delete();
+
+            if ($deleted) {
+                return response()->json(['success' => true, 'message' => 'Data berhasil dihapus.', 'icon' => 'success']);
+            } else {
+                return response()->json(['error' => 'Gagal menghapus data.']);
+            }
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
     }
 }

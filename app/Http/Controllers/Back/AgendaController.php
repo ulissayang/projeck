@@ -10,8 +10,6 @@ use Illuminate\Http\JsonResponse;
 use App\DataTables\AgendaDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AgendaRequest;
-use Illuminate\Support\Facades\Storage;
-
 
 class AgendaController extends Controller
 {
@@ -22,9 +20,16 @@ class AgendaController extends Controller
     public function index(AgendaDataTable $dataTable)
     {
         try {
-            return $dataTable->render('back.agenda.agenda');
+            $breadcrumbs = [
+                ['name' => 'Informasi'],
+                ['name' => 'Agenda'],
+            ];
+            return $dataTable->render('back.agenda.agenda', [
+                'title' => 'Tabel Agenda',
+                'breadcrumbs' => $breadcrumbs,
+            ]);
         } catch (Exception $e) {
-            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
     }
 
@@ -62,9 +67,9 @@ class AgendaController extends Controller
 
             $request->user()->agenda()->create($data);
 
-            return response()->json(['message' => 'Data Berhasil Di Tambahkan']);
+            return response()->json(['message' => 'Data Berhasil Ditambahkan'], 201);
         } catch (Exception $e) {
-            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
     }
 
@@ -74,38 +79,42 @@ class AgendaController extends Controller
     public function show(Agenda $agenda)
     {
         try {
-            return view('back.agenda.agenda-show', compact('agenda'));
+            $breadcrumbs = [
+                ['name' => 'Informasi'],
+                ['name' => 'Agenda'],
+                ['name' => 'Show'],
+            ];
+            return view('back.agenda.agenda-show', compact('agenda'), [
+                'title' => 'Show Agenda',
+                'breadcrumbs' => $breadcrumbs,
+            ]);
         } catch (Exception $e) {
-            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function edit(string $slug): JsonResponse
+    public function edit(string $slug)
     {
-        try {
-            $agenda = Agenda::where('slug', $slug)->first();
-            return response()->json(['data' => $agenda]);
-        } catch (Exception $e) {
-            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
-        }
+        $agenda = Agenda::where('slug', $slug)->firstOrFail();
+        return response()->json(['data' => $agenda]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(AgendaRequest $request, string $slug)
+    public function update(AgendaRequest $request)
     {
         try {
             $data = $request->validated();
 
             $data['excerpt'] = Str::limit($request->description, 150);
 
-            Agenda::where('slug', $slug)->firstOrFail()->update($data);
+            $request->user()->agenda()->update($data);
 
-            return response()->json(['message' => 'Data Berhasil Di Ubah']);
+            return response()->json(['message' => 'Data Berhasil Diubah'], 201);
         } catch (Exception $e) {
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
@@ -118,10 +127,10 @@ class AgendaController extends Controller
     {
         try {
             $agenda->delete();
-            return response()->json(['message' => 'Data Berhasil Di Hapus']);
+            return response()->json(['message' => 'Data Berhasil Di Hapus'], 201);
         } catch (Exception $e) {
             // Tangkap pengecualian dan kirim pesan error
-            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
     }
 
@@ -129,25 +138,17 @@ class AgendaController extends Controller
     public function bulkDelete(Request $request): JsonResponse
     {
         try {
-
             $agendaIds = $request->input('ids');
-            $agendas = Agenda::whereIn('slug', $agendaIds)->get();
-
-            foreach ($agendas as $agenda) {
-                if ($agenda->image) {
-                    Storage::delete($agenda->image);
-                }
-            }
 
             $deleted = Agenda::whereIn('slug', $agendaIds)->delete();
 
             if ($deleted) {
-                return response()->json(['success' => true, 'message' => 'Data berhasil dihapus.', 'icon' => 'success']);
+                return response()->json(['success' => true, 'message' => 'Data berhasil dihapus.', 'icon' => 'success'], 201);
             } else {
                 return response()->json(['error' => 'Gagal menghapus data.']);
             }
         } catch (Exception $e) {
-            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
     }
 }

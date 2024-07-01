@@ -32,6 +32,13 @@ class DashboardController extends Controller
             ->take(4)
             ->get();
 
-        return view('back.dashboard', compact('kegiatan', 'agenda'));
+        $breadcrumbs = [
+            ['name' => 'Dashboard'],
+        ];
+
+        return view('back.dashboard', compact('kegiatan', 'agenda'), [
+            'title' => 'Dashboard',
+            'breadcrumbs' => $breadcrumbs,
+        ]);
     }
 }

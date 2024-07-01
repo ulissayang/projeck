@@ -1,267 +1,100 @@
-{{-- <x-app-layout>
-  @push('link')
-  <link href="{{ asset('assets/vendor/summernote/dist/summernote-lite.css') }}" rel="stylesheet">
-  <link href="DataTables/datatables.min.css" rel="stylesheet">
-  @endpush
-  @slot('title', 'Kegiatan')
-  <main id="main" class="main">
+<div class="row">
+  <div class="col-lg-12">
 
-    <div class="pagetitle">
-      <h1>Tabel Kegiatan</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Informasi</li>
-          <li class="breadcrumb-item active">Kegiatan</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title --> --}}
+    <div class="card">
+      <div class="card-body">
+        <div class="card-title">
+          <x-button onclick="showModal()" class="btn-sm" title="Tambah Data">
+            <i class="bi bi-patch-plus"></i> Tambah Data
+          </x-button>
+        </div>
 
-    {{-- <section class="section"> --}}
-      <div class="row">
-        <div class="col-lg-12">
+        <!-- Tombol Hapus Terpilih -->
+        <form id="bulk-delete-form" action="#" method="POST" data-url="{{ route('kegiatan.bulk_delete') }}"
+          style="display: none;">
+          @csrf
+          @method('DELETE')
+          <input type="hidden" id="bulk-delete-ids" name="ids">
+          <x-button id="delete-selected" class="btn-sm btn-danger mb-3"><i class="bi bi-trash"></i>Hapus
+            Terpilih
+          </x-button>
+        </form>
 
-          <div class="card">
-            <div class="card-body">
-              <div class="card-title">
-                <x-button onclick="showModal()" class="btn-sm" title="Tambah Data">
-                  <i class="bi bi-patch-plus"></i> Tambah Data
-                </x-button>
+        <!-- Table -->
+        {{ $dataTable->table(['class' => 'table table-striped table-hover', 'style' => 'width:100%']) }}
+        <!-- End Table -->
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+{{-- Modal Kegiatan --}}
+<div class="modal fade" id="dataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="ms-auto">
+        <button type="button" class="btn-close fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <h1 class="modal-title fs-5 text-center fw-bold" id="staticBackdropLabel"></h1>
+      <div class="modal-body">
+        <!-- Form update data  -->
+        <form id="modalForm">
+          @csrf
+          <input type="hidden" name="slug" id="slug">
+          <input type="hidden" name="oldImage" value="">
+
+          <div class="mb-3">
+            <label for="title" class="form-label">Title<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}" required
+              autofocus>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="description">Description<span class="text-danger">*</span></label>
+            <textarea class="form-control description" id="summernote" name="description" rows="5"
+              value="{{ old('description') }}">{{ old('description') }}</textarea>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="date_time" class="form-label">Date & Time<span class="text-danger">*</span></label>
+                <input type="datetime-local" class="form-control" id="date_time" name="date_time"
+                  value="{{ old('date_time') }}" required>
               </div>
+            </div>
 
-              <!-- Tombol Hapus Terpilih -->
-              <form id="bulk-delete-form" action="#" method="POST" data-url="{{ route('kegiatan.bulk_delete') }}"
-                style="display: none;">
-                @csrf
-                @method('DELETE')
-                <input type="hidden" id="bulk-delete-ids" name="ids">
-                <x-button id="delete-selected" class="btn-sm btn-danger mb-3"><i class="bi bi-trash"></i>Hapus
-                  Terpilih
-                </x-button>
-              </form>
-
-              <!-- Table -->
-              {{ $dataTable->table(['class' => 'table table-striped table-hover', 'style' => 'width:100%']) }}
-              <!-- End Table -->
-
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="location" class="form-label">Location<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="location" name="location" value="{{ old('location') }}"
+                  required>
+              </div>
             </div>
           </div>
 
-        </div>
+          <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+
+            <img id="image-preview" class="img-preview img-fluid col-sm-2 py-2 d-block" style="display: none;">
+
+            <input type="file" class="form-control" name="image" id="image" accept="image/*" onchange="previewImage()">
+          </div>
+
+
+          <div class="float-end">
+            <div class="m-3">
+              <x-button type="button" class="btn-secondary" data-bs-dismiss="modal">Keluar</x-button>
+              <x-button class="btnSubmit"></x-button>
+            </div>
+          </div>
+
+        </form>
       </div>
-
-      @include('back.kegiatan.kegiatan-form')
-
-      {{--
-    </section> --}}
-
-    {{--
-  </main><!-- End #main -->
-
-  @push('scripts')
-
-  <!-- Jquery 3 -->
-  <script type="text/javascript" src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
-
-  <!-- Bootstrap 5 -->
-  <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.js') }}"></script>
-
-  <!-- Main js -->
-  <script type="text/javascript" src="{{ asset('assets/js/main.js') }}"></script>
-
-  <!-- Laravel Javascript Validation -->
-  <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-  {!! JsValidator::formRequest('App\Http\Requests\KegiatanRequest', '#modalForm') !!}
-
-  <!-- Sweet Alert2 -->
-  <script type="text/javascript" src="{{ asset('assets/vendor/sweetalert/sweetalert2.js') }}"></script>
-
-  <!-- Summernote Editor -->
-  <script type="text/javascript" src="{{ asset('assets/vendor/summernote/dist/summernote-lite.js') }}"></script>
-
-  <script type="text/javascript" src="{{ asset('assets/vendor/summernote/dist/lang/summernote-id-ID.min.js') }}">
-  </script>
-
-  <!-- Datatables -->
-  <script type="text/javascript" src="{{ asset('DataTables/datatables.min.js') }}"> </script>
-
-
-  {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
-
-  <script>
-    @if (session('success'))
-            window.sessionStorage.setItem("successMessage", "{{ session('success') }}");
-        @endif
-        
-        @if (session('error'))
-            window.sessionStorage.setItem("errorMessage", "{{ session('error') }}");
-            @endif
-
-        var bulkDeleteUrl = "{{ route('kegiatan.bulk_delete') }}";
-
-        let save_method;
-
-
-     // Function to reset form and clear validation errors
-    function resetForm() {
-        $('#modalForm')[0].reset();
-        $('#image-preview').hide(); // Menyembunyikan pratinjau gambar
-        $('#summernote').summernote('code', ''); // Clear Summernote content
-        $('.is-invalid').removeClass('is-invalid'); // Remove validation error classes
-        $('.is-valid').removeClass('is-valid'); // Remove validation succes classes
-        $('span.invalid-feedback').remove(); // Remove validation error messages
-    }
-
-    // Function to show modal for creating new data
-    function showModal() {
-        resetForm(); // Reset form and clear validation errors
-        $('#dataModal').modal('show');
-        save_method = 'create';
-
-        $('.btnSubmit').text('Simpan');
-        $('.modal-title').text('Tambah Data');
-    }
-
-    // Function to handle form submission for store & update data
-    $('#modalForm').on('submit', function(e) {
-        e.preventDefault();
-
-        const formData = new FormData(this);
-        let url, method;
-        url = 'kegiatan';
-        method = 'POST';
-
-        if (save_method === 'update') {
-            url = 'kegiatan/' + $('#slug').val();
-            formData.append('_method', 'PUT');
-        }
-
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: method,
-            url: url,
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                $('#dataModal').modal('hide');
-                $('.table').DataTable().ajax.reload();
-                Swal.fire({
-                    icon: "success",
-                    title: "Sukses",
-                    text: response.message,
-                    showConfirmButton: false,
-                    timer: 2000,
-                });
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                Swal.fire({
-                    icon: "info",
-                    title: "Peringatan!",
-                    text: jqXHR.responseJSON.message || jqXHR.responseText,
-                    showConfirmButton: false,
-                    timer: 3000,
-                });
-            }
-        });
-    });
-
-    // Function to show edit modal and load data
-    function confirmEdit(e) {
-        resetForm(); // Reset form and clear validation errors
-
-        let slug = e.getAttribute('data-slug');
-        save_method = 'update';
-
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: "GET",
-            url: '{{ route("kegiatan.edit", ":slug") }}'.replace(':slug', slug),
-            success: function(response) {
-                let result = response.data;
-                $('#title').val(result.title);
-                $('#summernote').summernote('code', result.description); // Set Summernote content
-                $('#date_time').val(result.date_time);
-                $('#location').val(result.location);
-                $('#slug').val(result.slug);
-
-                // Display the image if it exists
-                if (result.image) {
-                    $('#image-preview').attr('src', '/storage/' + result.image).show();
-                } else {
-                    $('#image-preview').hide();
-                }
-
-                $('#dataModal').modal('show'); // Show modal after data is loaded
-                $('.btnSubmit').text('Simpan');
-                $('.modal-title').text('Ubah Data');
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                Swal.fire({
-                    icon: "info",
-                    title: "Peringatan!",
-                    text: jqXHR.responseJSON.message || jqXHR.responseText,
-                    showConfirmButton: false,
-                    timer: 3000,
-                });
-            }
-        });
-    }
-
-    // Function to confirm delete action
-    function confirmDelete(e) {
-        let slug = e.getAttribute('data-slug');
-
-        Swal.fire({
-            title: "Apakah Anda yakin?",
-            text: "Data yang dihapus tidak bisa dikembalikan!",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonColor: "#d33",
-            cancelButtonColor: "#3085d6",
-            confirmButtonText: "Ya, hapus!",
-            cancelButtonText: "Batal",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    type: "DELETE",
-                    url: '{{ route("kegiatan.destroy", ":slug") }}'.replace(':slug', slug),
-                    dataType: 'json',
-                    success: function(response) {
-                        $('#dataModal').modal('hide');
-                        $('.table').DataTable().ajax.reload();
-                        Swal.fire({
-                            icon: "success",
-                            title: "Sukses",
-                            text: response.message,
-                            showConfirmButton: false,
-                            timer: 2000,
-                        });
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        Swal.fire({
-                            icon: "info",
-                            title: "Peringatan!",
-                            text: jqXHR.responseJSON.message || jqXHR.responseText,
-                            showConfirmButton: false,
-                            timer: 3000,
-                        });
-                    }
-                });
-            }
-        });
-    }
-
-
-  </script>
-
-  @endpush
-
-</x-app-layout> --}}
+    </div>
+  </div>
+</div>

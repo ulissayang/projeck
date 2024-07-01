@@ -1,4 +1,4 @@
-<x-app-layout>
+{{-- <x-app-layout>
   @slot('title', 'Show Agenda')
   <main id="main" class="main">
 
@@ -12,9 +12,9 @@
           <li class="breadcrumb-item active">Show</li>
         </ol>
       </nav>
-    </div><!-- End Page Title -->
+    </div><!-- End Page Title --> --}}
 
-    <section class="section">
+    {{-- <section class="section">
       <div class="row">
         <div class="col-lg-12">
 
@@ -27,15 +27,15 @@
               </div>
 
               <!-- Tampilkan data agenda -->
-              <div class="row">
+              <div class="row"> --}}
 
                 {{-- col title --}}
-                <div class="col-md-12 col-8 pagetitle mb-4 order-md-1 order-2">
+                {{-- <div class="col-md-12 col-8 pagetitle mb-4 order-md-1 order-2">
                   <h1 class="text-md-center fw-bold">{{ $agenda->title }}</h1>
-                </div>
+                </div> --}}
 
                 {{-- col date_time --}}
-                <div class="col-md-2 col-4 mb-4 order-md-2 order-1">
+                {{-- <div class="col-md-2 col-4 mb-4 order-md-2 order-1">
                   <div class="position-relative text-center rounded bg-dark py-1">
                     <i class="bi bi-calendar4-week text-light d-block w-100 h-100"
                       style="font-size: 4rem; opacity: 0.2;"></i>
@@ -48,10 +48,10 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> --}}
 
                 {{-- col heading --}}
-                <div class="col-md-10 order-3">
+                {{-- <div class="col-md-10 order-3">
                   <div
                     class="row justify-content-around p-2 mb-4 bg-info bg-opacity-10 border border-info border-start-0 border-end-0">
 
@@ -74,15 +74,16 @@
                     <div class="col-md-3 col-6"> <i class="bi bi-geo-alt-fill text-success"></i> {{ $agenda->location }}
                     </div>
                   </div>
-                  <div class="overflow-x-auto">
+                  <div class="overflow-x-auto"> --}}
                     {{-- Isi deskripsi --}}
-                    <p>{!! $agenda->description !!}</p>
+                    {{-- <p>{!! $agenda->description !!}</p>
 
                   </div>
                 </div>
-              </div>
+              </div> --}}
               <!-- End Tampilkan data agenda -->
 
+              {{--
             </div>
 
             <div class="col px-3 py-2 bg-secondary-subtle">
@@ -104,6 +105,44 @@
 
   </main><!-- End #main -->
 
+
+  @push('scripts')
+
+  <!-- Bootstrap 5 -->
+  <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+  <!-- Main js -->
+  <script type="text/javascript" src="{{ asset('assets/js/main.js') }}"></script>
+
+  @endpush
+
+</x-app-layout> --}}
+
+<x-app-layout>
+  @slot('title', 'Show Agenda')
+  <main id="main" class="main">
+
+    <x-back.breadcrumb :title="$title" :breadcrumbs="$breadcrumbs" /><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+          
+          <x-back.show-data :data="[
+            'title' => $agenda->title,
+            'description' => $agenda->description,
+            'author' => $agenda->user->name,
+            'location' => $agenda->location,
+            'date_time' => $agenda->date_time,
+            'status' => $agenda->date_time,
+            'created_at' => $agenda->created_at,
+            'updated_at' => $agenda->updated_at,
+            ]" :backRoute="route('agenda.index')" />
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
 
   @push('scripts')
 

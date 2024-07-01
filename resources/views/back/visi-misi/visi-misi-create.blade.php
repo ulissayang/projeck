@@ -1,4 +1,4 @@
-<x-app-layout>
+{{-- <x-app-layout>
   @slot('title', 'Tambah Visi Misi')
   <main id="main" class="main">
 
@@ -68,4 +68,4 @@
 
   </main><!-- End #main -->
 
-</x-app-layout>
+</x-app-layout> --}}

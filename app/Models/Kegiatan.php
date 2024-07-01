@@ -12,7 +12,7 @@ class Kegiatan extends Model
 {
     use HasFactory, Sluggable;
 
-    protected $table = 'Kegiatan';
+    protected $table = 'kegiatan';
 
     protected $fillable = [
         'title',

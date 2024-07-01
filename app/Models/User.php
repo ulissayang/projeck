@@ -66,4 +66,34 @@ class User extends Authenticatable
     {
         return $this->hasMany(Prestasi::class);
     }
+
+    public function guru(): HasMany
+    {
+        return $this->hasMany(Guru::class);
+    }
+
+    public function fasilitas(): HasMany
+    {
+        return $this->hasMany(Fasilitas::class);
+    }
+
+    public function visi_misi(): HasMany
+    {
+        return $this->hasMany(VisiMisi::class);
+    }
+
+    public function galery_video(): HasMany
+    {
+        return $this->hasMany(GaleryVideo::class);
+    }
+
+    public function galery_foto(): HasMany
+    {
+        return $this->hasMany(GaleryFoto::class);
+    }
+
+    public function pengaturan(): HasMany
+    {
+        return $this->hasMany(Pengaturan::class);
+    }
 }

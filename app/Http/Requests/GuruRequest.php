@@ -24,7 +24,7 @@ class GuruRequest extends FormRequest
         return [
             'nama' => 'required|min:3|max:255|string',
             'jabatan' => 'required',
-            'foto' => 'nullable|image|file|max:1024',
+            'image' => 'nullable|image|file|max:1024',
         ];
     }
 }

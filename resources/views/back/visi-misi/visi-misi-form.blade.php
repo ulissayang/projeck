@@ -1,71 +1,43 @@
-<x-app-layout>
-  @slot('title', $title)
-  <main id="main" class="main">
+<div class="modal fade" id="dataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="ms-auto">
+        <button type="button" class="btn-close fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <h1 class="modal-title fs-5 text-center fw-bold" id="staticBackdropLabel"></h1>
+      <div class="modal-body">
+        <!-- Form update data  -->
+        <form id="modalForm">
+          @csrf
+          <input type="hidden" name="slug" id="slug">
 
-    <div class="pagetitle">
-      <h1>{{ $title }}</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Informasi</li>
-          <li class="breadcrumb-item active">{{ $name }}</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
+          <div class="mb-3">
+            <label for="jenis" class="form-label">Jenis<span class="text-danger">*</span></label>
+            <select class="form-control" id="jenis" name="jenis" required autofocus>
+              <option value="" disabled selected>Pilih Jenis</option>
+              <option value="Visi" {{ old('jenis')=='Visi' ? 'selected' : '' }}>Visi</option>
+              <option value="Misi" {{ old('jenis')=='Misi' ? 'selected' : '' }}>Misi</option>
+            </select>
+          </div>
 
-    <section class="section">
-      <div class="row">
-        <div class="col-lg-12">
 
-          <div class="card">
-            <div class="card-body ">
-              <div class="card-title">
-                <x-button as="a" href="{{ route('visi-misi.index') }}" class="btn-sm">
-                  <i class="bi bi-arrow-left-circle"></i> Kembali
-                </x-button>
-              </div>
+          <div class="mb-3">
+            <label class="form-label" for="deskripsi">Deskripsi<span class="text-danger">*</span></label>
+            <textarea class="form-control deskripsi" id="summernote" name="deskripsi" rows="5"
+              value="{{ old('deskripsi') }}">{{ old('deskripsi') }}</textarea>
+          </div>
 
-              <!-- Form update data kegiatan -->
-              <form action="{{ $route }}" method="post"
-                enctype="multipart/form-data">
-                @method($method)
-                @csrf
-                <div class="mb-3">
-                  <label for="jenis" class="form-label">Jenis</label>
-                  <input type="text" class="form-control @error('jenis') is-invalid @enderror" id="jenis" name="jenis"
-                    value="{{ old('jenis', $visi_misi->jenis) }}">
-                  @error('jenis')
-                  <div class="invalid-feedback">
-                    {{ $message }}
-                  </div>
-                  @enderror
-                </div>
 
-                <div class="mb-3">
-                  <label class="form-label" for="deskripsi">Deskripsi</label>
-                  <textarea class="form-control @error('deskripsi') is-invalid @enderror" id="deskripsi"
-                    name="deskripsi" rows="5">{{ old('deskripsi', $visi_misi->deskripsi) }}</textarea>
-
-                  @error('deskripsi')
-                  <div class="invalid-feedback">
-                    {{ $message }}
-                  </div>
-                  @enderror
-                </div>
-
-                <div class="mb-3 float-end">
-                  <x-button>Simpan</x-button>
-                </div>
-              </form>
-              <!-- End Form update data kegiatan -->
-
+          <div class="float-end">
+            <div class="m-3">
+              <x-button type="button" class="btn-secondary" data-bs-dismiss="modal">Keluar</x-button>
+              <x-button class="btnSubmit"></x-button>
             </div>
           </div>
 
-        </div>
+        </form>
       </div>
-    </section>
-
-  </main><!-- End #main -->
-
-</x-app-layout>
+    </div>
+  </div>
+</div>

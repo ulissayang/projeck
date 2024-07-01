@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class GaleryFoto extends Model
 {
@@ -14,14 +15,13 @@ class GaleryFoto extends Model
 
     protected $fillable = [
         'judul',
-        'user_id',
         'slug',
         'deskripsi',
-        'foto'
+        'image'
     ];
 
     protected $casts = [
-        'foto' => 'array',
+        'image' => 'array',
     ];
 
     public function user():BelongsTo 
@@ -29,12 +29,23 @@ class GaleryFoto extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function sluggable(): array
+   
+        public function sluggable(): array
     {
         return [
             'slug' => [
-                'source' => 'judul'
+                'source' => 'judul',
+                'unique' => true,
+                'onUpdate' => true,
+                'separator' => '-',
+                'method' => function ($string, $separator) {
+                    $slug = Str::slug($string, $separator);
+                    // Append UUID to ensure global uniqueness
+                    $slug .= '-' . Str::uuid();
+                    return $slug;
+                },
             ]
         ];
     }
+
 }

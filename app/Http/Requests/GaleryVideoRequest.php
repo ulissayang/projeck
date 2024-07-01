@@ -24,7 +24,6 @@ class GaleryVideoRequest extends FormRequest
         return [
             'judul'         => 'required|min:3|string',
             'deskripsi'     => 'required|min:3',
-            'video_url'     => 'required|min:3',
         ];
     }
 }

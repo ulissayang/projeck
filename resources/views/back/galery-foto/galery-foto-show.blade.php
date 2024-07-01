@@ -1,74 +1,30 @@
 <x-app-layout>
-  @slot('title', 'Show Galery Foto')
+  @slot('title', 'Show Galaery Foto')
   <main id="main" class="main">
 
-    <div class="pagetitle">
-      <h1>Show : Galery Foto</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-          <li class="breadcrumb-item">Informasi</li>
-          <li class="breadcrumb-item active">Galery Foto</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
+    <x-back.breadcrumb :title="$title" :breadcrumbs="$breadcrumbs" /><!-- End Page Title -->
 
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
-
-          <div class="card">
-            <div class="card-body overflow-x-auto">
-              <div class="card-title">
-                <x-button as="a" href="{{ route('galery-foto.index') }}" class="btn-sm">
-                  <i class="bi bi-arrow-left-circle"></i> Kembali
-                </x-button>
-              </div>
-
-              <!-- Table with stripped rows -->
-              <table class="table table-striped table-responsive table-hover">
-                <tr>
-                  <th>Judul</th>
-                  <td>:</td>
-                  <td>{{ $galery_foto->judul }}</td>
-                </tr>
-                <tr>
-                  <th>Deskripsi</th>
-                  <td>:</td>
-                  <td>{{ $galery_foto->deskripsi }}</td>
-                </tr>
-                <tr>
-                  <th>Foto</th>
-                  <td>:</td>
-                  <td>
-                    @if ($galery_foto->foto)
-                    @php
-                    $fotos = is_string($galery_foto->foto) ? json_decode($galery_foto->foto) : $galery_foto->foto;
-                    @endphp
-                    @if (is_array($fotos))
-                    <div class="d-flex flex-wrap">
-                      @foreach ($fotos as $foto)
-                      <img src="{{ asset('storage/' . $foto) }}" alt="" class="img-fluid m-2 col-sm-2 rounded-4">
-                      @endforeach
-                    </div>
-                    @else
-                    <img src="{{ asset('storage/' . $galery_foto->foto) }}" alt=""
-                      class="img-fluid m-2 col-sm-2 rounded-4">
-                    @endif
-                    @else
-                    Tidak ada foto
-                    @endif
-                  </td>
-                </tr>
-              </table>
-              <!-- End Table with stripped rows -->
-
-            </div>
-          </div>
-
+          <x-back.show-data :data="[
+                        'judul' => $galery_foto->judul,
+                        'deskripsi' => $galery_foto->deskripsi,
+                        'author' => $galery_foto->user->name,
+                        'image' => $galery_foto->image,
+                        'created_at' => $galery_foto->created_at,
+                        'updated_at' => $galery_foto->updated_at,
+                    ]" :backRoute="route('galery-foto.index')" />
         </div>
       </div>
     </section>
 
   </main><!-- End #main -->
+
+  @push('scripts')
+  <!-- Bootstrap 5 -->
+  <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <!-- Main js -->
+  <script type="text/javascript" src="{{ asset('assets/js/main.js') }}"></script>
+  @endpush
 </x-app-layout>

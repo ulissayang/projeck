@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Back;
 
 use App\Models\VisiMisi;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VisiMisiRequest;
+use Illuminate\Support\Facades\DB;
 
 class VisiMisiController extends Controller
 {
@@ -14,22 +14,17 @@ class VisiMisiController extends Controller
      */
     public function index()
     {
-        return view('back.visi-misi.visi-misi', [
-            'visi_misi' => VisiMisi::where('user_id', auth()->user()->id)->latest()->get()
-        ]);
-    }
+        $breadcrumbs = [
+            ['name' => 'Informasi'],
+            ['name' => 'Visi Misi'],
+        ];
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(VisiMisi $visi_misi)
-    {
-        return view('back.visi-misi.visi-misi-form', [
-            'visi_misi' => $visi_misi,
-            'name'      => 'Tambah Visi Misi',
-            'title'     => 'Tambah Visi Misi',
-            'method'    => 'post',
-            'route'     => route('visi-misi.store')
+        $visiMisi = auth()->user()->visi_misi()->latest()->get();
+
+        return view('back.visi-misi.visi-misi', [
+            'title' => 'Tabel Visi Misi',
+            'breadcrumbs' => $breadcrumbs,
+            'visi_misi' => $visiMisi,
         ]);
     }
 
@@ -38,51 +33,79 @@ class VisiMisiController extends Controller
      */
     public function store(VisiMisiRequest $request)
     {
-        $data = $request->validated();
 
-        $data['user_id'] = auth()->user()->id;
+        try {
+            $data = $request->validated();
+            $visiMisi = $request->user()->visi_misi()->create($data);
 
-        VisiMisi::create($data);
+            return response()->json([
+                'message' => 'Data Berhasil Ditambahkan!',
+                'data' => $visiMisi
+            ]);
+        } catch (\Exception $e) {
 
-        return redirect()->route('visi-misi.index')->with('success', 'Data Berhasil Di Tambahkan!');
+            return response()->json([
+                'error' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(VisiMisi $visi_misi)
+    public function edit(string $slug)
     {
-        return view('back.visi-misi.visi-misi-form', [
-            'visi_misi' => $visi_misi,
-            'name'      => 'Edit',
-            'title'     => 'Edit : ' . $visi_misi->jenis,
-            'method'    => 'put',
-            'route'     => route('visi-misi.update', $visi_misi->id)
-        ]);
+        try {
+            $visiMisi = VisiMisi::where('slug', $slug)->firstOrFail();
+            return response()->json(['data' => $visiMisi]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Data tidak ditemukan'
+            ], 404);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(VisiMisiRequest $request, string $id)
+    public function update(VisiMisiRequest $request, string $slug)
     {
-        $data = $request->validated();
 
-        $data['user_id'] = auth()->user()->id;
+        try {
+            $data = $request->validated();
+            $visiMisi = VisiMisi::where('slug', $slug)->firstOrFail();
+            $visiMisi->update($data);
 
-        VisiMisi::find($id)->update($data);
+            return response()->json([
+                'message' => 'Data Berhasil Diupdate!',
+                'data' => $visiMisi
+            ]);
+        } catch (\Exception $e) {
 
-        return redirect()->route('visi-misi.index')->with('success', 'Data Berhasil Di Update!');
+            return response()->json([
+                'error' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $slug)
     {
-        $visi_misi = VisiMisi::find($id);
 
-        VisiMisi::destroy($visi_misi->id);
-        return redirect()->route('visi-misi.index')->with('success', 'Data Berhasil Di Hapus!');
+        try {
+            $visiMisi = VisiMisi::where('slug', $slug)->firstOrFail();
+            $visiMisi->delete();
+
+            return response()->json([
+                'message' => 'Data Berhasil Dihapus!'
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'error' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

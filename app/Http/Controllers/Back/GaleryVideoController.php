@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Back;
 
+use Exception;
 use App\Models\GaleryVideo;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use App\DataTables\GaleryVideoDataTable;
 use App\Http\Requests\GaleryVideoRequest;
 
 class GaleryVideoController extends Controller
@@ -13,25 +16,21 @@ class GaleryVideoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(GaleryVideoDataTable $dataTable)
     {
-        return view('back.galery-video.galery-video', [
-            'galery_video' => GaleryVideo::where('user_id', auth()->user()->id)->latest()->get()
-        ]);
-    }
+        try {
+            $breadcrumbs = [
+                ['name' => 'Informasi'],
+                ['name' => 'Galery Video'],
+            ];
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(GaleryVideo $galery_video)
-    {
-        return view('back.galery-video.galery-video-form', [
-            'galery_video'  => $galery_video,
-            'name'          => 'Tambah Galery Video',
-            'title'         => 'Tambah Galery Video',
-            'method'        => 'post',
-            'route'        => route('galery-video.store'),
-        ]);
+            return $dataTable->render('back.galery-video.galery-video', [
+                'title' => 'Tabel Galery Video',
+                'breadcrumbs' => $breadcrumbs,
+            ]);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -39,13 +38,15 @@ class GaleryVideoController extends Controller
      */
     public function store(GaleryVideoRequest $request)
     {
-        $data = $request->validated();
+        try {
+            $data = $request->validated();
 
-        $data['user_id'] = auth()->user()->id;
+            $request->user()->galery_video()->create($data);
 
-        GaleryVideo::create($data);
-
-        return to_route('galery-video.index')->with('success', 'Data Berhasil Di Tambahkan!');
+            return response()->json(['message' => 'Data Berhasil Ditambahkan'], 201);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -53,47 +54,74 @@ class GaleryVideoController extends Controller
      */
     public function show(GaleryVideo $galery_video)
     {
-        return view('back.galery-video.galery-video-show', [
-            'galery_video' => $galery_video
-        ]);
+        try {
+            $breadcrumbs = [
+                ['name' => 'Informasi'],
+                ['name' => 'Galery Video'],
+                ['name' => 'Show'],
+            ];
+            return view('back.galery-video.galery-video-show', compact('galery_video'), [
+                'title' => 'Tabel Galery Video',
+                'breadcrumbs' => $breadcrumbs,
+            ]);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(GaleryVideo $galery_video)
+    public function edit(string $slug)
     {
-        return view('back.galery-video.galery-video-form', [
-            'galery_video'  => $galery_video,
-            'name'          => 'Edit Galery Video',
-            'title'         => 'Edit Galery Video : ' . $galery_video->judul,
-            'method'        => 'put',
-            'route'        => route('galery-video.update', $galery_video->slug),
-        ]);
+        $galery_video = GaleryVideo::where('slug', $slug)->firstOrFail();
+        return response()->json(['data' => $galery_video]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(GaleryVideoRequest $request, string $id)
+    public function update(GaleryVideoRequest $request)
     {
-        $data = $request->validated();
+        try {
+            $data = $request->validated();
 
-        $data['user_id'] = auth()->user()->id;
+            $request->user()->galery_video()->update($data);
 
-        GaleryVideo::where('slug', $id)->update($data);
-
-        return to_route('galery-video.index')->with('success', 'Data Berhasil Di Update!');
+            return response()->json(['message' => 'Data Berhasil Diubah'], 201);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(GaleryVideo $galery_video)
     {
-        $galery_video = GaleryVideo::find($id);
+        try {
+            $galery_video->delete();
+            return response()->json(['message' => 'Data Berhasil Di Hapus'], 201);
+        } catch (Exception $e) {
+            // Tangkap pengecualian dan kirim pesan error
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
+    }
 
-        GaleryVideo::destroy($galery_video->id);
-        return to_route('galery-video.index')->with('success', 'Data Berhasil Di Hapus!');
+    public function bulkDelete(Request $request): JsonResponse
+    {
+        try {
+            $galery_videoIds = $request->input('ids');
+
+            $deleted = GaleryVideo::whereIn('slug', $galery_videoIds)->delete();
+
+            if ($deleted) {
+                return response()->json(['success' => true, 'message' => 'Data berhasil dihapus.', 'icon' => 'success'], 201);
+            } else {
+                return response()->json(['error' => 'Gagal menghapus data.']);
+            }
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
     }
 }

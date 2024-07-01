@@ -7,16 +7,7 @@
   @slot('title', 'Agenda')
   <main id="main" class="main">
 
-    <div class="pagetitle">
-      <h1>Tabel Agenda</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Informasi</li>
-          <li class="breadcrumb-item active">Agenda</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
+    <x-back.breadcrumb :title="$title" :breadcrumbs="$breadcrumbs" />
 
     <section class="section">
       <div class="row">

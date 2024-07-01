@@ -28,19 +28,10 @@
   </div>
 </x-app-layout> --}}
 <x-app-layout>
-  @slot('title', 'Profile')
+  @slot('title', 'Profil')
   <main id="main" class="main">
 
-    <div class="pagetitle">
-      <h1>Profile</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Users</li>
-          <li class="breadcrumb-item active">Profile</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
+    <x-back.breadcrumb :title="$title" :breadcrumbs="$breadcrumbs" /><!-- End Page Title -->
 
     <section class="section profile">
       <div class="row">
@@ -57,12 +48,7 @@
 
               <h2>{{ Auth::user()->name }}</h2>
               <h3>{{ Auth::user()->email }}</h3>
-              <div class="social-links mt-2">
-                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-              </div>
+
             </div>
           </div>
         </div>
@@ -75,7 +61,7 @@
               <ul class="nav nav-tabs-bordered">
 
                 <li class="nav-item">
-                  <button class="nav-link">Informasi Profil</button>
+                  <div class="nav-link">Informasi Profil</div>
                 </li>
 
               </ul>
@@ -83,22 +69,7 @@
 
                 <div class="pt-3">
 
-                  <small class="d-block mb-3">Perbarui informasi profil akun Anda.</small>
-
-                  {{-- alert success $ error --}}
-                  @if (session('success'))
-                  <div class="my-3">
-                    <div class="alert alert-success fs-6 py-2">
-                      <i class="bi bi-check-circle"></i> {{ session('success') }}
-                    </div>
-                  </div>
-                  @endif
-
-                  @if ($errors->any())
-                  @foreach ($errors->all() as $error)
-                  <small class="alert alert-danger m-2 py-2 d-block">{{ $error }}</small>
-                  @endforeach
-                  @endif
+                  <small class="d-block mb-3 text-muted">Perbarui informasi profil akun Anda.</small>
 
                   <!-- Profile Edit Form -->
                   <form id="send-verification" method="post" action="{{ route('verification.send') }}">
@@ -106,7 +77,7 @@
                   </form>
 
                   <form method="post" action="{{ route('profile.update', $user->id) }}" class="mt-6 space-y-6"
-                    enctype="multipart/form-data">
+                    enctype="multipart/form-data" id="modalForm">
                     @csrf
                     @method('patch')
 
@@ -153,8 +124,9 @@
                     </div>
                     @endif
 
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">{{ __('Simpan') }}</button>
+                    <div class="text-center float-end">
+                      <button type="submit" class="btn btn-primary"><i class="bi bi-floppy"></i> {{ __('Simpan')
+                        }}</button>
                     </div>
                   </form><!-- End Profile Edit Form -->
 
@@ -170,29 +142,20 @@
               <ul class="nav nav-tabs-bordered">
 
                 <li class="nav-item">
-                  <button class="nav-link">Perbarui
-                    Password</button>
+                  <div class="nav-link">Perbarui
+                    Password</div>
                 </li>
               </ul>
 
               <div class="tab-content pt-2">
                 <div class="pt-3">
 
-                  <small class="d-block mb-3">Pastikan akun Anda menggunakan kata sandi yang panjang dan acak agar tetap
+                  <small class="d-block mb-3 text-muted">Pastikan akun Anda menggunakan kata sandi yang panjang dan acak
+                    agar tetap
                     aman</small>
 
-                  {{-- alert success --}}
-                  @if (session('status'))
-                  <div class="my-3">
-                    <div class="alert alert-success fs-6 py-2">
-                      <i class="bi bi-check-circle"></i> {{ session('status') }}
-                    </div>
-                  </div>
-                  @endif
-
-
                   <!-- Change Password Form -->
-                  <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
+                  <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6" id="modalForm">
                     @csrf
                     @method('put')
 
@@ -223,8 +186,9 @@
                       </div>
                     </div>
 
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">{{ __('Simpan') }}</button>
+                    <div class="text-center float-end">
+                      <button type="submit" class="btn btn-primary"><i class="bi bi-floppy"></i> {{ __('Simpan')
+                        }}</button>
                     </div>
                   </form>
 
@@ -240,4 +204,33 @@
     </section>
 
   </main><!-- End #main -->
+  @push('scripts')
+
+  <!-- Jquery 3 -->
+  <script type="text/javascript" src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
+
+  <!-- Bootstrap 5 -->
+  <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.js') }}"></script>
+
+  <!-- Main js -->
+  <script type="text/javascript" src="{{ asset('assets/js/main.js') }}"></script>
+
+  <!-- Laravel Javascript Validation -->
+  <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+  {!! JsValidator::formRequest('App\Http\Requests\ProfileUpdateRequest', '#modalForm') !!}
+
+  <!-- Sweet Alert2 -->
+  <script type="text/javascript" src="{{ asset('assets/vendor/sweetalert/sweetalert2.js') }}"></script>
+
+  <script>
+    @if (session('success'))
+        window.sessionStorage.setItem("successMessage", "{{ session('success') }}");
+    @endif
+    
+    @if (session('error'))
+        window.sessionStorage.setItem("errorMessage", "{{ session('error') }}");
+        @endif
+  </script>
+
+  @endpush
 </x-app-layout>

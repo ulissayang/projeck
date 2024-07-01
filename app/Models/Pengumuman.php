@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -11,11 +12,10 @@ class Pengumuman extends Model
 {
     use HasFactory, Sluggable;
 
-    public $table = 'pengumuman';
+    protected $table = 'pengumuman';
 
     protected $fillable = [
         'title',
-        'user_id',
         'slug',
         'body'
     ];
@@ -29,7 +29,16 @@ class Pengumuman extends Model
     {
         return [
             'slug' => [
-                'source' => 'title'
+                'source' => 'title',
+                'unique' => true,
+                'onUpdate' => true,
+                'separator' => '-',
+                'method' => function ($string, $separator) {
+                    $slug = Str::slug($string, $separator);
+                    // Append UUID to ensure global uniqueness
+                    $slug .= '-' . Str::uuid();
+                    return $slug;
+                },
             ]
         ];
     }

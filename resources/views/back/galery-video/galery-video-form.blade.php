@@ -1,90 +1,38 @@
-<x-app-layout>
-  @slot('title', $title)
-  <main id="main" class="main">
+<div class="modal fade" id="dataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="ms-auto">
+        <button type="button" class="btn-close fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <h1 class="modal-nama fs-5 text-center fw-bold" id="staticBackdropLabel"></h1>
+      <div class="modal-body">
+        <!-- Form upketerangan data  -->
+        <form id="modalForm">
+          @csrf
+          <input type="hidden" name="slug" id="slug">
+          <input type="hidden" name="oldImage" value="">
 
-    <div class="pagetitle">
-      <h1>{{ $title }}</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Informasi</li>
-          <li class="breadcrumb-item active">{{ $name }}</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
+          <div class="mb-3">
+            <label for="judul" class="form-label">Judul<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="judul" name="judul" value="{{ old('judul') }}" required autofocus>
+          </div>
 
-    <section class="section">
-      <div class="row">
-        <div class="col-lg-12">
+          <div class="mb-3">
+            <label class="form-label" for="deskripsi">Deskripsi<span class="text-danger">*</span></label>
+            <textarea class="form-control deskripsi" id="summernote" name="deskripsi" rows="5"
+              value="{{ old('deskripsi') }}">{{ old('deskripsi') }}</textarea>
+          </div>
 
-          <div class="card">
-            <div class="card-body ">
-              <div class="card-title">
-                <x-button as="a" href="{{ route('galery-video.index') }}" class="btn-sm">
-                  <i class="bi bi-arrow-left-circle"></i> Kembali
-                </x-button>
-              </div>
-
-              <!-- Form update data kegiatan -->
-              <form action="{{ $route }}" method="post" enctype="multipart/form-data">
-                @method($method)
-                @csrf
-                <div class="mb-3">
-                  <label for="judul" class="form-label">Judul</label>
-                  <input type="text" class="form-control @error('judul') is-invalid @enderror" id="judul" name="judul"
-                    value="{{ old('judul', $galery_video->judul) }}">
-                  @error('judul')
-                  <div class="invalid-feedback">
-                    {{ $message }}
-                  </div>
-                  @enderror
-                </div>
-
-                <div class="mb-3">
-                  <label class="form-label" for="deskripsi">Deskripsi</label>
-                  <textarea class="form-control @error('deskripsi') is-invalid @enderror" id="deskripsi"
-                    name="deskripsi" rows="5">{{ old('deskripsi', $galery_video->deskripsi) }}</textarea>
-
-                  @error('deskripsi')
-                  <div class="invalid-feedback">
-                    {{ $message }}
-                  </div>
-                  @enderror
-                </div>
-
-                <div class="mb-3">
-                  <label class="form-label" for="video_url">Video Url</label>
-                  <input type="text" class="form-control @error('video_url') is-invalid @enderror" id="video_url"
-                    name="video_url" value="{{ old('video_url', $galery_video->video_url) }}">
-
-                  @error('video_url')
-                  <div class="invalid-feedback">
-                    {{ $message }}
-                  </div>
-                  @enderror
-                </div>
-
-                <div class="mb-3 float-end">
-                  <x-button>Simpan</x-button>
-                </div>
-              </form>
-              <!-- End Form update data kegiatan -->
-
+          <div class="float-end">
+            <div class="m-3">
+              <x-button type="button" class="btn-secondary" data-bs-dismiss="modal">Keluar</x-button>
+              <x-button class="btnSubmit"></x-button>
             </div>
           </div>
 
-        </div>
+        </form>
       </div>
-    </section>
-
-  </main><!-- End #main -->
-  <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
-
-  <script>
-    CKEDITOR.replace( 'deskripsi' );
-    // image preview
-  </script>
-
-
-
-</x-app-layout>
+    </div>
+  </div>
+</div>

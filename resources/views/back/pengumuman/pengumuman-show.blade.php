@@ -1,17 +1,8 @@
-<x-app-layout>
+{{-- <x-app-layout>
   @slot('title', 'Show Pengumuman')
   <main id="main" class="main">
 
-    <div class="pagetitle">
-      <h1>Show : {{ $pengumuman->title }}</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Informasi</li>
-          <li class="breadcrumb-item active">{{ $pengumuman->title }}</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
+    <x-auth.breadcrumb :title="$title" :breadcrumbs="$breadcrumbs" />
 
     <section class="section">
       <div class="row">
@@ -42,6 +33,15 @@
               <!-- End Table with stripped rows -->
 
             </div>
+            <div class="col px-3 py-2 bg-secondary-subtle">
+              <div class="float-end text-secondary">
+                <span>Updated at: {{ \Carbon\Carbon::parse($pengumuman->updated_at)->locale('id')->diffForHumans()
+                  }},</span>
+                <span>Created at: {{ \Carbon\Carbon::parse($pengumuman->created_at)->locale('id')->isoFormat('dddd, D
+                  MMMM
+                  YYYY ') }}</span>
+              </div>
+            </div>
           </div>
 
         </div>
@@ -49,4 +49,38 @@
     </section>
 
   </main><!-- End #main -->
+</x-app-layout> --}}
+
+<x-app-layout>
+  @slot('title', 'Show Pengumuman')
+  <main id="main" class="main">
+
+    <x-back.breadcrumb :title="$title" :breadcrumbs="$breadcrumbs" /><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <x-back.show-data :data="[
+            'title' => $pengumuman->title,
+            'body' => $pengumuman->body,
+            'created_at' => $pengumuman->created_at,
+            'updated_at' => $pengumuman->updated_at,
+            ]" :backRoute="route('pengumuman.index')" />
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  @push('scripts')
+
+  <!-- Bootstrap 5 -->
+  <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+  <!-- Main js -->
+  <script type="text/javascript" src="{{ asset('assets/js/main.js') }}"></script>
+
+  @endpush
+
 </x-app-layout>

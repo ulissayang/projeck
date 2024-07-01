@@ -1,67 +1,31 @@
 <x-app-layout>
-  @slot('title', 'Show fasilitas')
+  @slot('title', 'Show Fasilitas')
   <main id="main" class="main">
 
-    <div class="pagetitle">
-      <h1>Show : {{ $fasilitas->title }}</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Informasi</li>
-          <li class="breadcrumb-item active">{{ $fasilitas->title }}</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
+    <x-back.breadcrumb :title="$title" :breadcrumbs="$breadcrumbs" /><!-- End Page Title -->
 
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
-
-          <div class="card">
-            <div class="card-body overflow-x-auto">
-              <div class="card-title">
-                <x-button as="a" href="{{ route('fasilitas.index') }}" class="btn-sm">
-                  <i class="bi bi-arrow-left-circle"></i> Kembali
-                </x-button>
-              </div>
-
-              <!-- Table with stripped rows -->
-              <table class="table table-striped table-responsive table-hover">
-                <tr>
-                  <th>Nama</th>
-                  <td>:</td>
-                  <td>{{ $fasilitas->nama }}</td>
-                </tr>
-                <tr>
-                  <th>Deskripsi</th>
-                  <td>:</td>
-                  <td>{{ $fasilitas->deskripsi }}</td>
-                </tr>
-                <tr>
-                  <th>Foto</th>
-                  <td>:</td>
-                  <td>
-                    @if ($fasilitas->foto)
-                    <img src="{{ asset('storage/'. $fasilitas->foto) }}" alt="" class="img-fluid col-sm-2">
-                    @else
-                    Tidak ada foto
-                    @endif
-                  </td>
-                </tr>
-                <tr>
-                  <th>Keterangan</th>
-                  <td>:</td>
-                  <td>{{ $fasilitas->keterangan }}</td>
-                </tr>
-              </table>
-              <!-- End Table with stripped rows -->
-
-            </div>
-          </div>
-
+          <x-back.show-data :data="[
+                        'nama' => $fasilitas->nama,
+                        'deskripsi' => $fasilitas->deskripsi,
+                        'author' => $fasilitas->user->name,
+                        'image' => $fasilitas->image,
+                        'keterangan' => $fasilitas->keterangan,
+                        'created_at' => $fasilitas->created_at,
+                        'updated_at' => $fasilitas->updated_at,
+                    ]" :backRoute="route('fasilitas.index')" />
         </div>
       </div>
     </section>
 
   </main><!-- End #main -->
+
+  @push('scripts')
+  <!-- Bootstrap 5 -->
+  <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <!-- Main js -->
+  <script type="text/javascript" src="{{ asset('assets/js/main.js') }}"></script>
+  @endpush
 </x-app-layout>

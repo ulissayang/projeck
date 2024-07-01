@@ -24,7 +24,7 @@ class FasilitasRequest extends FormRequest
         return [
             'nama' => 'required|min:3|max:255|string',
             'deskripsi' => 'nullable|required',
-            'foto' => 'nullable|image|file|max:1024',
+            'image' => 'nullable|image|file|max:1024',
             'keterangan' => 'nullable|min:3',
         ];
     }

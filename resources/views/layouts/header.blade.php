@@ -135,7 +135,7 @@
             </li><!-- End Search Icon-->
 
             <li class="nav-item d-lg-block d-none me-4">
-                <div id="live-clock" style="font-size: smaller;">
+                <div id="live-clock" class="text-muted" style="font-size: smaller;">
                     <script>
                         function updateClock() {
                         const now = new Date();
@@ -316,9 +316,17 @@
                     <li>
                         <a class="dropdown-item d-flex align-items-center" href="{{ route('profile.edit') }}">
                             <i class="bi bi-person"></i>
-                            <span>My Profile</span>
+                            <span>Profil Saya</span>
                         </a>
                     </li>
+
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center" href="{{ route('pengaturan.index') }}">
+                            <i class="bi bi-gear"></i>
+                            <span>Pengaturan</span>
+                        </a>
+                    </li>
+
                     <li>
                         <hr class="dropdown-divider">
                     </li>
@@ -329,7 +337,7 @@
                             <a class="dropdown-item d-flex align-items-center" href="href=" route('logout') onclick="event.preventDefault();
                         this.closest('form').submit();">
                                 <i class="bi bi-box-arrow-right"></i>
-                                <span>Sign Out</span>
+                                <span>Keluar</span>
                             </a>
                         </form>
                     </li>

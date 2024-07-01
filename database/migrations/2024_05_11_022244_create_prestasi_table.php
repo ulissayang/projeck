@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('prestasi', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->string('nama');
+            $table->string('title');
             $table->string('slug');
-            $table->string('foto');
-            $table->text('deskripsi');
+            $table->string('image');
+            $table->text('description');
             $table->date('date');
             // $table->foreignId('kategori_id')->constrained('kategori');
             $table->timestamps();

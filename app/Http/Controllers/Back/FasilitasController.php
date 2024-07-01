@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Back;
 
+use Exception;
 use App\Models\Fasilitas;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use App\DataTables\FasilitasDataTable;
 use App\Http\Requests\FasilitasRequest;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,25 +17,21 @@ class FasilitasController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(FasilitasDataTable $dataTable)
     {
-        return view('back.fasilitas.fasilitas', [
-            'fasilitas' => Fasilitas::where('user_id', auth()->user()->id)->latest()->get()
-        ]);
-    }
+        try {
+            $breadcrumbs = [
+                ['name' => 'Informasi'],
+                ['name' => 'Fasilitas'],
+            ];
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Fasilitas $fasilitas)
-    {
-        return view('back.fasilitas.fasilitas-form', [
-            'fasilitas' => $fasilitas,
-            'name' => 'Tambah Fasilitas',
-            'title' => 'Tambah Fasilitas',
-            'method' => 'post',
-            'route' => route('fasilitas.store')
-        ]);
+            return $dataTable->render('back.fasilitas.fasilitas', [
+                'title' => 'Tabel Fasilitas',
+                'breadcrumbs' => $breadcrumbs,
+            ]);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -40,17 +39,31 @@ class FasilitasController extends Controller
      */
     public function store(FasilitasRequest $request)
     {
-        $data = $request->validated();
+        try {
+            $data = $request->validated();
 
-        if ($request->file('foto')) {
-            $data['foto'] = $request->file('foto')->store('fasilitas-images');
+            // Simpan gambar sementara jika ada
+            $tempImagePath = $request->file('image')?->store('images-temp');
+            $data['image'] = basename($tempImagePath);
+
+
+            // Buat fasilitas
+            $fasilitas = $request->user()->fasilitas()->create($data);
+
+            // Jika transaksi berhasil, pindahkan gambar dari temp ke lokasi akhir
+            if ($tempImagePath) {
+                $finalImagePath = str_replace('images-temp', 'fasilitas-images', $tempImagePath);
+                Storage::move($tempImagePath, $finalImagePath);
+                $fasilitas->update(['image' => $finalImagePath]);
+            }
+
+            return response()->json(['message' => 'Data Berhasil Ditambahkan'], 201);
+        } catch (\Throwable $e) {
+            if ($tempImagePath) {
+                Storage::delete($tempImagePath);
+            }
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
-
-        $data['user_id'] = auth()->user()->id;
-
-        Fasilitas::create($data);
-
-        return to_route('fasilitas.index')->with('success', 'Fasilitas Berhasil Di Tambahkan!');
     }
 
     /**
@@ -58,59 +71,98 @@ class FasilitasController extends Controller
      */
     public function show(Fasilitas $fasilitas)
     {
-        return view('back.fasilitas.fasilitas-show', [
-            'fasilitas' => $fasilitas,
-        ]);
+        try {
+            $breadcrumbs = [
+                ['name' => 'Informasi'],
+                ['name' => 'Fasilitas'],
+                ['name' => 'Show'],
+            ];
+            return view('back.fasilitas.fasilitas-show', compact('fasilitas'), [
+                'title' => 'Tabel fasilitas',
+                'breadcrumbs' => $breadcrumbs,
+            ]);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Fasilitas $fasilitas)
+    public function edit(string $slug)
     {
-        return view('back.fasilitas.fasilitas-form', [
-            'fasilitas' => $fasilitas,
-            'name'      => 'Edit Fasilitas',
-            'title'     => 'Edit Fasilitas : ' . $fasilitas->nama,
-            'method'    => 'put',
-            'route'     => route('fasilitas.update', $fasilitas->slug)
-        ]);
+        $fasilitas = fasilitas::where('slug', $slug)->firstOrFail();
+        return response()->json(['data' => $fasilitas]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(FasilitasRequest $request, string $id)
+    public function update(FasilitasRequest $request, string $slug)
     {
-        $data = $request->validated();
+        try {
+            $data = $request->validated();
 
-        if ($request->file('foto')) {
-            if ($request->oldImage) {
-                Storage::delete($request->oldImage);
+            if ($request->file('image')) {
+                if ($request->oldImage) {
+                    Storage::delete($request->oldImage);
+                }
+                $data['image'] = $request->file('image')->store('fasilitas-images');
             }
-            $data['foto'] = $request->file('foto')->store('fasilitas-images');
+
+            // Buat fasilitas
+            $request->user()->fasilitas()->update($data);
+
+            return response()->json(['message' => 'Data Berhasil Diubah'], 201);
+        } catch (\Throwable $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
-
-        $data['user_id'] = auth()->user()->id;
-
-        Fasilitas::where('slug', $id)->update($data);
-
-        return to_route('fasilitas.index')->with('success', 'Fasilitas Berhasil Di Update!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Fasilitas $fasilitas)
     {
-        $fasilitas = Fasilitas::find($id);
+        try {
+            // Cek jika ada gambar yang terkait dengan data
+            if ($fasilitas->image) {
+                // Hapus gambar dari penyimpanan
+                Storage::delete($fasilitas->image);
+            }
 
-        if ($fasilitas->foto) {
-            Storage::delete($fasilitas->foto);
+            // Hapus data dari database
+            $fasilitas->delete();
+
+            return response()->json(['message' => 'Data Berhasil Di Hapus']);
+        } catch (Exception $e) {
+            // Tangkap pengecualian dan kirim pesan error
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
-
-        Fasilitas::destroy($fasilitas->id);
-        return to_route('fasilitas.index')->with('success', 'Fasilitas Berhasil Di Hapus!');
     }
 
+
+    public function bulkDelete(Request $request): JsonResponse
+    {
+        try {
+            $fasilitasIds = $request->input('ids');
+            $fasilitass = Fasilitas::whereIn('slug', $fasilitasIds)->get();
+
+            foreach ($fasilitass as $fasilitas) {
+                if ($fasilitas->image) {
+                    Storage::delete($fasilitas->image);
+                }
+            }
+
+            $deleted = Fasilitas::whereIn('slug', $fasilitasIds)->delete();
+
+            if ($deleted) {
+                return response()->json(['success' => true, 'message' => 'Data berhasil dihapus.', 'icon' => 'success']);
+            } else {
+                return response()->json(['error' => 'Gagal menghapus data.']);
+            }
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
+    }
 }

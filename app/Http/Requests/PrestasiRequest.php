@@ -22,10 +22,10 @@ class PrestasiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nama' => 'required|min:3|max:255|string',
-            'deskripsi' => 'required',
+            'title' => 'required|min:3|max:255|string',
+            'description' => 'required',
             'date' => 'required',
-            'foto' => 'nullable|image|file|max:1024',
+            'image' => 'nullable|image|file|max:1024',
         ];
     }
 }

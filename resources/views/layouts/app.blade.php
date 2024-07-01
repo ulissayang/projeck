@@ -27,9 +27,9 @@
     <link href="{{ asset('assets/vendor/quill/quill.snow.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet"> --}}
-  
+
     @stack('link')
-    
+
     <!-- Template Main CSS File -->
 
 </head>
@@ -41,9 +41,9 @@
     <!-- End Header -->
 
     <!-- ======= Sidebar ======= -->
-    <x-auth.sidebar>
+    <x-back.sidebar>
 
-    </x-auth.sidebar>
+    </x-back.sidebar>
     <!-- End Sidebar-->
 
     {{-- page content --}}
@@ -55,7 +55,7 @@
     <!-- End #main -->
 
     <!-- ======= Footer ======= -->
-    <x-auth.footer />
+    <x-back.footer />
     <!-- End Footer -->
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i

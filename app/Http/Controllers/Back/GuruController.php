@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Back;
 
+use Exception;
 use App\Models\Guru;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\DataTables\GuruDataTable;
+use Illuminate\Http\JsonResponse;
 use App\Http\Requests\GuruRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -14,25 +17,20 @@ class GuruController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(GuruDataTable $dataTable)
     {
-        return view('back.guru.guru', [
-            'guru' => Guru::where('user_id', auth()->user()->id)->latest()->get()
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Guru $guru)
-    {
-        return view('back.guru.guru-form', [
-            'guru' => $guru,
-            'name' => 'Tambah Guru',
-            'title' => 'Tambah Guru',
-            'method' => 'post',
-            'route' => route('guru.store')
-        ]);
+        try {
+            $breadcrumbs = [
+                ['name' => 'Informasi'],
+                ['name' => 'Guru'],
+            ];
+            return $dataTable->render('back.guru.guru', [
+                'title' => 'Tabel Guru',
+                'breadcrumbs' => $breadcrumbs,
+            ]);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -40,17 +38,31 @@ class GuruController extends Controller
      */
     public function store(GuruRequest $request)
     {
-        $data = $request->validated();
+        try {
+            $data = $request->validated();
 
-        if ($request->file('foto')) {
-            $data['foto'] = $request->file('foto')->store('guru-images');
+            // Simpan gambar sementara jika ada
+            $tempImagePath = $request->file('image')?->store('images-temp');
+            $data['image'] = basename($tempImagePath);
+
+
+            // Buat guru
+            $guru = $request->user()->guru()->create($data);
+
+            // Jika transaksi berhasil, pindahkan gambar dari temp ke lokasi akhir
+            if ($tempImagePath) {
+                $finalImagePath = str_replace('images-temp', 'guru-images', $tempImagePath);
+                Storage::move($tempImagePath, $finalImagePath);
+                $guru->update(['image' => $finalImagePath]);
+            }
+
+            return response()->json(['message' => 'Data Berhasil Ditambahkan'], 201);
+        } catch (\Throwable $e) {
+            if ($tempImagePath) {
+                Storage::delete($tempImagePath);
+            }
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
-
-        $data['user_id'] = auth()->user()->id;
-
-        Guru::create($data);
-
-        return to_route('guru.index')->with('success', 'Guru Berhasil Di Tambahkan!');
     }
 
     /**
@@ -58,56 +70,98 @@ class GuruController extends Controller
      */
     public function show(Guru $guru)
     {
-        return view('back.guru.guru-show', [
-            'guru' => $guru
-        ]);
+        try {
+            $breadcrumbs = [
+                ['name' => 'Informasi'],
+                ['name' => 'Guru'],
+                ['name' => 'Show'],
+            ];
+            return view('back.guru.guru-show', compact('guru'), [
+                'title' => 'Tabel Guru',
+                'breadcrumbs' => $breadcrumbs,
+            ]);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Guru $guru)
+    public function edit(string $slug)
     {
-        return view('back.guru.guru-form', [
-            'guru' => $guru,
-            'name' => 'Edit Guru',
-            'title' => 'Edit Guru : ' . $guru->nama,
-            'method' => 'put',
-            'route' => route('guru.update', $guru->slug)
-        ]);
+        $guru = Guru::where('slug', $slug)->firstOrFail();
+        return response()->json(['data' => $guru]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(GuruRequest $request, string $id)
+    public function update(GuruRequest $request, string $slug)
     {
-        $data = $request->validated();
+        try {
+            $data = $request->validated();
 
-        if ($request->hasFile('foto')) {
-            Storage::delete($request->input('oldImage', ''));
-            $data['foto'] = $request->file('foto')->store('guru-images', 'public');
+            if ($request->file('image')) {
+                if ($request->oldImage) {
+                    Storage::delete($request->oldImage);
+                }
+                $data['image'] = $request->file('image')->store('guru-images');
+            }
+
+            // Buat guru
+            Guru::where('slug', $slug)->update($data);
+
+            return response()->json(['message' => 'Data Berhasil Diubah'], 201);
+        } catch (\Throwable $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
-
-        $data['user_id'] = auth()->user()->id;
-
-        Guru::where('slug', $id)->update($data);
-
-        return to_route('guru.index')->with('success', 'Guru Berhasil Di Update!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Guru $guru)
     {
-        $guru = Guru::find($id);
+        try {
+            // Cek jika ada gambar yang terkait dengan data
+            if ($guru->image) {
+                // Hapus gambar dari penyimpanan
+                Storage::delete($guru->image);
+            }
 
-        if ($guru->foto) {
-            Storage::delete($guru->foto);
+            // Hapus data dari database
+            $guru->delete();
+
+            return response()->json(['message' => 'Data Berhasil Di Hapus']);
+        } catch (Exception $e) {
+            // Tangkap pengecualian dan kirim pesan error
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
+    }
 
-        Guru::destroy($guru->id);
-        return to_route('guru.index')->with('success', 'Guru Berhasil Di Hapus!');
+
+    public function bulkDelete(Request $request): JsonResponse
+    {
+        try {
+            $guruIds = $request->input('ids');
+            $gurus = Guru::whereIn('slug', $guruIds)->get();
+
+            foreach ($gurus as $guru) {
+                if ($guru->image) {
+                    Storage::delete($guru->image);
+                }
+            }
+
+            $deleted = Guru::whereIn('slug', $guruIds)->delete();
+
+            if ($deleted) {
+                return response()->json(['success' => true, 'message' => 'Data berhasil dihapus.', 'icon' => 'success']);
+            } else {
+                return response()->json(['error' => 'Gagal menghapus data.']);
+            }
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
     }
 }
