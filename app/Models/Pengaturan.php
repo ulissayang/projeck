@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pengaturan extends Model
 {
-    use HasFactory;
+    use HasFactory, Sluggable;
 
     protected $table = 'pengaturan';
 
@@ -25,6 +26,8 @@ class Pengaturan extends Model
         'banner',
         'background',
         'ig',
+        'map',
+        'akreditas',
         'youtube',
         'facebook',
         'twitter',

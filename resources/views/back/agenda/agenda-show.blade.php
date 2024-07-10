@@ -127,14 +127,14 @@
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
-          
+
           <x-back.show-data :data="[
-            'title' => $agenda->title,
-            'description' => $agenda->description,
-            'author' => $agenda->user->name,
-            'location' => $agenda->location,
-            'date_time' => $agenda->date_time,
-            'status' => $agenda->date_time,
+            'agenda' => $agenda->title,
+            'deskripsi' => $agenda->description,
+            'penulis' => $agenda->user->name,
+            'lokasi' => $agenda->location,
+            'waktu & tanggal' => \Carbon\Carbon::parse($agenda->date_time)->locale('id')->isoFormat('dddd, D MMMM YYYY HH:mm'),
+            'status' =>  $agenda->date_time,
             'created_at' => $agenda->created_at,
             'updated_at' => $agenda->updated_at,
             ]" :backRoute="route('agenda.index')" />

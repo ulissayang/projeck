@@ -261,8 +261,10 @@
                 success: function(response) {
                     let result = response.data;
                     $('#title').val(result.title);
+                    $('#nama').val(result.nama);
                     $('#summernote').summernote('code', result.description); // Set Summernote content
                     $('#date').val(result.date);
+                    $('#jenis').val(result.jenis);
                     $('#location').val(result.location);
                     $('#slug').val(result.slug);
 

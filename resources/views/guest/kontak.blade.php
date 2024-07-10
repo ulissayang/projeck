@@ -1,9 +1,9 @@
-<x-app-layout title="Kontak">
+<x-guest.app-layout title="Kontak">
 
   <main id="main">
 
     {{-- start heading --}}
-    <x-guest.heading title="Kontak" content="Sekolah Dasar Negeri 260 Maluku Tengah" />
+    <x-guest.heading title="Kontak" linkText="Kontak" content="Sekolah Dasar Negeri 260 Maluku Tengah" />
     {{-- End heading --}}
 
     <!-- ======= Content Section ======= -->
@@ -12,7 +12,7 @@
 
         <div class="row g-5">
 
-          <div class="col-lg-8">
+          <div class="col-lg-12">
 
             <!-- ======= Contact Section ======= -->
             <section class="contact">
@@ -24,7 +24,7 @@
                     quis dolorem dolore earum</p>
                 </div>
 
-                <div class="row gx-lg-0 gy-4">
+                <div class="row gx-lg-0 gy-4 mb-5">
 
                   <div class="col-lg-5">
 
@@ -33,7 +33,7 @@
                         <i class="bi bi-geo-alt flex-shrink-0"></i>
                         <div>
                           <h4>Location:</h4>
-                          <p>A108 Adam Street, New York, NY 535022</p>
+                          <p>{{ $kontak->alamat }}</p>
                         </div>
                       </div><!-- End Info Item -->
 
@@ -41,7 +41,7 @@
                         <i class="bi bi-envelope flex-shrink-0"></i>
                         <div>
                           <h4>Email:</h4>
-                          <p>info@example.com</p>
+                          <p>{{ $kontak->email }}</p>
                         </div>
                       </div><!-- End Info Item -->
 
@@ -49,7 +49,7 @@
                         <i class="bi bi-phone flex-shrink-0"></i>
                         <div>
                           <h4>Call:</h4>
-                          <p>+1 5589 55488 55</p>
+                          <p>{{ $kontak->telp }}</p>
                         </div>
                       </div><!-- End Info Item -->
 
@@ -57,15 +57,15 @@
                         <i class="bi bi-clock flex-shrink-0"></i>
                         <div>
                           <h4>Open Hours:</h4>
-                          <p>Mon-Sat: 11AM - 23PM</p>
+                          <p>{{ $kontak->jam_kerja }}</p>
                         </div>
                       </div><!-- End Info Item -->
                     </div>
 
                   </div>
 
-                  <div class="col-lg-7 order-lg-2 order-md-3">
-                    <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                  <div class="col-lg-7">
+                    <form action="mailto:ulissleksmart@gmail.com" method="GET" class="php-email-form">
                       <div class="row">
                         <div class="form-group">
                           <input type="text" name="name" class="form-control" id="name" placeholder="Your Name"
@@ -86,31 +86,25 @@
                       </div>
                       <div class="my-3">
                         <div class="loading">Loading</div>
-                        <div class="error-message"></div>
                         <div class="sent-message">Your message has been sent. Thank you!</div>
                       </div>
                       <div class="text-center"><button type="submit">Send Message</button></div>
                     </form>
                   </div><!-- End Contact Form -->
 
-                  <div class="col-lg-12 order-lg-3 order-md-2 ">
-                    <iframe class="rounded-2 shadow"
-                      src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"
-                      frameborder="0" style="border:0; width: 100%; height: 384px;" allowfullscreen></iframe>
-                  </div>
 
+                </div>
+
+                <div class="row overflow-hidden rounded-3 shadow">
+                  <iframe class="px-0 mx-0"
+                    src="{{ $kontak->map }}"
+                    frameborder="0" style="border:0; width: 100%; height: 384px;" allowfullscreen></iframe>
                 </div>
 
               </div>
             </section><!-- End Contact Section -->
 
           </div>
-
-          {{-- sidebar start --}}
-          <div class="col-lg-4">
-            <x-guest.sidebar />
-          </div>
-          {{-- sidebar end --}}
         </div>
 
       </div>
@@ -118,4 +112,4 @@
 
   </main><!-- End #main -->
 
-</x-app-layout>
+</x-guest.app-layout>

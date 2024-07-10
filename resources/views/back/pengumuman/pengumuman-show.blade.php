@@ -62,8 +62,9 @@
         <div class="col-lg-12">
 
           <x-back.show-data :data="[
-            'title' => $pengumuman->title,
-            'body' => $pengumuman->body,
+            'pengumuman' => $pengumuman->title,
+            'deskripsi' => $pengumuman->body,
+            'penulis' => $pengumuman->user->name,
             'created_at' => $pengumuman->created_at,
             'updated_at' => $pengumuman->updated_at,
             ]" :backRoute="route('pengumuman.index')" />

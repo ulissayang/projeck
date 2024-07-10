@@ -22,7 +22,7 @@ class KegiatanDataTable extends DataTable
             ->addColumn('checkbox', function ($data) {
                 return '<input type="checkbox" class="bulk-checkbox" value="' . $data->slug . '">';
             })
-            ->addColumn('action', function ($data) {
+            ->addColumn('aksi', function ($data) {
                 return sprintf(
                     '<a href="%s" class="btn btn-sm btn-success" title="Lihat">
                         <i class="bi bi-eye"></i>
@@ -35,7 +35,7 @@ class KegiatanDataTable extends DataTable
                     <button class="btn btn-sm btn-danger" onclick="confirmDelete(this)" data-slug="%s" title="Hapus">
                     <i class="bi bi-trash"></i>
                 </button>
-                    <form id="delete-form-%d" method="POST" action="%s" style="display: none;">
+                    <form id="delete-form-%d" method="POST" aksi="%s" style="display: none;">
                         %s
                         %s
                     </form>',
@@ -49,7 +49,7 @@ class KegiatanDataTable extends DataTable
                     csrf_field()
                 );
             })
-            ->rawColumns(['checkbox', 'action'])
+            ->rawColumns(['checkbox', 'aksi'])
             ->addIndexColumn()
             ->setRowId('id');
     }
@@ -113,11 +113,10 @@ class KegiatanDataTable extends DataTable
                         return '';
                     }
                 }),
-            Column::make('title')->title('Title'),
-            Column::make('excerpt')->title('Excerpt'),
-            Column::make('location')->title('Location'),
-            Column::make('date_time')->title('Date & Time'),
-            Column::computed('action')
+            Column::make('title')->title('Kegiatan'),
+            Column::make('excerpt')->title('Deskripsi'),
+            Column::make('location')->title('Lokasi'),
+            Column::computed('aksi')
                 ->exportable(false)
                 ->printable(false)
                 ->width(120)

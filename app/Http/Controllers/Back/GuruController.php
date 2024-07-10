@@ -10,10 +10,15 @@ use App\DataTables\GuruDataTable;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\GuruRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Services\ImageService;
 use Illuminate\Support\Facades\Storage;
 
 class GuruController extends Controller
 {
+
+    public function __construct(private ImageService $imageService)
+    {
+    }
     /**
      * Display a listing of the resource.
      */
@@ -41,26 +46,17 @@ class GuruController extends Controller
         try {
             $data = $request->validated();
 
-            // Simpan gambar sementara jika ada
-            $tempImagePath = $request->file('image')?->store('images-temp');
-            $data['image'] = basename($tempImagePath);
-
+            $data['image'] = $this->imageService->uploadImage($data, 'guru-images');
 
             // Buat guru
             $guru = $request->user()->guru()->create($data);
 
-            // Jika transaksi berhasil, pindahkan gambar dari temp ke lokasi akhir
-            if ($tempImagePath) {
-                $finalImagePath = str_replace('images-temp', 'guru-images', $tempImagePath);
-                Storage::move($tempImagePath, $finalImagePath);
-                $guru->update(['image' => $finalImagePath]);
-            }
+            // Load the 'user' relation
+            $guru->load('user');
 
             return response()->json(['message' => 'Data Berhasil Ditambahkan'], 201);
         } catch (\Throwable $e) {
-            if ($tempImagePath) {
-                Storage::delete($tempImagePath);
-            }
+
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
     }
@@ -76,6 +72,10 @@ class GuruController extends Controller
                 ['name' => 'Guru'],
                 ['name' => 'Show'],
             ];
+
+            // // Load the 'user' relation
+            $guru->load('user');
+
             return view('back.guru.guru-show', compact('guru'), [
                 'title' => 'Tabel Guru',
                 'breadcrumbs' => $breadcrumbs,
@@ -101,16 +101,14 @@ class GuruController extends Controller
     {
         try {
             $data = $request->validated();
+            $guru = Guru::where('slug', $slug)->firstOrFail();
 
             if ($request->file('image')) {
-                if ($request->oldImage) {
-                    Storage::delete($request->oldImage);
-                }
-                $data['image'] = $request->file('image')->store('guru-images');
+                $data['image'] = $this->imageService->uploadImage($data, 'guru-images', $guru->image);
             }
 
-            // Buat guru
-            Guru::where('slug', $slug)->update($data);
+            // Update guru
+            $guru->update($data);
 
             return response()->json(['message' => 'Data Berhasil Diubah'], 201);
         } catch (\Throwable $e) {
@@ -127,7 +125,7 @@ class GuruController extends Controller
             // Cek jika ada gambar yang terkait dengan data
             if ($guru->image) {
                 // Hapus gambar dari penyimpanan
-                Storage::delete($guru->image);
+                Storage::delete(['guru-images/' . $guru->image, 'guru-images/thumbnail/' . $guru->image]);
             }
 
             // Hapus data dari database
@@ -149,7 +147,7 @@ class GuruController extends Controller
 
             foreach ($gurus as $guru) {
                 if ($guru->image) {
-                    Storage::delete($guru->image);
+                    Storage::delete(['guru-images/' . $guru->image, 'guru-images/thumbnail/' . $guru->image]);
                 }
             }
 

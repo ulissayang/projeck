@@ -91,7 +91,7 @@ class FasilitasController extends Controller
      */
     public function edit(string $slug)
     {
-        $fasilitas = fasilitas::where('slug', $slug)->firstOrFail();
+        $fasilitas = Fasilitas::where('slug', $slug)->firstOrFail();
         return response()->json(['data' => $fasilitas]);
     }
 
@@ -111,7 +111,7 @@ class FasilitasController extends Controller
             }
 
             // Buat fasilitas
-            $request->user()->fasilitas()->update($data);
+            Fasilitas::where('slug', $slug)->update($data);
 
             return response()->json(['message' => 'Data Berhasil Diubah'], 201);
         } catch (\Throwable $e) {

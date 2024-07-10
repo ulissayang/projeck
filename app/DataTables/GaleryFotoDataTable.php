@@ -22,7 +22,7 @@ class GaleryFotoDataTable extends DataTable
             ->addColumn('checkbox', function ($data) {
                 return '<input type="checkbox" class="bulk-checkbox" value="' . $data->slug . '">';
             })
-            ->addColumn('action', function ($data) {
+            ->addColumn('aksi', function ($data) {
                 return sprintf(
                     '<a href="%s" class="btn btn-sm btn-success" title="Lihat">
                         <i class="bi bi-eye"></i>
@@ -40,7 +40,7 @@ class GaleryFotoDataTable extends DataTable
                     $data->slug  // slug attribute for delete button
                 );
             })
-            ->rawColumns(['checkbox', 'action'])
+            ->rawColumns(['checkbox', 'aksi'])
             ->addIndexColumn()
             ->setRowId('id');
     }
@@ -105,9 +105,8 @@ class GaleryFotoDataTable extends DataTable
                     }
                 }),
             Column::make('judul')->title('Judul'),
-            Column::make('created_at')->title('Created At'),
-            Column::make('updated_at')->title('Updated At'),
-            Column::computed('action')
+            Column::make('deskripsi')->title('Deskripsi'),
+            Column::computed('aksi')
                 ->exportable(false)
                 ->printable(false)
                 ->width(120)

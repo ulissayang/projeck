@@ -81,26 +81,36 @@
           <input type="hidden" name="oldImage" value="">
 
           <div class="mb-3">
-            <label for="title" class="form-label">Title<span class="text-danger">*</span></label>
+            <label for="title" class="form-label">Prestasi<span class="text-danger">*</span></label>
             <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}" required
               autofocus>
           </div>
 
           <div class="mb-3">
-            <label class="form-label" for="description">Description<span class="text-danger">*</span></label>
+            <label for="nama" class="form-label">Nama</label>
+            <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama') }}" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="description">Deskripsi<span class="text-danger">*</span></label>
             <textarea class="form-control description" id="summernote" name="description" rows="5"
               value="{{ old('description') }}">{{ old('description') }}</textarea>
           </div>
 
+          <div class="row">
+            <div class="mb-3 col-6">
+              <label for="date" class="form-label">Tanggal<span class="text-danger">*</span></label>
+              <input type="date" class="form-control" id="date" name="date" value="{{ old('date') }}" required>
+            </div>
 
-          <div class="mb-3">
-            <label for="date" class="form-label">Date<span class="text-danger">*</span></label>
-            <input type="date" class="form-control" id="date" name="date" value="{{ old('date') }}" required>
+            <div class="mb-3 col-6">
+              <label for="jenis" class="form-label">Jenis<span class="text-danger">*</span></label>
+              <input type="jenis" class="form-control" id="jenis" name="jenis" value="{{ old('jenis') }}" required>
+            </div>
           </div>
 
-
           <div class="mb-3">
-            <label for="image" class="form-label">Image</label>
+            <label for="image" class="form-label">Foto</label>
 
             <img id="image-preview" class="img-preview img-fluid col-sm-2 py-2 d-block" style="display: none;">
 

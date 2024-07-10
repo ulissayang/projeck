@@ -4,12 +4,9 @@ use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', Controllers\Guest\HomeController::class)->name('home');
-
 // Route::get('/dashboard', function () {
 //     return view('pages-auth.dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
-
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', Controllers\Back\DashboardController::class)->middleware('verified')->name('dashboard');
@@ -23,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/kegiatan/{kegiatan:slug}', [Controllers\Back\KegiatanController::class, 'show'])->name('kegiatan.show');
     Route::get('/kegiatan/{kegiatan:slug}/edit', [Controllers\Back\KegiatanController::class, 'edit'])->name('kegiatan.edit');
     Route::post('/kegiatan/bulk-delete',  [Controllers\Back\KegiatanController::class, 'bulkDelete'])->name('kegiatan.bulk_delete');
+
 
     Route::resource('/agenda', Controllers\Back\AgendaController::class)->except(['show', 'edit', 'destroy', 'create']);
     Route::delete('/agenda/{agenda:slug}', [Controllers\Back\AgendaController::class, 'destroy'])->name('agenda.destroy');
@@ -77,4 +75,4 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
-// require __DIR__ . '/guest.php';
+require __DIR__ . '/guest.php';

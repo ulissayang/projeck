@@ -8,14 +8,17 @@
       <div class="row">
         <div class="col-lg-12">
           <x-back.show-data :data="[
-                        'title' => $prestasi->title,
-                        'description' => $prestasi->description,
-                        'author' => $prestasi->user->name,
-                        'image' => $prestasi->image,
-                        'date' => $prestasi->date,
+                        'prestasi' => $prestasi->title,
+                        'nama' => $prestasi->nama,
+                        'deskripsi' => $prestasi->description,
+                        'penulis' => $prestasi->user->name,
+                        'foto' => $prestasi->image,
+                        'tanggal' => $prestasi->date,
+                        'jenis' => $prestasi->jenis,
                         'created_at' => $prestasi->created_at,
                         'updated_at' => $prestasi->updated_at,
-                    ]" :backRoute="route('prestasi.index')" />
+                    ]" :backRoute="route('prestasi.index')"
+            :imagePathPrefix="'storage/' . $prestasi->imagePathPrefix" />
         </div>
       </div>
     </section>

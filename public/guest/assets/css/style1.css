@@ -732,30 +732,27 @@ a {
 }
 
 /*--------------------------------------------------------------
-# Clients Section
+# Agenda Home Section
 --------------------------------------------------------------*/
-.clients {
+.agenda-home {
     padding: 40px 0;
+    background-color: var(--color-primary);
 }
 
-.clients .swiper {
-    padding: 10px 0;
+.agenda-slider .card-text {
+    cursor: pointer;
 }
 
-.clients .swiper-slide img {
-    transition: 0.3s;
+.agenda-slider .card-text:hover {
+    color: var(--color-primary);
 }
 
-.clients .swiper-slide img:hover {
-    transform: scale(1.1);
-}
-
-.clients .swiper-pagination {
+.agenda-home .swiper-pagination {
     margin-top: 20px;
     position: relative;
 }
 
-.clients .swiper-pagination .swiper-pagination-bullet {
+.agenda-home .swiper-pagination .swiper-pagination-bullet {
     width: 12px;
     height: 12px;
     background-color: #fff;
@@ -763,45 +760,8 @@ a {
     background-color: #ddd;
 }
 
-.clients .swiper-pagination .swiper-pagination-bullet-active {
-    background-color: var(--color-primary);
-}
-
-/*--------------------------------------------------------------
-# Stats Counter Section
---------------------------------------------------------------*/
-.stats-counter {
-    padding: 40px 0;
-}
-
-.stats-counter .stats-item {
-    padding: 20px 0;
-    border-bottom: 1px solid #e4e4e4;
-}
-
-.stats-counter .stats-item .purecounter {
-    min-width: 90px;
-    padding-right: 15px;
-}
-
-.stats-counter .stats-item i {
-    font-size: 44px;
-    line-height: 0;
-    margin-right: 15px;
-}
-
-.stats-counter .stats-item span {
-    font-size: 40px;
-    display: block;
-    font-weight: 700;
-    color: var(--color-primary);
-    line-height: 40px;
-}
-
-.stats-counter .stats-item p {
-    margin: 0;
-    font-family: var(--font-primary);
-    font-size: 14px;
+.agenda-home .swiper-pagination .swiper-pagination-bullet-active {
+    background-color: var(--color-secondary);
 }
 
 /*--------------------------------------------------------------
@@ -936,49 +896,28 @@ a {
 }
 
 .services .service-item {
-    padding: 40px;
     background: #fff;
-    height: 100%;
     border-radius: 10px;
+    overflow: hidden;
 }
 
-.services .service-item .icon {
-    width: 48px;
-    height: 48px;
-    position: relative;
-    margin-bottom: 50px;
+.services .service-item .image img {
+    height: 300px;
+    object-fit: cover;
+    overflow: hidden;
 }
 
-.services .service-item .icon i {
-    color: var(--color-default);
-    font-size: 56px;
-    transition: ease-in-out 0.3s;
-    z-index: 2;
-    position: relative;
-}
-
-.services .service-item .icon:before {
-    position: absolute;
-    content: "";
-    height: 100%;
-    width: 100%;
-    background: #eeeeee;
-    border-radius: 50px;
-    z-index: 1;
-    top: 10px;
-    right: -20px;
-    transition: 0.3s;
+.services .service-item .content {
+    padding: 25px;
 }
 
 .services .service-item h3 {
     color: var(--color-default);
     font-weight: 700;
-    margin: 0 0 20px 0;
     padding-bottom: 8px;
-    font-size: 22px;
+    font-size: 20px;
     position: relative;
     display: inline-block;
-    border-bottom: 4px solid #eeeeee;
     transition: 0.3s;
 }
 
@@ -994,12 +933,19 @@ a {
     color: var(--color-primary);
 }
 
-.services .service-item:hover .icon:before {
-    background: #00b6a1;
+.services .service-item:hover h3 {
+    color: var(--color-primary);
 }
 
-.services .service-item:hover h3 {
-    border-color: var(--color-primary);
+.image .date-card {
+    bottom: 4px; /* Posisi dari bawah */
+    left: 4px; /* Posisi dari kiri */
+    z-index: 10; /* Pastikan berada di atas gambar */
+    margin: 8px; /* Margin opsional */
+    background-color: #008374bd; /* Background transparan */
+    padding: 8px; /* Padding dalam date card */
+    border-radius: 5px; /* Border radius untuk membulatkan sudut */
+    color: gold; /* Warna teks */
 }
 
 /*--------------------------------------------------------------
@@ -2053,7 +1999,6 @@ a {
 .blog .posts-list article {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     padding: 30px;
-    height: 100%;
     border-radius: 10px;
     overflow: hidden;
 }
@@ -2062,6 +2007,7 @@ a {
     max-height: 240px;
     margin: -30px -30px 15px -30px;
     overflow: hidden;
+    object-fit: cover;
 }
 
 .blog .posts-list .post-category {
@@ -2080,6 +2026,7 @@ a {
 .blog .posts-list .title a {
     color: var(--color-default);
     transition: 0.3s;
+    cursor: pointer;
 }
 
 .blog .posts-list .title a:hover {

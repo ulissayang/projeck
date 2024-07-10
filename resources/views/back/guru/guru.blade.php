@@ -1,84 +1,86 @@
 <x-app-layout>
-  @push('link')
-  <link href="{{ asset('assets/vendor/summernote/dist/summernote-lite.css') }}" rel="stylesheet">
-  <link href="DataTables/datatables.min.css" rel="stylesheet">
-  @endpush
+    @push('link')
+    <link href="{{ asset('assets/vendor/summernote/dist/summernote-lite.css') }}" rel="stylesheet">
+    <link href="DataTables/datatables.min.css" rel="stylesheet">
+    @endpush
 
-  @slot('title', 'Guru')
-  <main id="main" class="main">
+    @slot('title', 'Guru')
+    <main id="main" class="main">
 
-    <x-back.breadcrumb :title="$title" :breadcrumbs="$breadcrumbs" />
+        <x-back.breadcrumb :title="$title" :breadcrumbs="$breadcrumbs" />
 
-    <section class="section">
-      <div class="row">
-        <div class="col-lg-12">
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
 
-          <div class="card">
-            <div class="card-body overflow-x-auto">
-              <div class="card-title">
-                <x-button onclick="showModal()" class="btn-sm" title="Tambah Data">
-                  <i class="bi bi-patch-plus"></i> Tambah Data
-                </x-button>
-              </div>
+                    <div class="card">
+                        <div class="card-body overflow-x-auto">
+                            <div class="card-title">
+                                <x-button onclick="showModal()" class="btn-sm" title="Tambah Data">
+                                    <i class="bi bi-patch-plus"></i> Tambah Data
+                                </x-button>
+                            </div>
 
-              <!-- Tombol Hapus Terpilih -->
-              <form id="bulk-delete-form" action="#" method="POST" data-url="{{ route('guru.bulk_delete') }}"
-                style="display: none;">
-                @csrf
-                @method('DELETE')
-                <input type="hidden" id="bulk-delete-ids" name="ids">
-                <x-button id="delete-selected" class="btn-sm btn-danger mb-3"><i class="bi bi-trash"></i>Hapus
-                  Terpilih
-                </x-button>
-              </form>
+                            <!-- Tombol Hapus Terpilih -->
+                            <form id="bulk-delete-form" action="#" method="POST"
+                                data-url="{{ route('guru.bulk_delete') }}" style="display: none;">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" id="bulk-delete-ids" name="ids">
+                                <x-button id="delete-selected" class="btn-sm btn-danger mb-3"><i
+                                        class="bi bi-trash"></i>Hapus
+                                    Terpilih
+                                </x-button>
+                            </form>
 
-              {{-- data tabel start --}}
-              {{ $dataTable->table(['class' => 'table table-striped table-hover', 'style' => 'width:100%']) }}
-              {{-- data tabel end --}}
+                            {{-- data tabel start --}}
+                            {{ $dataTable->table(['class' => 'table table-striped table-hover', 'style' =>
+                            'width:100%']) }}
+                            {{-- data tabel end --}}
 
+                        </div>
+                    </div>
+
+                </div>
             </div>
-          </div>
 
-        </div>
-      </div>
+            @include('back.guru.guru-form')
 
-      @include('back.guru.guru-form')
+        </section>
+    </main><!-- End #main -->
 
-    </section>
-  </main><!-- End #main -->
+    @push('scripts')
 
-  @push('scripts')
+    <!-- Jquery 3 -->
+    <script type="text/javascript" src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
 
-  <!-- Jquery 3 -->
-  <script type="text/javascript" src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
+    <!-- Bootstrap 5 -->
+    <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.js') }}"></script>
 
-  <!-- Bootstrap 5 -->
-  <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.js') }}"></script>
+    <!-- Main js -->
+    <script type="text/javascript" src="{{ asset('assets/js/main.js') }}"></script>
 
-  <!-- Main js -->
-  <script type="text/javascript" src="{{ asset('assets/js/main.js') }}"></script>
+    <!-- Laravel Javascript Validation -->
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+    {!! JsValidator::formRequest('App\Http\Requests\guruRequest', '#modalForm') !!}
 
-  <!-- Laravel Javascript Validation -->
-  <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-  {!! JsValidator::formRequest('App\Http\Requests\guruRequest', '#modalForm') !!}
+    <!-- Sweet Alert2 -->
+    <script type="text/javascript" src="{{ asset('assets/vendor/sweetalert/sweetalert2.js') }}"></script>
 
-  <!-- Sweet Alert2 -->
-  <script type="text/javascript" src="{{ asset('assets/vendor/sweetalert/sweetalert2.js') }}"></script>
+    <!-- Summernote Editor -->
+    <script type="text/javascript" src="{{ asset('assets/vendor/summernote/dist/summernote-lite.js') }}"></script>
 
-  <!-- Summernote Editor -->
-  <script type="text/javascript" src="{{ asset('assets/vendor/summernote/dist/summernote-lite.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/summernote/dist/lang/summernote-id-ID.min.js') }}">
+    </script>
 
-  <script type="text/javascript" src="{{ asset('assets/vendor/summernote/dist/lang/summernote-id-ID.min.js') }}">
-  </script>
-
-  <!-- Datatables -->
-  <script type="text/javascript" src="{{ asset('DataTables/datatables.min.js') }}"> </script>
+    <!-- Datatables -->
+    <script type="text/javascript" src="{{ asset('DataTables/datatables.min.js') }}"> </script>
 
 
-  {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
 
-  <script>
-    @if (session('success'))
+    <script>
+        @if (session('success'))
             window.sessionStorage.setItem("successMessage", "{{ session('success') }}");
         @endif
         
@@ -175,7 +177,7 @@
 
                     // Tampilkan gambar yang ada
                 if (result.image) {
-                    $('#image-preview').attr('src', '/storage/' + result.image).show();
+                    $('#image-preview').attr('src', '/storage/guru-images/' + result.image).show();
                     $('input[name="oldImage"]').val(result.image);
                 } else {
                     $('#image-preview').hide();
@@ -244,8 +246,8 @@
         }
 
 
-  </script>
+    </script>
 
-  @endpush
+    @endpush
 
 </x-app-layout>

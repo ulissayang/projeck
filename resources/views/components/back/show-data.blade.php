@@ -22,20 +22,18 @@
                     @else
                     Segera
                     @endif
-                    @elseif ($key === 'image' && $value)
+                    @elseif ($key === 'foto' && $value)
                     @php
                     $images = json_decode($value, true);
                     @endphp
                     @if (!empty($images))
                     <div class="gallery-images">
                         @foreach ($images as $image)
-                        <img src="{{ asset('storage/' . $image) }}" alt="Image" class="img-fluid col-sm-2">
+                        <img src="{{ asset($imagePathPrefix . $image) }}" alt="Image" class="img-fluid col-sm-2" loading="lazy">
                         @endforeach
                     </div>
-                    @elseif ($key === 'image' && $value)
-                    <img src="{{ asset('storage/' . $value) }}" alt="Image" class="img-fluid col-sm-2">
                     @else
-                    Tidak ada gambar
+                    <img src="{{ asset($imagePathPrefix . $value) }}" alt="Image" class="img-fluid col-sm-2" loading="lazy">
                     @endif
                     @elseif ($key === 'date_time')
                     {{ \Carbon\Carbon::parse($value)->translatedFormat('l, d F Y') }} pukul {{
@@ -53,8 +51,8 @@
     <div class="col px-3 py-2 bg-secondary-subtle">
         <div class="float-end text-secondary">
             <span>Updated at: {{ \Carbon\Carbon::parse($data['updated_at'])->locale('id')->diffForHumans() }},</span>
-            <span>Created at: {{ \Carbon\Carbon::parse($data['created_at'])->locale('id')->isoFormat('dddd, D MMMM YYYY
-                ') }}</span>
+            <span>Created at: {{ \Carbon\Carbon::parse($data['created_at'])->locale('id')->isoFormat('dddd, D MMMM
+                YYYY') }}</span>
         </div>
     </div>
 </div>

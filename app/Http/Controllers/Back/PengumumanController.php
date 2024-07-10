@@ -79,12 +79,12 @@ class PengumumanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PengumumanRequest $request)
+    public function update(PengumumanRequest $request, string $slug)
     {
         try {
             $data = $request->validated();
 
-            $request->user()->pengumuman()->update($data);
+            Pengumuman::where('slug', $slug)->update($data);
 
             return response()->json(['message' => 'Data Berhasil Diubah'], 201);
         } catch (Exception $e) {

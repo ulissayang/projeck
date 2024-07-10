@@ -24,9 +24,9 @@
           </div>
 
           <div class="mb-3">
-            <label for="image" class="form-label">Image</label>
+            <label for="image" class="form-label">Foto</label>
 
-            <img id="image-preview" class="img-preview img-fluid col-sm-2 py-2 d-block" style="display: none;">
+            <img id="image-preview" class="img-preview img-fluid col-sm-2 py-2 d-block" loading="lazy" style="display: none;">
 
             <input type="file" class="form-control" name="image" id="image" accept="image/*" onchange="previewImage()">
           </div>

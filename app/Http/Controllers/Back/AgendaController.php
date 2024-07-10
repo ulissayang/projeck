@@ -105,14 +105,14 @@ class AgendaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AgendaRequest $request)
+    public function update(AgendaRequest $request, string $slug): JsonResponse
     {
         try {
             $data = $request->validated();
 
             $data['excerpt'] = Str::limit($request->description, 150);
 
-            $request->user()->agenda()->update($data);
+            Agenda::where('slug', $slug)->update($data);;
 
             return response()->json(['message' => 'Data Berhasil Diubah'], 201);
         } catch (Exception $e) {

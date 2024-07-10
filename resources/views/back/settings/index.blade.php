@@ -10,8 +10,8 @@
           <div class="card p-4">
             <div class="row">
               {{-- form data pengaturan --}}
-              <form action="{{ route('pengaturan.update', $pengaturan->slug) }}" method="POST"
-                enctype="multipart/form-data">
+              <form action="{{ route('pengaturan.update', $pengaturan->id) }}" method="POST"
+                enctype="multipart/form-data" id="modalForm">
                 @method('PUT')
                 @csrf
                 <div class="row">
@@ -114,6 +114,31 @@
                     </div>
                   </div>
 
+                  <div class="col-md-6">
+                    <div class="mb-3 row align-items-center">
+                      <div class="col-4">
+                        <label for="map" class="form-label">Map</label>
+                      </div>
+                      <div class="col-8">
+                        <textarea class="form-control" id="map" name="map" cols="30"
+                          rows="3">{{ $pengaturan->map }}</textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="mb-3 row align-items-center">
+                      <div class="col-4">
+                        <label for="akreditas" class="form-label">Akreditas</label>
+                      </div>
+                      <div class="col-8">
+                        <input type="text" class="form-control" id="akreditas" name="akreditas"
+                          value="{{ $pengaturan->akreditas }}">
+                      </div>
+                    </div>
+                  </div>
+
+
                   <div class="mb-3">
                     <label for="logo" class="form-label">Logo</label>
                     <img id="logo-preview" class="img-preview img-fluid col-sm-2 py-2 d-block"
@@ -168,11 +193,20 @@
   </main>
 
   @push('scripts')
+  <!-- Jquery 3 -->
   <script type="text/javascript" src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
+
+  <!-- Bootstrap 5 -->
   <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.js') }}"></script>
+
+  <!-- Main js -->
   <script type="text/javascript" src="{{ asset('assets/js/main.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
-  {!! JsValidator::formRequest('App\Http\Requests\PengaturanRequest', 'form') !!}
+
+  <!-- Laravel Javascript Validation -->
+  <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+  {!! JsValidator::formRequest('App\Http\Requests\PengaturanRequest', '#modalForm') !!}
+
+  <!-- Sweet Alert2 -->
   <script type="text/javascript" src="{{ asset('assets/vendor/sweetalert/sweetalert2.js') }}"></script>
 
   <script>

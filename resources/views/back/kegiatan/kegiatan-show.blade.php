@@ -8,15 +8,15 @@
       <div class="row">
         <div class="col-lg-12">
           <x-back.show-data :data="[
-                          'title' => $kegiatan->title,
-                        'description' => $kegiatan->description,
-                        'author' => $kegiatan->user->name,
-                        'location' => $kegiatan->location,
-                        'image' => $kegiatan->image,
-                        'date_time' => $kegiatan->date_time,
+                        'kegiatan' => $kegiatan->title,
+                        'deskripsi' => $kegiatan->description,
+                        'penulis' => $kegiatan->user->name,
+                        'lokasi' => $kegiatan->location,
+                        'foto' => $kegiatan->image,
+                        'Waktu & Tanggal' => \Carbon\Carbon::parse($kegiatan->date_time)->locale('id')->isoFormat('dddd, D MMMM YYYY HH:mm'),
                         'created_at' => $kegiatan->created_at,
                         'updated_at' => $kegiatan->updated_at,
-                    ]" :backRoute="route('kegiatan.index')" />
+                    ]" :backRoute="route('kegiatan.index')" :imagePathPrefix="'storage/' . $kegiatan->imagePathPrefix"/>
         </div>
       </div>
     </section>

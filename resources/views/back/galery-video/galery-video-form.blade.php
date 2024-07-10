@@ -5,7 +5,7 @@
       <div class="ms-auto">
         <button type="button" class="btn-close fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <h1 class="modal-nama fs-5 text-center fw-bold" id="staticBackdropLabel"></h1>
+      <h1 class="modal-title fs-5 text-center fw-bold" id="staticBackdropLabel"></h1>
       <div class="modal-body">
         <!-- Form upketerangan data  -->
         <form id="modalForm">
@@ -14,7 +14,7 @@
           <input type="hidden" name="oldImage" value="">
 
           <div class="mb-3">
-            <label for="judul" class="form-label">Judul<span class="text-danger">*</span></label>
+            <label for="judul" class="form-label">Tautan<span class="text-danger">*</span></label>
             <input type="text" class="form-control" id="judul" name="judul" value="{{ old('judul') }}" required autofocus>
           </div>
 

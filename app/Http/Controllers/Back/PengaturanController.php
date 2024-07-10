@@ -17,6 +17,7 @@ class PengaturanController extends Controller
             $breadcrumbs = [
                 ['name' => 'Pengaturan'],
             ];
+
             return view('back.settings.index', [
                 'title' => 'Pengaturan',
                 'breadcrumbs' => $breadcrumbs,
@@ -41,6 +42,8 @@ class PengaturanController extends Controller
             $pengaturan->youtube = $validated['youtube'];
             $pengaturan->facebook = $validated['facebook'];
             $pengaturan->twitter = $validated['twitter'];
+            $pengaturan->map = $validated['map'];
+            $pengaturan->akreditas = $validated['akreditas'];
 
             // Store images and delete old ones if necessary
             $this->storeImage($request, $pengaturan, 'logo', 'logo-images');
@@ -61,10 +64,12 @@ class PengaturanController extends Controller
         if ($request->hasFile($field)) {
             // Delete the old image if it exists
             if ($pengaturan->$field) {
-                Storage::disk('public')->delete("{$path}/{$pengaturan->$field}");
+                Storage::disk('public')->delete($pengaturan->$field);
             }
+
             // Store the new image and save the path
-            $pengaturan->$field = $request->file($field)->store($path, 'public');
+            $imagePath = $request->file($field)->store($path, 'public');
+            $pengaturan->$field = $imagePath;
         }
     }
 }

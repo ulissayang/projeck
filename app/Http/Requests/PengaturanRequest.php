@@ -28,6 +28,8 @@ class PengaturanRequest extends FormRequest
             'alamat' => 'required|string|max:255',
             'jam_kerja' => 'required|string|max:255',
             'ig' => 'nullable|string|max:255',
+            'map' => 'required|string',
+            'akreditas' => 'required|string',
             'youtube' => 'nullable|string|max:255',
             'facebook' => 'nullable|string|max:255',
             'twitter' => 'nullable|string|max:255',

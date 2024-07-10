@@ -117,11 +117,11 @@
 
             const formData = new FormData(this);
             let url, method;
-            url = '{{ route("fasilitas.store") }}';
+            url = 'fasilitas';
             method = 'POST';
 
             if (save_method === 'update') {
-                url = '{{ url("fasilitas") }}/' + $('#slug').val();
+                url = 'fasilitas/' + $('#slug').val();
                 formData.append('_method', 'PUT');
             }
 
@@ -168,7 +168,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "GET",
-                url: '{{ url("fasilitas") }}/' + slug + '/edit',
+                url: '{{ route("fasilitas.edit", ":slug") }}'.replace(':slug', slug),
                 success: function(response) {
                     let result = response.data;
                     $('#nama').val(result.nama);
@@ -219,7 +219,7 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         type: "DELETE",
-                        url: '{{ url("fasilitas") }}/' + slug,
+                        url: '{{ route("fasilitas.destroy", ":slug") }}'.replace(':slug', slug),
                         dataType: 'json',
                         success: function(response) {
                             $('#dataModal').modal('hide');

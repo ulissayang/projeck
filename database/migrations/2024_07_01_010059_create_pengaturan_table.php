@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('banner');
             $table->string('background');
             $table->string('ig')->nullable();
+            $table->string('map');
+            $table->string('akreditas');
             $table->string('youtube')->nullable();
             $table->string('facebook')->nullable();
             $table->string('twitter')->nullable();

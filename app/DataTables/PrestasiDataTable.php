@@ -22,7 +22,7 @@ class PrestasiDataTable extends DataTable
             ->addColumn('checkbox', function ($data) {
                 return '<input type="checkbox" class="bulk-checkbox" value="' . $data->slug . '">';
             })
-            ->addColumn('action', function ($data) {
+            ->addColumn('aksi', function ($data) {
                 return sprintf(
                     '<a href="%s" class="btn btn-sm btn-success" title="Lihat">
                         <i class="bi bi-eye"></i>
@@ -35,7 +35,7 @@ class PrestasiDataTable extends DataTable
                     <button class="btn btn-sm btn-danger" onclick="confirmDelete(this)" data-slug="%s" title="Hapus">
                     <i class="bi bi-trash"></i>
                 </button>
-                    <form id="delete-form-%d" method="POST" action="%s" style="display: none;">
+                    <form id="delete-form-%d" method="POST" aksi="%s" style="display: none;">
                         %s
                         %s
                     </form>',
@@ -49,7 +49,7 @@ class PrestasiDataTable extends DataTable
                     csrf_field()
                 );
             })
-            ->rawColumns(['checkbox', 'action'])
+            ->rawColumns(['checkbox', 'aksi'])
             ->addIndexColumn()
             ->setRowId('id');
     }
@@ -113,10 +113,10 @@ class PrestasiDataTable extends DataTable
                         return '';
                     }
                 }),
-            Column::make('title')->title('Title'),
-            Column::make('description')->title('Description'),
-            Column::make('date')->title('Date'),
-            Column::computed('action')
+            Column::make('title')->title('Prestasi'),
+            Column::make('description')->title('Deskripsi'),
+            Column::make('date')->title('Tanggal'),
+            Column::computed('aksi')
                 ->exportable(false)
                 ->printable(false)
                 ->width(120)

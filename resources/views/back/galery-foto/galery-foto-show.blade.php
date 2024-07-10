@@ -10,11 +10,11 @@
           <x-back.show-data :data="[
                         'judul' => $galery_foto->judul,
                         'deskripsi' => $galery_foto->deskripsi,
-                        'author' => $galery_foto->user->name,
-                        'image' => $galery_foto->image,
+                        'penulis' => $galery_foto->user->name,
+                        'foto' => $galery_foto->image,
                         'created_at' => $galery_foto->created_at,
                         'updated_at' => $galery_foto->updated_at,
-                    ]" :backRoute="route('galery-foto.index')" />
+                    ]" :backRoute="route('galery-foto.index')" :imagePathPrefix="'storage/' . $galery_foto->imagePathPrefix" />
         </div>
       </div>
     </section>

@@ -5,7 +5,7 @@
       <div class="ms-auto">
         <button type="button" class="btn-close fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <h1 class="modal-nama fs-5 text-center fw-bold" id="staticBackdropLabel"></h1>
+      <h1 class="modal-title fs-5 text-center fw-bold" id="staticBackdropLabel"></h1>
       <div class="modal-body">
         <!-- Form upketerangan data  -->
         <form id="modalForm">
@@ -24,11 +24,8 @@
               value="{{ old('deskripsi') }}">{{ old('deskripsi') }}</textarea>
           </div>
 
-
-
-
           <div class="mb-3">
-            <label for="image" class="form-label">Image</label>
+            <label for="image" class="form-label">Foto</label>
 
             <img id="image-preview" class="img-preview img-fluid col-sm-2 py-2 d-block" style="display: none;">
 

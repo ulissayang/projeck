@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     /**
      * Clients Slider
      */
-    new Swiper(".clients-slider", {
+    new Swiper(".agenda-slider", {
         speed: 400,
         loop: true,
         autoplay: {
@@ -174,21 +174,17 @@ document.addEventListener("DOMContentLoaded", () => {
             clickable: true,
         },
         breakpoints: {
-            320: {
+            0: {
+                slidesPerView: 1,
+                spaceBetween: 5,
+            },
+            768: {
                 slidesPerView: 2,
-                spaceBetween: 40,
+                spaceBetween: 5,
             },
-            480: {
+            1024: {
                 slidesPerView: 3,
-                spaceBetween: 60,
-            },
-            640: {
-                slidesPerView: 4,
-                spaceBetween: 80,
-            },
-            992: {
-                slidesPerView: 6,
-                spaceBetween: 120,
+                spaceBetween: 5,
             },
         },
     });
@@ -236,9 +232,13 @@ document.addEventListener("DOMContentLoaded", () => {
             prevEl: ".swiper-button-prev",
         },
         breakpoints: {
-            320: {
+            0: {
                 slidesPerView: 1,
-                spaceBetween: 40,
+                spaceBetween: 5,
+            },
+            320: {
+                slidesPerView: 2,
+                spaceBetween: 5,
             },
 
             1200: {

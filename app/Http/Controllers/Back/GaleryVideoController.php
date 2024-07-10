@@ -81,12 +81,12 @@ class GaleryVideoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(GaleryVideoRequest $request)
+    public function update(GaleryVideoRequest $request, string $slug)
     {
         try {
             $data = $request->validated();
 
-            $request->user()->galery_video()->update($data);
+            GaleryVideo::where('slug', $slug)->update($data);
 
             return response()->json(['message' => 'Data Berhasil Diubah'], 201);
         } catch (Exception $e) {

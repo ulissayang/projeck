@@ -140,13 +140,13 @@
           <input type="hidden" name="slug" id="slug">
 
           <div class="mb-3">
-            <label for="title" class="form-label">Title<span class="text-danger">*</span></label>
+            <label for="title" class="form-label">Agenda<span class="text-danger">*</span></label>
             <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}" required
               autofocus>
           </div>
 
           <div class="mb-3">
-            <label class="form-label" for="description">Description<span class="text-danger">*</span></label>
+            <label class="form-label" for="description">Deskripsi<span class="text-danger">*</span></label>
             <textarea class="form-control description" id="summernote" name="description" rows="5"
               value="{{ old('description') }}">{{ old('description') }}</textarea>
           </div>
@@ -154,7 +154,7 @@
           <div class="row">
             <div class="col-md-6">
               <div class="mb-3">
-                <label for="date_time" class="form-label">Date & Time<span class="text-danger">*</span></label>
+                <label for="date_time" class="form-label">Waktu & Tanggal<span class="text-danger">*</span></label>
                 <input type="datetime-local" class="form-control" id="date_time" name="date_time"
                   value="{{ old('date_time') }}" required>
               </div>
@@ -162,7 +162,7 @@
 
             <div class="col-md-6">
               <div class="mb-3">
-                <label for="location" class="form-label">Location<span class="text-danger">*</span></label>
+                <label for="location" class="form-label">Lokasi<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="location" name="location" value="{{ old('location') }}"
                   required>
               </div>

@@ -1,6 +1,13 @@
 <x-guest.app-layout>
   <!-- ======= Hero Section ======= -->
-  <x-guest.hero-home/>
+  <x-guest.hero-home>
+    <x-slot name="title">
+      {{ $nama_web }}
+    </x-slot>
+    <x-slot name="banner">
+      {{ $banner }}
+    </x-slot>
+  </x-guest.hero-home>
   <!-- End Hero Section -->
 
   {{-- Main --}}
@@ -11,56 +18,40 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-header">
-          <h2>Sekolah Dasar Negeri 260 Maluku Tengah</h2>
-          <p>Aperiam dolorum et et wuia molestias qui eveniet numquam nihil porro incidunt dolores placeat
-            sunt id nobis omnis tiledo stran delop</p>
+          <h2>Sejarah dan Informasi Sekolah</h2>
+          <p>SD Negeri 260 Maluku Tengah merupakan sekolah dasar yang berlokasi di Desa Haria, Kecamatan Saparua,
+            Kabupaten Maluku Tengah, Provinsi Maluku. Didirikan pada tanggal 2 Oktober 1970, sekolah ini berstatus
+            negeri dan dimiliki oleh Pemerintah Daerah.</p>
         </div>
 
         <div class="row gy-4">
           <div class="col-lg-6">
-            <h3>Voluptatem dignissimos provident quasi corporis</h3>
+
             <img src="{{ asset('guest/assets/img/banner-sekolah.jpeg') }}" class="img-fluid rounded-4 mb-4" alt="">
-            <p>Ut fugiat ut sunt quia veniam. Voluptate perferendis perspiciatis quod nisi et. Placeat
-              debitis quia recusandae odit et consequatur voluptatem. Dignissimos pariatur consectetur
-              fugiat voluptas ea.</p>
-            <p>Temporibus nihil enim deserunt sed ea. Provident sit expedita aut cupiditate nihil vitae quo
-              officia vel. Blanditiis eligendi possimus et in cum. Quidem eos ut sint rem veniam qui. Ut
-              ut repellendus nobis tempore doloribus debitis explicabo similique sit. Accusantium sed ut
-              omnis beatae neque deleniti repellendus.</p>
+
           </div>
           <div class="col-lg-6">
             <div class="content ps-0 ps-lg-5">
+              <p>Sekolah Dasar Negeri 260 Maluku Tengah, yang berlokasi di Desa Haria, Kecamatan Saparua, Kabupaten
+                Maluku
+                Tengah, Provinsi Maluku, didirikan berdasarkan SK Pendirian pada tanggal 2 Oktober 1970. Sekolah ini
+                memiliki NPSN 60100674 dan berstatus negeri, dimiliki oleh Pemerintah Daerah.</p>
               <p class="fst-italic">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore
-                magna aliqua.
+                Dengan status kepemilikan oleh Pemerintah Daerah, sekolah ini memperoleh izin operasional melalui SK
+                Izin Operasional nomor 421-112 Tahun 2021 yang diterbitkan pada 20 Januari 2021.
               </p>
               <ul>
-                <li><i class="bi bi-check-circle-fill"></i> Ullamco laboris nisi ut aliquip ex ea
-                  commodo consequat.</li>
-                <li><i class="bi bi-check-circle-fill"></i> Duis aute irure dolor in reprehenderit in
-                  voluptate velit.</li>
-                <li><i class="bi bi-check-circle-fill"></i> Ullamco laboris nisi ut aliquip ex ea
-                  commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta
-                  storacalaperda mastiro dolore eu fugiat nulla pariatur.</li>
+                <li><i class="bi bi-check-circle-fill"></i> Alamat: Desa Haria, RT/RW: 0/0, Kode Pos: 97592</li>
+                <li><i class="bi bi-check-circle-fill"></i> Kelurahan: Haria, Kecamatan: Saparua</li>
+                <li><i class="bi bi-check-circle-fill"></i> Kabupaten/Kota: Maluku Tengah, Provinsi: Maluku</li>
               </ul>
-              <p>
-                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                reprehenderit in voluptate
-                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident
-              </p>
-
-              <div class="position-relative mt-4">
-                <img src="assets/img/about-2.jpg" class="img-fluid rounded-4" alt="">
-                <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox play-btn"></a>
-              </div>
             </div>
           </div>
         </div>
 
       </div>
-    </section><!-- End About Us Section -->
+    </section>
+    <!-- End About Us Section -->
 
     <!-- ======= Clients Section ======= -->
     {{-- <section id="clients" class="clients">
@@ -90,48 +81,134 @@
       </div>
     </section><!-- End Clients Section --> --}}
 
-    <!-- ======= Stats Counter Section ======= -->
-    <section id="stats-counter" class="stats-counter">
+    <!-- ======= Our Services Section ======= -->
+    <section id="services" class="services sections-bg">
       <div class="container" data-aos="fade-up">
 
-        <div class="section-header">
-          <h2>Pengumuman</h2>
-          <p>Voluptatem quibusdam ut ullam perferendis repellat non ut consequuntur est eveniet deleniti
-            fignissimos eos quam</p>
+        <div class="mb-5 row text-center align-items-center justify-content-between">
+          <div class="col-md-4">
+            <h2 class="fw-bold">Kegiatan</h2>
+          </div>
+          <div class="col-md-4">
+            <p class="small">Berbagai kegiatan dari SD Negeri 260 Maluku Tengah</p>
+          </div>
+          <div class="col-md-4 text-md-end">
+            <a href="{{ url('kegiatan-sekolah') }}" class="btn btn-sm border border-success text-success">
+              Lihat Semua Kegiatan
+            </a>
+          </div>
         </div>
 
-        <div class="row gy-4 align-items-center">
 
-          <div class="col-lg-6">
-            <img src="assets/img/stats-img.svg" alt="" class="img-fluid">
+        <div class="row gy-4" data-aos="fade-up" data-aos-delay="100">
+
+          {{-- Kegiatan terbaru --}}
+          @if ($kegiatan->count() == 0)
+          <img src="{{ asset('assets/img/not-data.png') }}" class="img-fluid m-auto" style="max-width: 40%" alt="Foto">
+          @else
+          @foreach ($kegiatan as $data)
+          <div class="col-lg-4 col-md-6">
+            <div class="service-item position-relative">
+              <div class="image position-relative">
+                <div class="date-card position-absolute bg-dark-transparent rounded">
+                  <div class="position-relative text-center py-1 text-white">
+                    <div class="hari fs-1 fw-bold" style="font-size: 1rem;">{{ (new
+                      \Carbon\Carbon($data->created_at))->format('d') }}</div>
+                    <div class="bulan" style="font-size: 0.8rem;">{{ (new \Carbon\Carbon($data->created_at))->format('F,
+                      Y') }}</div>
+                  </div>
+                </div>
+                {{-- kalau ada image --}}
+                @if ($data->image != null)
+                <img src="{{ 'storage/' . $data->image }}" alt="{{ $data->title }}" class="card-img">
+                @else
+                <img src="{{ asset('guest/assets/img/keg-sekolah.svg') }}" alt="Kegiatan Sekolah">
+                @endif
+              </div>
+              <div class="content">
+                <h3>{{ $data->title }}</h3>
+                <div>
+                  <span class="text-muted small"><i class="text-warning bi bi-person-fill"></i> {{ $data->user->name
+                    }}</span>
+                </div>
+                <p class="pt-3">{{ $data->excerpt }}</p>
+                <a href="{{ route('kegiatan-sekolah-show', $data->slug) }}"
+                  class="readmore stretched-link text-end d-block">Baca
+                  Selengkapnya <i class="bi bi-arrow-right"></i></a>
+              </div>
+            </div>
+
           </div>
+          @endforeach
+          @endif
 
-          <div class="col-lg-6">
 
-            <div class="stats-item d-flex align-items-center">
-              <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1"
-                class="purecounter"></span>
-              <p><strong>Happy Clients</strong> consequuntur quae diredo para mesta</p>
-            </div><!-- End Stats Item -->
 
-            <div class="stats-item d-flex align-items-center">
-              <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1"
-                class="purecounter"></span>
-              <p><strong>Projects</strong> adipisci atque cum quia aut</p>
-            </div><!-- End Stats Item -->
+          <!-- End Service Item -->
 
-            <div class="stats-item d-flex align-items-center">
-              <span data-purecounter-start="0" data-purecounter-end="453" data-purecounter-duration="1"
-                class="purecounter"></span>
-              <p><strong>Hours Of Support</strong> aut commodi quaerat</p>
-            </div><!-- End Stats Item -->
 
-          </div>
 
         </div>
+      </div>
+    </section><!-- End Our Services Section -->
+
+    <!-- ======= Agenda Home Section ======= -->
+    <section id="agenda-home" class="agenda-home">
+      <div class="container" data-aos="fade-up">
+
+        <div class="mb-5 row text-center d-flex flex-wrap text-white align-items-center justify-content-between">
+          <div class="col-md-4">
+            <h2 class="fw-bold">Agenda</h2>
+          </div>
+          <div class="col-md-4">
+            <p class="small">Berbagai agenda dari SD Negeri 260 Maluku Tengah</p>
+          </div>
+          <div class="col-md-4 text-md-end">
+            <a href="{{ url('agenda-sekolah') }}" class="btn btn-sm bg-white text-success">
+              Lihat Semua Agenda
+            </a>
+          </div>
+        </div>
+
+        <div class=" agenda-slider swiper" data-aos="fade-up" data-aos-delay="100">
+          <div class="swiper-wrapper">
+
+            {{-- Agenda terbaru --}}
+            @foreach ($agenda as $data)
+            <div class="swiper-slide">
+              <div class="card overflow-hidden" style="width: 20rem;">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <span class="small mb-2 text-body-secondary"><i class="text-warning bi bi-calendar3"></i> {{
+                      \Carbon\Carbon::parse($data->date_time)->format('d F Y') }}</span>
+                    <span class="small mb-2 text-body-secondary"><i class="text-warning bi bi-clock"></i> {{
+                      \Carbon\Carbon::parse($data->date_time)->format('H:i') }} WIT - Selesai</span>
+                  </div>
+                  <h5 class="card-text pt-2">
+                    <a data-bs-toggle="modal" data-bs-target="#modalagenda{{ $data->id }}">
+                      {{-- batasi hanya 33 karakter dari title --}}
+                      {{ \Illuminate\Support\Str::limit($data->title, 20) }}
+                    </a>
+                  </h5>
+                  <p class="small"><i class="text-warning bi bi-geo-alt"></i> {{ $data->location }}</p>
+                </div>
+              </div>
+            </div>
+            @endforeach
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+        {{-- include modal --}}
+        @foreach ($agenda as $item)
+        <x-guest.modal :title="$item->title" :dateTime="$item->date_time" :description="$item->description"
+          :location="$item->location" type="agenda" :id="$item->id" />
+        @endforeach
 
       </div>
-    </section><!-- End Stats Counter Section -->
+    </section>
+    <!-- End Agenda Home Section -->
 
     <!-- ======= Call To Action Section ======= -->
     {{-- <section id="call-to-action" class="call-to-action">
@@ -144,95 +221,6 @@
         <a class="cta-btn" href="#">Call To Action</a>
       </div>
     </section><!-- End Call To Action Section --> --}}
-
-    <!-- ======= Our Services Section ======= -->
-    <section id="services" class="services sections-bg">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-header">
-          <h2>Berita Terbaru</h2>
-          <p>Aperiam dolorum et et wuia molestias qui eveniet numquam nihil porro incidunt dolores placeat
-            sunt id nobis omnis tiledo stran delop</p>
-        </div>
-
-        <div class="row gy-4" data-aos="fade-up" data-aos-delay="100">
-
-          <div class="col-lg-4 col-md-6">
-            <div class="service-item  position-relative">
-              <div class="icon">
-                <i class="bi bi-activity"></i>
-              </div>
-              <h3>Nesciunt Mete</h3>
-              <p>Provident nihil minus qui consequatur non omnis maiores. Eos accusantium minus dolores
-                iure perferendis tempore et consequatur.</p>
-              <a href="#" class="readmore stretched-link">Read more <i class="bi bi-arrow-right"></i></a>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-lg-4 col-md-6">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-broadcast"></i>
-              </div>
-              <h3>Eosle Commodi</h3>
-              <p>Ut autem aut autem non a. Sint sint sit facilis nam iusto sint. Libero corrupti neque eum
-                hic non ut nesciunt dolorem.</p>
-              <a href="#" class="readmore stretched-link">Read more <i class="bi bi-arrow-right"></i></a>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-lg-4 col-md-6">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-easel"></i>
-              </div>
-              <h3>Ledo Markt</h3>
-              <p>Ut excepturi voluptatem nisi sed. Quidem fuga consequatur. Minus ea aut. Vel qui id
-                voluptas adipisci eos earum corrupti.</p>
-              <a href="#" class="readmore stretched-link">Read more <i class="bi bi-arrow-right"></i></a>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-lg-4 col-md-6">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-bounding-box-circles"></i>
-              </div>
-              <h3>Asperiores Commodit</h3>
-              <p>Non et temporibus minus omnis sed dolor esse consequatur. Cupiditate sed error ea fuga
-                sit provident adipisci neque.</p>
-              <a href="#" class="readmore stretched-link">Read more <i class="bi bi-arrow-right"></i></a>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-lg-4 col-md-6">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-calendar4-week"></i>
-              </div>
-              <h3>Velit Doloremque</h3>
-              <p>Cumque et suscipit saepe. Est maiores autem enim facilis ut aut ipsam corporis aut. Sed
-                animi at autem alias eius labore.</p>
-              <a href="#" class="readmore stretched-link">Read more <i class="bi bi-arrow-right"></i></a>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-lg-4 col-md-6">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-chat-square-text"></i>
-              </div>
-              <h3>Dolori Architecto</h3>
-              <p>Hic molestias ea quibusdam eos. Fugiat enim doloremque aut neque non et debitis iure.
-                Corrupti recusandae ducimus enim.</p>
-              <a href="#" class="readmore stretched-link">Read more <i class="bi bi-arrow-right"></i></a>
-            </div>
-          </div><!-- End Service Item -->
-
-        </div>
-
-      </div>
-    </section><!-- End Our Services Section -->
 
     <!-- ======= Testimonials Section ======= -->
     <section id="testimonials" class="testimonials">
@@ -548,28 +536,29 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-header">
-          <h2>Prestasi</h2>
+          <h2>Tenaga Pendidik</h2>
           <p>Nulla dolorum nulla nesciunt rerum facere sed ut inventore quam porro nihil id ratione ea sunt
             quis dolorem dolore earum</p>
         </div>
 
         <div class="row gy-4">
 
+          @if ($guru->count() == 0)
+          <img src="{{ asset('assets/img/not-data.png') }}" class="img-fluid m-auto" style="max-width: 40%" alt="">
+          @else
+          @foreach ($guru as $data)
           <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
-            <div class="member">
-              <img src="assets/img/team/team-1.jpg" class="img-fluid" alt="">
-              <h4>Walter White</h4>
-              <span>Web Development</span>
-              <div class="social">
-                <a href=""><i class="bi bi-twitter"></i></a>
-                <a href=""><i class="bi bi-facebook"></i></a>
-                <a href=""><i class="bi bi-instagram"></i></a>
-                <a href=""><i class="bi bi-linkedin"></i></a>
-              </div>
+            <div class="member ">
+              <img src="{{ 'storage/guru-images/thumbnail/'. $data->image  }}" class="img-fluid"
+                alt="{{ $data->nama }}">
+              <h4>{{ $data->nama }}</h4>
+              <span>{{ $data->jabatan }}</span>
+
             </div>
           </div><!-- End Team Member -->
-
-          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+          @endforeach
+          @endif
+          {{-- <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
             <div class="member">
               <img src="assets/img/team/team-2.jpg" class="img-fluid" alt="">
               <h4>Sarah Jhinson</h4>
@@ -609,8 +598,12 @@
                 <a href=""><i class="bi bi-linkedin"></i></a>
               </div>
             </div>
-          </div><!-- End Team Member -->
+          </div><!-- End Team Member --> --}}
 
+        </div>
+
+        <div class="text-center py-4 my-4">
+          <a href="{{ url('data-guru') }}" class="text-success ">Lihat Semua Guru <i class="bi bi-arrow-right"></i></a>
         </div>
 
       </div>
@@ -902,85 +895,6 @@
       </div>
     </section><!-- End Recent Blog Posts Section -->
 
-    <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-header">
-          <h2>Contact</h2>
-          <p>Nulla dolorum nulla nesciunt rerum facere sed ut inventore quam porro nihil id ratione ea sunt
-            quis dolorem dolore earum</p>
-        </div>
-
-        <div class="row gx-lg-0 gy-4">
-
-          <div class="col-lg-4">
-
-            <div class="info-container d-flex flex-column align-items-center justify-content-center">
-              <div class="info-item d-flex">
-                <i class="bi bi-geo-alt flex-shrink-0"></i>
-                <div>
-                  <h4>Location:</h4>
-                  <p>A108 Adam Street, New York, NY 535022</p>
-                </div>
-              </div><!-- End Info Item -->
-
-              <div class="info-item d-flex">
-                <i class="bi bi-envelope flex-shrink-0"></i>
-                <div>
-                  <h4>Email:</h4>
-                  <p>info@example.com</p>
-                </div>
-              </div><!-- End Info Item -->
-
-              <div class="info-item d-flex">
-                <i class="bi bi-phone flex-shrink-0"></i>
-                <div>
-                  <h4>Call:</h4>
-                  <p>+1 5589 55488 55</p>
-                </div>
-              </div><!-- End Info Item -->
-
-              <div class="info-item d-flex">
-                <i class="bi bi-clock flex-shrink-0"></i>
-                <div>
-                  <h4>Open Hours:</h4>
-                  <p>Mon-Sat: 11AM - 23PM</p>
-                </div>
-              </div><!-- End Info Item -->
-            </div>
-
-          </div>
-
-          <div class="col-lg-8">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-              <div class="row">
-                <div class="col-md-6 form-group">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
-                </div>
-                <div class="col-md-6 form-group mt-3 mt-md-0">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-                </div>
-              </div>
-              <div class="form-group mt-3">
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
-              </div>
-              <div class="form-group mt-3">
-                <textarea class="form-control" name="message" rows="7" placeholder="Message" required></textarea>
-              </div>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
-            </form>
-          </div><!-- End Contact Form -->
-
-        </div>
-
-      </div>
-    </section><!-- End Contact Section -->
 
   </main><!-- End #main -->
 </x-guest.app-layout>

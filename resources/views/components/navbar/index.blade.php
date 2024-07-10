@@ -27,27 +27,28 @@
 
         <li class="dropdown"><span>Profil Sekolah<i class="bi bi-chevron-down dropdown-indicator"></i></span>
           <ul>
-            <li><a href="{{ url('visi-misi') }}">Visi Misi</a></li>
+            <li><a href="{{ url('visi-misi-sekolah') }}">Visi Misi</a></li>
             <li><a href="{{ url('data-guru') }}">Data Guru / Staff</a></li>
-            <li><a href="{{ url('fasilitas') }}">Fasilitas</a></li>
+            <li><a href="{{ url('fasilitas-sekolah') }}">Fasilitas</a></li>
           </ul>
         </li>
 
         <li class="dropdown"><span>Informasi<i class="bi bi-chevron-down dropdown-indicator"></i></span>
           <ul>
-            <li><a href="{{ url('kegiatan') }}">Kegiatan</a></li>
-            <li><a href="{{ url('agenda') }}">Agenda</a></li>
-            <li><a href="{{ url('pengumuman') }}">Pengumuman</a></li>
+            <li><a href="{{ url('kegiatan-sekolah') }}">Kegiatan</a></li>
+            <li><a href="{{ url('agenda-sekolah') }}">Agenda</a></li>
+            <li><a href="{{ url('pengumuman-sekolah') }}">Pengumuman</a></li>
+            <li><a href="{{ url('prestasi-ak') }}">Prestasi</a></li>
           </ul>
         </li>
 
         <li class="dropdown"><span>Galery<i class="bi bi-chevron-down dropdown-indicator"></i></span>
           <ul>
-            <li><a href="{{ url('galery') }}">Galery Foto</a></li>
-            <li><a href="{{ url('galery') }}">Galery Video</a></li>
+            <li><a href="{{ url('galery-foto-sekolah') }}">Galery Foto</a></li>
+            <li><a href="{{ url('galery-video-sekolah') }}">Galery Video</a></li>
           </ul>
         </li>
-        <li><a href="{{ url('kontak') }}">Kontak</a></li>
+        <li><a href="{{ url('kontak-sekolah') }}">Kontak</a></li>
       </ul>
     </nav><!-- .navbar -->
 

@@ -24,13 +24,13 @@ class GuruDataTable extends DataTable
             })
             ->addColumn('foto', function ($data) {
                 if ($data->image) {
-                    $url = asset('storage/' . $data->image);
-                    return '<img src="' . $url . '" alt="Foto" class="img-thumbnail" width="50" />';
+                    $url = asset('storage/guru-images/' . $data->image);
+                    return '<img src="' . $url . '" alt="Foto" class="img-thumbnail" width="50" loading="lazy" />';
                 } else {
                     return 'Tidak ada gambar';
                 }
             })
-            ->addColumn('action', function ($data) {
+            ->addColumn('aksi', function ($data) {
                 return sprintf(
                     '<a href="%s" class="btn btn-sm btn-success" title="Lihat">
                         <i class="bi bi-eye"></i>
@@ -43,7 +43,7 @@ class GuruDataTable extends DataTable
                     <button class="btn btn-sm btn-danger" onclick="confirmDelete(this)" data-slug="%s" title="Hapus">
                     <i class="bi bi-trash"></i>
                 </button>
-                    <form id="delete-form-%d" method="POST" action="%s" style="display: none;">
+                    <form id="delete-form-%d" method="POST" aksi="%s" style="display: none;">
                         %s
                         %s
                     </form>',
@@ -57,7 +57,7 @@ class GuruDataTable extends DataTable
                     csrf_field()
                 );
             })
-            ->rawColumns(['checkbox', 'foto', 'action'])
+            ->rawColumns(['checkbox', 'foto', 'aksi'])
             ->addIndexColumn()
             ->setRowId('id');
     }
@@ -69,7 +69,6 @@ class GuruDataTable extends DataTable
     {
         return $model->newQuery()->where('user_id', auth()->user()->id)->latest();
     }
-
     /**
      * Optional method if you want to use the html builder.
      */
@@ -124,7 +123,7 @@ class GuruDataTable extends DataTable
             Column::make('nama')->title('Nama'),
             Column::make('jabatan')->title('Jabatan'),
             Column::make('foto')->title('Foto'),
-            Column::computed('action')
+            Column::computed('aksi')
                 ->exportable(false)
                 ->printable(false)
                 ->width(120)

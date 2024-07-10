@@ -13,7 +13,7 @@ class Prestasi extends Model
     use HasFactory, Sluggable;
     protected $table = 'prestasi';
 
-    protected $fillable = ['title', 'slug', 'image', 'description', 'date'];
+    protected $fillable = ['title', 'nama', 'slug', 'image', 'jenis', 'description', 'date'];
 
     public function user(): BelongsTo
     {

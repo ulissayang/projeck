@@ -1,83 +1,85 @@
 <x-app-layout>
-  @push('link')
-  <link href="{{ asset('assets/vendor/summernote/dist/summernote-lite.css') }}" rel="stylesheet">
-  <link href="DataTables/datatables.min.css" rel="stylesheet">
-  @endpush
+    @push('link')
+    <link href="{{ asset('assets/vendor/summernote/dist/summernote-lite.css') }}" rel="stylesheet">
+    <link href="DataTables/datatables.min.css" rel="stylesheet">
+    @endpush
 
-  @slot('title', 'Galery Foto')
-  <main id="main" class="main">
+    @slot('title', 'Galery Foto')
+    <main id="main" class="main">
 
-    <x-back.breadcrumb :title="$title" :breadcrumbs="$breadcrumbs" />
+        <x-back.breadcrumb :title="$title" :breadcrumbs="$breadcrumbs" />
 
-    <section class="section">
-      <div class="row">
-        <div class="col-lg-12">
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
 
-          <div class="card">
-            <div class="card-body overflow-x-auto">
-              <div class="card-title">
-                <x-button onclick="showModal()" class="btn-sm" title="Tambah Data">
-                  <i class="bi bi-patch-plus"></i> Tambah Data
-                </x-button>
-              </div>
+                    <div class="card">
+                        <div class="card-body overflow-x-auto">
+                            <div class="card-title">
+                                <x-button onclick="showModal()" class="btn-sm" title="Tambah Data">
+                                    <i class="bi bi-patch-plus"></i> Tambah Data
+                                </x-button>
+                            </div>
 
-              <!-- Tombol Hapus Terpilih -->
-              <form id="bulk-delete-form" action="#" method="POST" data-url="{{ route('galery-foto.bulk_delete') }}"
-                style="display: none;">
-                @csrf
-                @method('DELETE')
-                <input type="hidden" id="bulk-delete-ids" name="ids">
-                <x-button id="delete-selected" class="btn-sm btn-danger mb-3"><i class="bi bi-trash"></i> Hapus Terpilih
-                </x-button>
-              </form>
+                            <!-- Tombol Hapus Terpilih -->
+                            <form id="bulk-delete-form" action="#" method="POST"
+                                data-url="{{ route('galery-foto.bulk_delete') }}" style="display: none;">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" id="bulk-delete-ids" name="ids">
+                                <x-button id="delete-selected" class="btn-sm btn-danger mb-3"><i
+                                        class="bi bi-trash"></i> Hapus Terpilih
+                                </x-button>
+                            </form>
 
-              {{-- Data tabel start --}}
-              {{ $dataTable->table(['class' => 'table table-striped table-hover', 'style' => 'width:100%']) }}
-              {{-- Data tabel end --}}
+                            {{-- Data tabel start --}}
+                            {{ $dataTable->table(['class' => 'table table-striped table-hover', 'style' =>
+                            'width:100%']) }}
+                            {{-- Data tabel end --}}
 
+                        </div>
+                    </div>
+
+                </div>
             </div>
-          </div>
 
-        </div>
-      </div>
+            @include('back.galery-foto.galery-foto-form')
 
-      @include('back.galery-foto.galery-foto-form')
+        </section>
+    </main><!-- End #main -->
 
-    </section>
-  </main><!-- End #main -->
+    @push('scripts')
 
-  @push('scripts')
+    <!-- Jquery 3 -->
+    <script type="text/javascript" src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
 
-  <!-- Jquery 3 -->
-  <script type="text/javascript" src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
+    <!-- Bootstrap 5 -->
+    <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.js') }}"></script>
 
-  <!-- Bootstrap 5 -->
-  <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.js') }}"></script>
+    <!-- Main js -->
+    <script type="text/javascript" src="{{ asset('assets/js/main.js') }}"></script>
 
-  <!-- Main js -->
-  <script type="text/javascript" src="{{ asset('assets/js/main.js') }}"></script>
+    <!-- Laravel Javascript Validation -->
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+    {!! JsValidator::formRequest('App\Http\Requests\GaleryFotoRequest', '#modalForm') !!}
 
-  <!-- Laravel Javascript Validation -->
-  <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-  {!! JsValidator::formRequest('App\Http\Requests\GaleryFotoRequest', '#modalForm') !!}
+    <!-- Sweet Alert2 -->
+    <script type="text/javascript" src="{{ asset('assets/vendor/sweetalert/sweetalert2.js') }}"></script>
 
-  <!-- Sweet Alert2 -->
-  <script type="text/javascript" src="{{ asset('assets/vendor/sweetalert/sweetalert2.js') }}"></script>
+    <!-- Summernote Editor -->
+    <script type="text/javascript" src="{{ asset('assets/vendor/summernote/dist/summernote-lite.js') }}"></script>
 
-  <!-- Summernote Editor -->
-  <script type="text/javascript" src="{{ asset('assets/vendor/summernote/dist/summernote-lite.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/summernote/dist/lang/summernote-id-ID.min.js') }}">
+    </script>
 
-  <script type="text/javascript" src="{{ asset('assets/vendor/summernote/dist/lang/summernote-id-ID.min.js') }}">
-  </script>
-
-  <!-- Datatables -->
-  <script type="text/javascript" src="{{ asset('DataTables/datatables.min.js') }}"> </script>
+    <!-- Datatables -->
+    <script type="text/javascript" src="{{ asset('DataTables/datatables.min.js') }}"> </script>
 
 
-  {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
 
-  <script>
-      @if (session('success'))
+    <script>
+        @if (session('success'))
           window.sessionStorage.setItem("successMessage", "{{ session('success') }}");
       @endif
       
@@ -115,7 +117,7 @@
           for (var i = 0; i < files.length; i++) {
               var file = files[i];
               var img = document.createElement('img');
-              img.classList.add('img-preview', 'img-fluid', 'col-sm-2', 'py-2');
+              img.classList.add('img-preview', 'img-fluid', 'rounded-4', 'p-2', 'col-sm-2', 'col-sm-2', 'py-2');
               img.style.display = 'block';
               img.src = URL.createObjectURL(file);
               container.appendChild(img);
@@ -260,8 +262,8 @@
               }
           });
       }
-  </script>
+    </script>
 
-  @endpush
+    @endpush
 
 </x-app-layout>

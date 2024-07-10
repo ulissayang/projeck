@@ -8,7 +8,7 @@
       <div class="row">
         <div class="col-lg-12">
           <x-back.show-data :data="[
-                        'judul' => $galery_video->judul,
+                        'tautan' => $galery_video->judul,
                         'deskripsi' => $galery_video->deskripsi,
                         'created_at' => $galery_video->created_at,
                         'updated_at' => $galery_video->updated_at,
