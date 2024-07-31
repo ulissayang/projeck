@@ -96,4 +96,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Pengaturan::class);
     }
+
+    public function eskul(): HasMany
+    {
+        return $this->hasMany(Eskul::class);
+    }
+
+    public function sejarah(): HasMany
+    {
+        return $this->hasMany(Sejarah::class);
+    }
 }

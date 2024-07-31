@@ -1,20 +1,26 @@
 <x-guest.app-layout title="Data Guru">
+  @push('link')
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+  @endpush
   <main id="main">
 
     {{-- start heading --}}
     <x-guest.heading title="Data Guru" linkText="Data Guru" content="Sekolah Dasar Negeri 260 Maluku Tengah" />
     {{-- End heading --}}
 
-
-
-
-    <section id="blog" class="blog team">
+    <section id="blog" class="guru">
       <div class="container" data-aos="fade-up">
 
         <div class="row">
 
+          {{-- search start --}}
+          <div class="col-lg-6 m-auto">
+            <x-guest.search />
+          </div>
+          {{-- search end --}}
+
           <!-- ======= Data Pendidik  ======= -->
-          <div class="col-lg-8">
+          <div class="col-lg-12">
 
             <div class="row gy-4">
               @if ($guru->count() == 0)
@@ -25,44 +31,36 @@
               </div>
               @else
               @foreach ($guru as $data)
-              <div class="col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+              <div class="col-md-3 d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
                 <div class="member">
-                  <img src="{{ 'storage/guru-images/thumbnail/'. $data->image  }}" class="img-fluid"
-                    alt="{{ $data->nama }}" loading="lazy">
+                  <a href="{{ asset('storage/guru-images/'. $data->image)  }}" data-fancybox="gallery"
+                    data-caption="{{ $data->nama }}">
+                    <img src="{{ asset('storage/guru-images/thumbnail/'. $data->image)  }}" class="card-img"
+                      alt="{{ $data->nama }}" loading="lazy">
+                  </a>
                   <h4>{{ $data->nama }}</h4>
                   <span>{{ $data->jabatan }}</span>
-                  <div class="social">
-                    <a href=""><i class="bi bi-twitter"></i></a>
-                    <a href=""><i class="bi bi-facebook"></i></a>
-                    <a href=""><i class="bi bi-instagram"></i></a>
-                    <a href=""><i class="bi bi-linkedin"></i></a>
-                  </div>
                 </div>
-              </div><!-- End Team Member -->
+              </div><!-- End Guru -->
               @endforeach
               @endif
-
-
             </div>
+
+            <div class="float-end pt-4">
+              {{ $guru->onEachSide(0) }}
+            </div><!-- End pagination -->
 
           </div>
           <!-- End Data Pendidik Section -->
-
-          {{-- start sidebar --}}
-          <div class="col-lg-4">
-
-            <x-guest.sidebar />
-
-          </div>
-          {{-- end sidebar --}}
-
         </div>
-
-
 
       </div>
     </section>
 
   </main><!-- End #main -->
+
+  @push('script')
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+  @endpush
 
 </x-guest.app-layout>

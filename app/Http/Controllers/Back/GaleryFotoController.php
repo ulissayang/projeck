@@ -20,7 +20,7 @@ class GaleryFotoController extends Controller
     {
         try {
             $breadcrumbs = [
-                ['name' => 'Informasi'],
+                ['name' => 'Galeri'],
                 ['name' => 'Galeri Foto'],
             ];
 

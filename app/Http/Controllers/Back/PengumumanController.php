@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Back;
 
 use Exception;
 use App\Models\Pengumuman;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
@@ -38,6 +39,9 @@ class PengumumanController extends Controller
     {
         try {
             $data = $request->validated();
+
+             // Buat excerpt dari body
+             $data['excerpt'] = Str::limit(strip_tags($request->body), 150);
 
             $request->user()->pengumuman()->create($data);
 
@@ -83,6 +87,9 @@ class PengumumanController extends Controller
     {
         try {
             $data = $request->validated();
+
+             // Buat excerpt dari body
+             $data['excerpt'] = Str::limit(strip_tags($request->body), 150);
 
             Pengumuman::where('slug', $slug)->update($data);
 

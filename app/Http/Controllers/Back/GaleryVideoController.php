@@ -20,12 +20,12 @@ class GaleryVideoController extends Controller
     {
         try {
             $breadcrumbs = [
-                ['name' => 'Informasi'],
-                ['name' => 'Galery Video'],
+                ['name' => 'Galeri'],
+                ['name' => 'Galeri Video'],
             ];
 
             return $dataTable->render('back.galery-video.galery-video', [
-                'title' => 'Tabel Galery Video',
+                'title' => 'Tabel Galeri Video',
                 'breadcrumbs' => $breadcrumbs,
             ]);
         } catch (Exception $e) {

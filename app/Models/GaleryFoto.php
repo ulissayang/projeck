@@ -24,13 +24,13 @@ class GaleryFoto extends Model
         'image' => 'array',
     ];
 
-    public function user():BelongsTo 
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-   
-        public function sluggable(): array
+
+    public function sluggable(): array
     {
         return [
             'slug' => [
@@ -48,4 +48,17 @@ class GaleryFoto extends Model
         ];
     }
 
+    // Definisikan scope untuk pencarian di sisi user
+    public function scopeSearch($query, $search)
+    {
+        if ($search) {
+            return $query->where(function ($query) use ($search) {
+                $query->where('judul', 'like', '%' . $search . '%')
+                    ->orWhere('deskripsi', 'like', '%' . $search . '%')
+                    ->orWhere('created_at', 'like', '%' . $search . '%');
+            });
+        }
+
+        return $query;
+    }
 }

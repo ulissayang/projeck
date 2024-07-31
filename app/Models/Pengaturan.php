@@ -21,6 +21,7 @@ class Pengaturan extends Model
         'email',
         'jam_kerja',
         'alamat',
+        'deskripsi',
         'logo',
         'favicon',
         'banner',

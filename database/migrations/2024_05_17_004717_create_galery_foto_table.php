@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('judul');
             $table->string('slug');
             $table->text('deskripsi')->nullable();
-            $table->json('foto')->nullable();
+            $table->json('image');
             $table->timestamps();
         });
     }

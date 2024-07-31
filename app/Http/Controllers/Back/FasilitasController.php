@@ -21,7 +21,7 @@ class FasilitasController extends Controller
     {
         try {
             $breadcrumbs = [
-                ['name' => 'Informasi'],
+                ['name' => 'Profil Sekolah'],
                 ['name' => 'Fasilitas'],
             ];
 

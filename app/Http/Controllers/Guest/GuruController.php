@@ -8,11 +8,9 @@ use App\Http\Controllers\Controller;
 
 class GuruController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $guru = Guru::select('nama', 'image', 'jabatan')->get();
-        return view('guest.guru.data-guru', [
-            'guru' => $guru,
-        ]);
+        $guru = Guru::select('nama', 'image', 'jabatan')->latest()->search($request->search)->paginate(12)->withQueryString();
+        return view('guest.guru.data-guru', compact('guru'));
     }
 }

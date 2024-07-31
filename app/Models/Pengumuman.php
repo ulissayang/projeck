@@ -17,6 +17,7 @@ class Pengumuman extends Model
     protected $fillable = [
         'title',
         'slug',
+        'excerpt',
         'body'
     ];
 
@@ -42,4 +43,18 @@ class Pengumuman extends Model
             ]
         ];
     }
+      // Definisikan scope untuk pencarian di sisi user
+      public function scopeSearch($query, $search)
+      {
+          if ($search) {
+              return $query->where(function ($query) use ($search) {
+                  $query->where('title', 'like', '%' . $search . '%')
+                      ->orWhere('excerpt', 'like', '%' . $search . '%')
+                      ->orWhere('body', 'like', '%' . $search . '%')
+                      ->orWhere('created_at', 'like', '%' . $search . '%');
+              });
+          }
+  
+          return $query;
+      }
 }

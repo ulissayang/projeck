@@ -129,6 +129,18 @@
                   <div class="col-md-6">
                     <div class="mb-3 row align-items-center">
                       <div class="col-4">
+                        <label for="deskripsi" class="form-label">Deskripsi</label>
+                      </div>
+                      <div class="col-8">
+                        <textarea class="form-control" id="deskripsi" name="deskripsi" cols="30"
+                          rows="3">{{ $pengaturan->deskripsi }}</textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="mb-3 row align-items-center">
+                      <div class="col-4">
                         <label for="akreditas" class="form-label">Akreditas</label>
                       </div>
                       <div class="col-8">

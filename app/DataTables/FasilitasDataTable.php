@@ -114,7 +114,6 @@ class FasilitasDataTable extends DataTable
                     }
                 }),
             Column::make('nama')->title('Fasilitas'),
-            Column::make('deskripsi')->title('Deskripsi'),
             Column::make('keterangan')->title('Keterangan'),
             Column::computed('aksi')
                 ->exportable(false)

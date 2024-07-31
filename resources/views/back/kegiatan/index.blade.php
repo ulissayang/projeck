@@ -153,7 +153,6 @@
                     $('#image-preview').hide();
                 }
 
-
                     $('#dataModal').modal('show'); // Show modal after data is loaded
                     $('.btnSubmit').text('Simpan');
                     $('.modal-title').text('Ubah Data');

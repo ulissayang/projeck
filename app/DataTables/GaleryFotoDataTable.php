@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\GaleryFoto;
+use Illuminate\Support\Str;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
@@ -39,6 +40,9 @@ class GaleryFotoDataTable extends DataTable
                     $data->slug, // slug attribute for edit button
                     $data->slug  // slug attribute for delete button
                 );
+            })
+            ->addColumn('deskripsi', function ($data) {
+                return Str::limit(strip_tags($data->deskripsi), 150);
             })
             ->rawColumns(['checkbox', 'aksi'])
             ->addIndexColumn()

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Back;
 
 use Exception;
 use App\Models\Guru;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\DataTables\GuruDataTable;
 use Illuminate\Http\JsonResponse;
@@ -26,7 +25,7 @@ class GuruController extends Controller
     {
         try {
             $breadcrumbs = [
-                ['name' => 'Informasi'],
+                ['name' => 'Profil Sekolah'],
                 ['name' => 'Guru'],
             ];
             return $dataTable->render('back.guru.guru', [

@@ -36,4 +36,17 @@ class Fasilitas extends Model
             ]
         ];
     }
+      // Definisikan scope untuk pencarian di sisi user
+      public function scopeSearch($query, $search)
+      {
+          if ($search) {
+              return $query->where(function ($query) use ($search) {
+                  $query->where('nama', 'like', '%' . $search . '%')
+                      ->orWhere('deskripsi', 'like', '%' . $search . '%')
+                      ->orWhere('created_at', 'like', '%' . $search . '%');
+              });
+          }
+  
+          return $query;
+      }
 }

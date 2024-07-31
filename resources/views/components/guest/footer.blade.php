@@ -7,46 +7,34 @@
         <a href="index.html" class="logo d-flex align-items-center">
           <span>Sdn 260 Malteng</span>
         </a>
-        <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita
-          valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
+
+        <p>{{ $pengaturan->deskripsi }}</p>
+
         <div class="social-links d-flex mt-4">
-          <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-          <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-          <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+          <a href="{{ $pengaturan->twitter }}" class="twitter" target="_blank"><i class="bi bi-twitter-x"></i></a>
+          <a href="{{ $pengaturan->facebook }}" class="facebook" target="_blank"><i class="bi bi-facebook"></i></a>
+          <a href="{{ $pengaturan->ig }}" class="instagram" target="_blank"><i class="bi bi-instagram"></i></a>
+          <a href="{{ $pengaturan->youtube }}" class="youtube" target="_blank"><i class="bi bi-youtube"></i></i></a>
         </div>
       </div>
 
-      <div class="col-lg-2 col-6 footer-links">
-        <h4>Useful Links</h4>
+      <div class="col-lg-3 col-md-12 footer-links text-center text-md-start">
+        <h4>Menu Lainnya</h4>
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About us</a></li>
-          <li><a href="#">Services</a></li>
-          <li><a href="#">Terms of service</a></li>
-          <li><a href="#">Privacy policy</a></li>
+          <li><a href="{{ route('eskul-sekolah') }}">Ekstrakurikuler</a></li>
+          <li><a href="{{ route('visi-misi-sekolah') }}">Visi & Misi</a></li>
+          <li><a href="{{ route('prestasi-ak') }}">Prestasi</a></li>
+          <li><a href="{{ route('fasilitas-sekolah') }}">Fasilitas</a></li>
+          <li><a href="{{ route('sejarah-sekolah') }}">Sejarah</a></li>
         </ul>
       </div>
 
-      <div class="col-lg-2 col-6 footer-links">
-        <h4>Our Services</h4>
-        <ul>
-          <li><a href="#">Web Design</a></li>
-          <li><a href="#">Web Development</a></li>
-          <li><a href="#">Product Management</a></li>
-          <li><a href="#">Marketing</a></li>
-          <li><a href="#">Graphic Design</a></li>
-        </ul>
-      </div>
-
-      <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-        <h4>Contact Us</h4>
+      <div class="col-lg-4 col-md-12 footer-contact text-center text-md-start">
+        <h4>Kontak Kami</h4>
         <p>
-          A108 Adam Street <br>
-          New York, NY 535022<br>
-          United States <br><br>
-          <strong>Phone:</strong> +1 5589 55488 55<br>
-          <strong>Email:</strong> info@example.com<br>
+        <span class="d-block">{{ $pengaturan->alamat }}</span>
+        <strong>Phone :</strong> {{ $pengaturan->telp }}<br>
+        <strong>Email :</strong> {{ $pengaturan->email }}<br>
         </p>
 
       </div>
@@ -54,12 +42,15 @@
     </div>
   </div>
 
+  <hr>
+
   <div class="container mt-4">
     <div class="copyright">
-      &copy; Copyright <strong><span>Impact</span></strong>. All Rights Reserved
+      Copyright &copy; {{ now()->format('Y') }} <strong><span>{{ config('app.name') }}</span></strong>. All Rights
+      Reserved
     </div>
     <div class="credits">
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      Designed by <a href="https://ulissayang.github.io/portfolio-tailwind-css/" class="text-warning" target="_blank">Ulax</a>
     </div>
   </div>
 

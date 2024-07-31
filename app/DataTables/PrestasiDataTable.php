@@ -114,7 +114,7 @@ class PrestasiDataTable extends DataTable
                     }
                 }),
             Column::make('title')->title('Prestasi'),
-            Column::make('description')->title('Deskripsi'),
+            Column::make('jenis')->title('Jenis'),
             Column::make('date')->title('Tanggal'),
             Column::computed('aksi')
                 ->exportable(false)

@@ -596,14 +596,13 @@ h6 {
 --------------------------------------------------------------*/
 .sidebar {
     position: fixed;
-    top: 3.75rem;
     top: 60px;
     left: 0;
     bottom: 0;
-    width: 18rem;
+    width: 300px;
     z-index: 996;
     transition: all 0.3s;
-    padding: 1.25em;
+    padding: 20px;
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: #aab7cf transparent;
@@ -613,20 +612,24 @@ h6 {
 
 @media (max-width: 1199px) {
     .sidebar {
-        left: -18rem;
+        left: -300px;
     }
 }
 
 .sidebar::-webkit-scrollbar {
-    width: 0.625em;
-    height: 0.8em;
+    width: 5px;
+    height: 8px;
     background-color: #fff;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: #aab7cf;
 }
 
 @media (min-width: 1200px) {
     #main,
     #footer {
-        margin-left: 18rem;
+        margin-left: 300px;
     }
 }
 
@@ -643,7 +646,7 @@ h6 {
     }
 
     .toggle-sidebar .sidebar {
-        left: -18rem;
+        left: -300px;
     }
 }
 
@@ -660,32 +663,32 @@ h6 {
 }
 
 .sidebar-nav .nav-item {
-    margin-bottom: 0.3125em;
+    margin-bottom: 5px;
 }
 
 .sidebar-nav .nav-heading {
-    font-size: 0.6875em;
+    font-size: 11px;
     text-transform: uppercase;
     color: #899bbd;
     font-weight: 600;
-    margin: 0.625em 0 0.3125em 0.9375em;
+    margin: 10px 0 5px 15px;
 }
 
 .sidebar-nav .nav-link {
     display: flex;
     align-items: center;
-    font-size: 0.9375em;
+    font-size: 15px;
     font-weight: 600;
     color: #4154f1;
     transition: 0.3;
     background: #f6f9ff;
-    padding: 0.625em 0.9375em;
-    border-radius: 0.25em;
+    padding: 10px 15px;
+    border-radius: 4px;
 }
 
 .sidebar-nav .nav-link i {
-    font-size: 1em;
-    margin-right: 0.625em;
+    font-size: 16px;
+    margin-right: 10px;
     color: #4154f1;
 }
 
@@ -717,7 +720,7 @@ h6 {
 }
 
 .sidebar-nav .nav-content {
-    padding: 0.3125em 0 0 0;
+    padding: 5px 0 0 0;
     margin: 0;
     list-style: none;
 }
@@ -725,19 +728,19 @@ h6 {
 .sidebar-nav .nav-content a {
     display: flex;
     align-items: center;
-    font-size: 0.875em;
+    font-size: 14px;
     font-weight: 600;
     color: #012970;
     transition: 0.3;
-    padding: 0.625em 0 0.625em 2.5em;
+    padding: 10px 0 10px 40px;
     transition: 0.3s;
 }
 
 .sidebar-nav .nav-content a i {
-    font-size: 0.375em;
-    margin-right: 0.5em;
+    font-size: 6px;
+    margin-right: 8px;
     line-height: 0;
-    border-radius: 0.5em;
+    border-radius: 50%;
 }
 
 .sidebar-nav .nav-content a:hover,
@@ -750,8 +753,8 @@ h6 {
 }
 
 /*--------------------------------------------------------------
-# Dashboard
---------------------------------------------------------------*/
+  # Dashboard
+  --------------------------------------------------------------*/
 /* Filter dropdown */
 .dashboard .filter {
     position: absolute;
@@ -764,7 +767,7 @@ h6 {
     padding-right: 20px;
     padding-bottom: 5px;
     transition: 0.3s;
-    font-size: 1rem;
+    font-size: 16px;
 }
 
 .dashboard .filter .icon:hover,
@@ -773,12 +776,12 @@ h6 {
 }
 
 .dashboard .filter .dropdown-header {
-    padding: 0.5em 0.9375em;
+    padding: 8px 15px;
 }
 
 .dashboard .filter .dropdown-header h6 {
     text-transform: uppercase;
-    font-size: 0.875rem;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: 1px;
     color: #aab7cf;
@@ -787,16 +790,16 @@ h6 {
 }
 
 .dashboard .filter .dropdown-item {
-    padding: 0.5em 0.9375em;
+    padding: 8px 15px;
 }
 
 /* Info Cards */
 .dashboard .info-card {
-    padding-bottom: 0.625em;
+    padding-bottom: 10px;
 }
 
 .dashboard .info-card h6 {
-    font-size: 1.75rem;
+    font-size: 28px;
     color: #012970;
     font-weight: 700;
     margin: 0;
@@ -804,10 +807,10 @@ h6 {
 }
 
 .dashboard .card-icon {
-    font-size: 2rem;
+    font-size: 32px;
     line-height: 0;
-    width: 4rem;
-    height: 4rem;
+    width: 64px;
+    height: 64px;
     flex-shrink: 0;
     flex-grow: 0;
 }
@@ -829,7 +832,7 @@ h6 {
 
 /* Activity */
 .dashboard .activity {
-    font-size: 0.875rem;
+    font-size: 14px;
 }
 
 .dashboard .activity .activity-item .activite-label {
@@ -837,37 +840,37 @@ h6 {
     position: relative;
     flex-shrink: 0;
     flex-grow: 0;
-    min-width: 4rem;
+    min-width: 64px;
 }
 
 .dashboard .activity .activity-item .activite-label::before {
     content: "";
     position: absolute;
-    right: -0.6875em;
-    width: 0.25em;
+    right: -11px;
+    width: 4px;
     top: 0;
     bottom: 0;
     background-color: #eceefe;
 }
 
 .dashboard .activity .activity-item .activity-badge {
-    margin-top: 0.1875em;
+    margin-top: 3px;
     z-index: 1;
-    font-size: 0.6875rem;
+    font-size: 11px;
     line-height: 0;
     border-radius: 50%;
     flex-shrink: 0;
-    border: 0.1875em solid #fff;
+    border: 3px solid #fff;
     flex-grow: 0;
 }
 
 .dashboard .activity .activity-item .activity-content {
-    padding-left: 0.625em;
-    padding-bottom: 1.25em;
+    padding-left: 10px;
+    padding-bottom: 20px;
 }
 
 .dashboard .activity .activity-item:first-child .activite-label::before {
-    top: 0.3125em;
+    top: 5px;
 }
 
 .dashboard .activity .activity-item:last-child .activity-content {

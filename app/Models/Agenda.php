@@ -47,4 +47,20 @@ class Agenda extends Model
             ]
         ];
     }
+    // Definisikan scope untuk pencarian di sisi user
+    public function scopeSearch($query, $search)
+    {
+        if ($search) {
+            return $query->where(function ($query) use ($search) {
+                $query->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('excerpt', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%')
+                    ->orWhere('location', 'like', '%' . $search . '%')
+                    ->orWhere('date_time', 'like', '%' . $search . '%')
+                    ->orWhere('created_at', 'like', '%' . $search . '%');
+            });
+        }
+
+        return $query;
+    }
 }

@@ -1,11 +1,3 @@
-/**
- * Template Name: Impact
- * Template URL: https://bootstrapmade.com/impact-bootstrap-business-website-template/
- * Updated: Apr 4 2024 with Bootstrap v5.3.3
- * Author: BootstrapMade.com
- * License: https://bootstrapmade.com/license/
- */
-
 document.addEventListener("DOMContentLoaded", () => {
     "use strict";
 
@@ -158,9 +150,9 @@ document.addEventListener("DOMContentLoaded", () => {
     new PureCounter();
 
     /**
-     * Clients Slider
+     * item Slider
      */
-    new Swiper(".agenda-slider", {
+    new Swiper(".item-slider", {
         speed: 400,
         loop: true,
         autoplay: {
@@ -204,17 +196,26 @@ document.addEventListener("DOMContentLoaded", () => {
             el: ".swiper-pagination",
             type: "bullets",
             clickable: true,
+            dynamicBullets: true,
         },
         navigation: {
             nextEl: ".swiper-button-next",
             prevEl: ".swiper-button-prev",
+        },
+        effect: "coverflow", // Change to desired effect
+        coverflowEffect: {
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: false,
         },
     });
 
     /**
      * Init swiper slider with 3 slides at once in desktop view
      */
-    new Swiper(".slides-3", {
+    new Swiper(".slides-4", {
         speed: 600,
         loop: true,
         autoplay: {
@@ -236,13 +237,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 slidesPerView: 1,
                 spaceBetween: 5,
             },
-            320: {
+            768: {
                 slidesPerView: 2,
                 spaceBetween: 5,
             },
 
-            1200: {
+            1024: {
                 slidesPerView: 3,
+                spaceBetween: 5,
+            },
+            1200: {
+                slidesPerView: 4,
+                spaceBetween: 5,
             },
         },
     });
@@ -321,3 +327,6 @@ document.addEventListener("DOMContentLoaded", () => {
         aos_init();
     });
 });
+
+// Fancybox
+Fancybox.bind("[data-fancybox]");

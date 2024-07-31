@@ -37,4 +37,19 @@ class Prestasi extends Model
             ]
         ];
     }
+      // Definisikan scope untuk pencarian di sisi user
+      public function scopeSearch($query, $search)
+      {
+          if ($search) {
+              return $query->where(function ($query) use ($search) {
+                  $query->where('title', 'like', '%' . $search . '%')
+                      ->orWhere('nama', 'like', '%' . $search . '%')
+                      ->orWhere('description', 'like', '%' . $search . '%')
+                      ->orWhere('date', 'like', '%' . $search . '%')
+                      ->orWhere('created_at', 'like', '%' . $search . '%');
+              });
+          }
+  
+          return $query;
+      }
 }

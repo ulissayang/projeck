@@ -8,11 +8,13 @@ use App\Http\Controllers\Controller;
 
 class AgendaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $agenda = Agenda::with('user')
                         ->latest()
-                        ->paginate(6);
+                        ->search($request->search)
+                        ->paginate(9)
+                        ->withQueryString();
         return view('guest.agenda.agenda', compact('agenda'));
     }
 }

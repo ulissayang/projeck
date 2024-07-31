@@ -16,7 +16,8 @@
                         'Waktu & Tanggal' => \Carbon\Carbon::parse($kegiatan->date_time)->locale('id')->isoFormat('dddd, D MMMM YYYY HH:mm'),
                         'created_at' => $kegiatan->created_at,
                         'updated_at' => $kegiatan->updated_at,
-                    ]" :backRoute="route('kegiatan.index')" :imagePathPrefix="'storage/' . $kegiatan->imagePathPrefix"/>
+                    ]" :backRoute="route('kegiatan.index')"
+            :imagePathPrefix="'storage/' . $kegiatan->imagePathPrefix" />
         </div>
       </div>
     </section>

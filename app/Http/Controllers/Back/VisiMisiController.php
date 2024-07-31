@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Back;
 
-use App\Models\VisiMisi;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\VisiMisiRequest;
-use Illuminate\Support\Facades\DB;
+use App\Models\VisiMisi;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Exception;
 
 class VisiMisiController extends Controller
 {
@@ -15,17 +16,22 @@ class VisiMisiController extends Controller
     public function index()
     {
         $breadcrumbs = [
-            ['name' => 'Informasi'],
+            ['name' => 'Profil Sekolah'],
             ['name' => 'Visi Misi'],
         ];
 
-        $visiMisi = auth()->user()->visi_misi()->latest()->get();
+        try {
+            // Eager load relasi jika ada
+            $visiMisi = auth()->user()->visi_misi()->with('user')->latest()->get();
 
-        return view('back.visi-misi.visi-misi', [
-            'title' => 'Tabel Visi Misi',
-            'breadcrumbs' => $breadcrumbs,
-            'visi_misi' => $visiMisi,
-        ]);
+            return view('back.visi-misi.visi-misi', [
+                'title' => 'Tabel Visi Misi',
+                'breadcrumbs' => $breadcrumbs,
+                'visi_misi' => $visiMisi,
+            ]);
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Gagal memuat data Visi Misi.');
+        }
     }
 
     /**
@@ -33,7 +39,6 @@ class VisiMisiController extends Controller
      */
     public function store(VisiMisiRequest $request)
     {
-
         try {
             $data = $request->validated();
             $visiMisi = $request->user()->visi_misi()->create($data);
@@ -42,8 +47,7 @@ class VisiMisiController extends Controller
                 'message' => 'Data Berhasil Ditambahkan!',
                 'data' => $visiMisi
             ]);
-        } catch (\Exception $e) {
-
+        } catch (Exception $e) {
             return response()->json([
                 'error' => 'Terjadi kesalahan: ' . $e->getMessage()
             ], 500);
@@ -56,9 +60,10 @@ class VisiMisiController extends Controller
     public function edit(string $slug)
     {
         try {
-            $visiMisi = VisiMisi::where('slug', $slug)->firstOrFail();
+            // Eager load relasi jika ada
+            $visiMisi = VisiMisi::where('slug', $slug)->with('user')->firstOrFail();
             return response()->json(['data' => $visiMisi]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'error' => 'Data tidak ditemukan'
             ], 404);
@@ -70,18 +75,19 @@ class VisiMisiController extends Controller
      */
     public function update(VisiMisiRequest $request, string $slug)
     {
-
         try {
             $data = $request->validated();
             $visiMisi = VisiMisi::where('slug', $slug)->firstOrFail();
             $visiMisi->update($data);
 
+            // Eager load relasi jika ada
+            $visiMisi->load('user');
+
             return response()->json([
                 'message' => 'Data Berhasil Diupdate!',
                 'data' => $visiMisi
             ]);
-        } catch (\Exception $e) {
-
+        } catch (Exception $e) {
             return response()->json([
                 'error' => 'Terjadi kesalahan: ' . $e->getMessage()
             ], 500);
@@ -93,16 +99,15 @@ class VisiMisiController extends Controller
      */
     public function destroy(string $slug)
     {
-
         try {
-            $visiMisi = VisiMisi::where('slug', $slug)->firstOrFail();
+            // Eager load relasi jika ada
+            $visiMisi = VisiMisi::where('slug', $slug)->with('user')->firstOrFail();
             $visiMisi->delete();
 
             return response()->json([
                 'message' => 'Data Berhasil Dihapus!'
             ]);
-        } catch (\Exception $e) {
-
+        } catch (Exception $e) {
             return response()->json([
                 'error' => 'Terjadi kesalahan: ' . $e->getMessage()
             ], 500);

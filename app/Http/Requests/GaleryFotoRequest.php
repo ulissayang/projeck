@@ -21,11 +21,18 @@ class GaleryFotoRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'judul' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
-            'image' => 'sometimes|array',
-            'image.*' => 'sometimes|image|mimes:jpeg,jpg,png,gif|max:2048',
         ];
+
+        if ($this->isMethod('post')) {
+            $rules['image'] = 'required|array';
+            $rules['image.*'] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+        } elseif ($this->isMethod('put')) {
+            $rules['image'] = 'nullable|array';
+            $rules['image.*'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+        }
+        return $rules;
     }
 }

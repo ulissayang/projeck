@@ -3,7 +3,7 @@
 use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', Controllers\Guest\HomeController::class)->name('home');
+Route::get('/', [Controllers\Guest\HomeController::class, 'index'])->name('home');
 // Route::get('/dashboard', function () {
 //     return view('pages-auth.dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
@@ -20,7 +20,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/kegiatan/{kegiatan:slug}', [Controllers\Back\KegiatanController::class, 'show'])->name('kegiatan.show');
     Route::get('/kegiatan/{kegiatan:slug}/edit', [Controllers\Back\KegiatanController::class, 'edit'])->name('kegiatan.edit');
     Route::post('/kegiatan/bulk-delete',  [Controllers\Back\KegiatanController::class, 'bulkDelete'])->name('kegiatan.bulk_delete');
-
 
     Route::resource('/agenda', Controllers\Back\AgendaController::class)->except(['show', 'edit', 'destroy', 'create']);
     Route::delete('/agenda/{agenda:slug}', [Controllers\Back\AgendaController::class, 'destroy'])->name('agenda.destroy');
@@ -43,6 +42,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('/visi-misi', Controllers\Back\VisiMisiController::class)->except(['show', 'edit', 'destroy', 'create']);
     Route::delete('/visi-misi/{visi_misi:slug}', [Controllers\Back\VisiMisiController::class, 'destroy'])->name('visi-misi.destroy');
     Route::get('/visi-misi/{visi_misi:slug}/edit', [Controllers\Back\VisiMisiController::class, 'edit'])->name('visi-misi.edit');
+    
+    Route::resource('/sejarah', Controllers\Back\SejarahController::class)->except(['show', 'edit', 'destroy', 'create']);
+    Route::delete('/sejarah/{sejarah:slug}', [Controllers\Back\SejarahController::class, 'destroy'])->name('sejarah.destroy');
+    Route::get('/sejarah/{sejarah:slug}', [Controllers\Back\SejarahController::class, 'show'])->name('sejarah.show');
+    Route::get('/sejarah/{sejarah:slug}/edit', [Controllers\Back\SejarahController::class, 'edit'])->name('sejarah.edit');
 
     Route::resource('/fasilitas', Controllers\Back\FasilitasController::class)->except(['show', 'edit', 'destroy', 'create']);
     Route::delete('/fasilitas/{fasilitas:slug}', [Controllers\Back\FasilitasController::class, 'destroy'])->name('fasilitas.destroy');
@@ -55,6 +59,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/prestasi/{prestasi:slug}', [Controllers\Back\PrestasiController::class, 'show'])->name('prestasi.show');
     Route::get('/prestasi/{prestasi:slug}/edit', [Controllers\Back\PrestasiController::class, 'edit'])->name('prestasi.edit');
     Route::post('/prestasi/bulk-delete',  [Controllers\Back\PrestasiController::class, 'bulkDelete'])->name('prestasi.bulk_delete');
+
+    Route::resource('/eskul', Controllers\Back\EskulController::class)->except(['show', 'edit', 'destroy', 'create']);
+    Route::delete('/eskul/{eskul:slug}', [Controllers\Back\EskulController::class, 'destroy'])->name('eskul.destroy');
+    Route::get('/eskul/{eskul:slug}', [Controllers\Back\EskulController::class, 'show'])->name('eskul.show');
+    Route::get('/eskul/{eskul:slug}/edit', [Controllers\Back\EskulController::class, 'edit'])->name('eskul.edit');
+    Route::post('/eskul/bulk-delete',  [Controllers\Back\EskulController::class, 'bulkDelete'])->name('eskul.bulk_delete');
 
     Route::resource('/galery-foto', Controllers\Back\GaleryFotoController::class)->except(['show', 'edit', 'destroy', 'create']);
     Route::delete('/galery-foto/{galery_foto:slug}', [Controllers\Back\GaleryFotoController::class, 'destroy'])->name('galery-foto.destroy');
@@ -72,6 +82,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/pengaturan/{pengaturan:slug}', [Controllers\Back\PengaturanController::class, 'destroy'])->name('pengaturan.destroy');
     Route::get('/pengaturan/{pengaturan:slug}', [Controllers\Back\PengaturanController::class, 'show'])->name('pengaturan.show');
     Route::get('/pengaturan/{pengaturan:slug}/edit', [Controllers\Back\PengaturanController::class, 'edit'])->name('pengaturan.edit');
+
+    Route::resource('/thnakademik', Controllers\Back\TahunAkademikController::class)->except(['show', 'destroy']);
 });
 
 require __DIR__ . '/auth.php';

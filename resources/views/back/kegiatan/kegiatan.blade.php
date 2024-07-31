@@ -41,7 +41,7 @@
       </div>
       <h1 class="modal-title fs-5 text-center fw-bold" id="staticBackdropLabel"></h1>
       <div class="modal-body">
-        <!-- Form update data  -->
+        <!-- Form input/update data  -->
         <form id="modalForm">
           @csrf
           <input type="hidden" name="slug" id="slug">

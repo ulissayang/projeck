@@ -7,7 +7,6 @@ use App\Models\Kegiatan;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\DataTables\KegiatanDataTable;
 use App\Http\Requests\KegiatanRequest;

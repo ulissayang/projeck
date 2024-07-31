@@ -101,7 +101,7 @@ class AgendaDataTable extends DataTable
                 ->addClass('text-center')
                 ->render(function ($data) {
                     // Jika $data adalah objek Agenda dan memiliki properti 'id'
-                    if ($data instanceof \App\Models\Agenda && property_exists($data, 'id')) {
+                    if ($data instanceof Agenda && property_exists($data, 'id')) {
                         return '<input type="checkbox" class="bulk-checkbox" value="' . $data->id . '">';
                     }
                     // Jika $data adalah array dan memiliki kunci 'id'

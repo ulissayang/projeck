@@ -1,19 +1,18 @@
 <aside id="sidebar" class="sidebar">
-
     <ul class="sidebar-nav" id="sidebar-nav">
-
         <li class="nav-item">
-            <a class="nav-link" href="{{ url('dashboard') }}">
+            <a class="nav-link collapsed" href="{{ url('dashboard') }}">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
         </li><!-- End Dashboard Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed " data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-menu-button-wide"></i><span>Informasi</span><i class="bi bi-chevron-down ms-auto"></i>
+            <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#"
+                aria-expanded="false">
+                <i class="bi bi-info-square"></i><span>Informasi</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="{{ route('kegiatan.index') }}">
                         <i class="bi bi-circle"></i><span>Kegiatan</span>
@@ -38,10 +37,11 @@
         </li><!-- End Components Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+            <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#"
+                aria-expanded="false">
                 <i class="bi bi-journal-text"></i><span>Profil Sekolah</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="{{ route('guru.index') }}">
                         <i class="bi bi-circle"></i><span>Guru</span>
@@ -57,20 +57,20 @@
                         <i class="bi bi-circle"></i><span>Visi Misi</span>
                     </a>
                 </li>
-                {{-- <li>
-                    <a href="forms-validation.html">
-                        <i class="bi bi-circle"></i><span>Form Validation</span>
+                <li>
+                    <a href="{{ route('sejarah.index') }}">
+                        <i class="bi bi-circle"></i><span>Sejarah</span>
                     </a>
-                </li> --}}
+                </li>
             </ul>
         </li><!-- End Forms Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-layout-text-window-reverse"></i><span>Galery</span><i
-                    class="bi bi-chevron-down ms-auto"></i>
+            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#"
+                aria-expanded="false">
+                <i class="bi bi-images"></i><span>Galery</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="{{ route('galery-foto.index') }}">
                         <i class="bi bi-circle"></i><span>Galery Foto</span>
@@ -82,8 +82,14 @@
                     </a>
                 </li>
             </ul>
-        </li><!-- End Tables Nav -->
+        </li>
 
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('eskul.index') }}">
+                <i class="bi bi-universal-access-circle"></i>
+                <span>Ekstrakurikuler</span>
+            </a>
+        </li><!-- End Eskul -->
 
         <li class="nav-heading">Pages</li>
 
@@ -92,9 +98,6 @@
                 <i class="bi bi-gear"></i>
                 <span>Pengaturan</span>
             </a>
-        </li><!-- End Pengaturan Page -->
-
-
+        </li><!-- End Pengaturan -->
     </ul>
-
 </aside>

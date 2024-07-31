@@ -114,7 +114,7 @@ class PengumumanDataTable extends DataTable
                     }
                 }),
             Column::make('title')->title('Pengumuman'),
-            Column::make('body')->title('Deskripsi'),
+            Column::make('excerpt')->title('Deskripsi'),
             Column::computed('aksi')
                 ->exportable(false)
                 ->printable(false)

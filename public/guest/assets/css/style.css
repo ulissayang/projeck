@@ -51,10 +51,25 @@ h6 {
 # Sections & Section Header
 --------------------------------------------------------------*/
 section {
-    padding: 60px 0;
+    padding: 3.75rem 0;
     overflow: hidden;
-    scroll-margin-top: 70px;
+    scroll-margin-top: 4.375rem;
     overflow: clip;
+}
+
+.section-login {
+    background-image: url("/guest/assets/img/latar.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.section-login .title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--color-primary);
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .sections-bg {
@@ -63,14 +78,14 @@ section {
 
 .section-header {
     text-align: center;
-    padding-bottom: 60px;
+    padding-bottom: 3.75rem;
 }
 
 .section-header h2 {
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: 600;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
     position: relative;
 }
 
@@ -78,8 +93,8 @@ section {
     content: "";
     position: absolute;
     display: block;
-    width: 50px;
-    height: 3px;
+    width: 3.125rem;
+    height: 0.1875rem;
     background: var(--color-primary);
     left: 0;
     right: 0;
@@ -96,14 +111,14 @@ section {
 # Breadcrumbs
 --------------------------------------------------------------*/
 .breadcrumbs .page-header {
-    padding: 60px 0 60px 0;
+    padding: 3.75rem 0 3.75rem 0;
     min-height: 20vh;
     position: relative;
     background-color: var(--color-primary);
 }
 
 .breadcrumbs .page-header h2 {
-    font-size: 56px;
+    font-size: 3.5rem;
     font-weight: 500;
     color: #fff;
     font-family: var(--font-secondary);
@@ -115,7 +130,7 @@ section {
 
 .breadcrumbs nav {
     background-color: #f6f6f6;
-    padding: 20px 0;
+    padding: 1.25rem 0;
 }
 
 .breadcrumbs nav ol {
@@ -124,7 +139,7 @@ section {
     list-style: none;
     margin: 0;
     padding: 0;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 600;
     color: var(--color-default);
 }
@@ -139,12 +154,12 @@ section {
 }
 
 .breadcrumbs nav ol li + li {
-    padding-left: 10px;
+    padding-left: 0.625rem;
 }
 
 .breadcrumbs nav ol li + li::before {
     display: inline-block;
-    padding-right: 10px;
+    padding-right: 0.625rem;
     color: var(--color-secondary);
     content: "/";
 }
@@ -156,18 +171,18 @@ section {
     position: fixed;
     visibility: hidden;
     opacity: 0;
-    right: 15px;
-    bottom: -15px;
+    right: 0.9375rem;
+    bottom: -0.9375rem;
     z-index: 99999;
     background: var(--color-secondary);
-    width: 44px;
-    height: 44px;
+    width: 2.75rem;
+    height: 2.75rem;
     border-radius: 50px;
     transition: all 0.4s;
 }
 
 .scroll-top i {
-    font-size: 24px;
+    font-size: 1.5rem;
     color: #fff;
     line-height: 0;
 }
@@ -180,7 +195,7 @@ section {
 .scroll-top.active {
     visibility: visible;
     opacity: 1;
-    bottom: 15px;
+    bottom: 0.9375rem;
 }
 
 /*--------------------------------------------------------------
@@ -198,14 +213,15 @@ section {
 #preloader:before {
     content: "";
     position: fixed;
-    top: calc(50% - 30px);
-    left: calc(50% - 30px);
-    border: 6px solid #fff;
+    top: calc(50% - 1.875rem);
+    top: calc(50% - 1.875em);
+    left: calc(50% - 1.875em);
+    border: 0.375em solid #fff;
     border-color: var(--color-primary) transparent var(--color-primary)
         transparent;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: 3.75em;
+    height: 3.75em;
     animation: animate-preloader 1.5s linear infinite;
 }
 
@@ -222,7 +238,7 @@ section {
 /*--------------------------------------------------------------
 # Disable aos animation delay on mobile devices
 --------------------------------------------------------------*/
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 48em) {
     [data-aos-delay] {
         transition-delay: 0 !important;
     }
@@ -233,8 +249,8 @@ section {
 --------------------------------------------------------------*/
 .topbar {
     background: #00796b;
-    height: 40px;
-    font-size: 14px;
+    height: 2.5em;
+    font-size: 0.875em;
     transition: all 0.5s;
     color: #fff;
     padding: 0;
@@ -248,14 +264,14 @@ section {
 
 .topbar .contact-info i a,
 .topbar .contact-info i span {
-    padding-left: 5px;
+    padding-left: 0.3125em;
     color: #fff;
 }
 
-@media (max-width: 575px) {
+@media (max-width: 35.9375em) {
     .topbar .contact-info i a,
     .topbar .contact-info i span {
-        font-size: 13px;
+        font-size: 0.8125em;
     }
 }
 
@@ -273,7 +289,7 @@ section {
     color: rgba(255, 255, 255, 0.7);
     line-height: 0;
     transition: 0.3s;
-    margin-left: 20px;
+    margin-left: 1.25em;
 }
 
 .topbar .social-links a:hover {
@@ -283,7 +299,7 @@ section {
 .header {
     transition: all 0.5s;
     z-index: 997;
-    height: 90px;
+    height: 5.625em;
     background-color: var(--color-primary);
 }
 
@@ -292,17 +308,17 @@ section {
     top: 0;
     right: 0;
     left: 0;
-    height: 70px;
+    height: 4.375em;
     box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
 }
 
 .header .logo img {
-    max-height: 40px;
-    margin-right: 6px;
+    max-height: 2.5em;
+    margin-right: 0.375em;
 }
 
 .header .logo h1 {
-    font-size: 30px;
+    font-size: 1.875em;
     margin: 0;
     font-weight: 600;
     letter-spacing: 0.8px;
@@ -315,7 +331,7 @@ section {
 }
 
 .sticked-header-offset {
-    margin-top: 70px;
+    margin-top: 4.375em;
 }
 
 /*--------------------------------------------------------------
@@ -334,7 +350,7 @@ a {
 /*--------------------------------------------------------------
 # Desktop Navigation
 --------------------------------------------------------------*/
-@media (min-width: 992px) {
+@media (min-width: 62em) {
     .navbar {
         padding: 0;
     }
@@ -353,7 +369,7 @@ a {
 
     .navbar > ul > li {
         white-space: nowrap;
-        padding: 10px 0 10px 28px;
+        padding: 0.625em 0 0.625em 1.75em;
     }
     .navbar span,
     .navbar a,
@@ -361,9 +377,9 @@ a {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 3px;
+        padding: 0 0.1875em;
         font-family: var(--font-secondary);
-        font-size: 16px;
+        font-size: 1em;
         font-weight: 600;
         color: rgba(255, 255, 255, 0.6);
         white-space: nowrap;
@@ -375,9 +391,9 @@ a {
     .navbar li i,
     .navbar a i,
     .navbar a:focus i {
-        font-size: 12px;
+        font-size: 0.75em;
         line-height: 0;
-        margin-left: 5px;
+        margin-left: 0.3125em;
     }
 
     .navbar > ul > li > span:before,
@@ -385,8 +401,8 @@ a {
         content: "";
         position: absolute;
         width: 100%;
-        height: 2px;
-        bottom: -6px;
+        height: 0.125em;
+        bottom: -0.375em;
         left: 0;
         background-color: var(--color-secondary);
         visibility: hidden;
@@ -739,11 +755,19 @@ a {
     background-color: var(--color-primary);
 }
 
-.agenda-slider .card-text {
+.item-slider .card-text {
     cursor: pointer;
 }
 
-.agenda-slider .card-text:hover {
+.item-slider .head {
+    font-size: 14px;
+}
+
+.item-slider p {
+    font-size: 13px;
+}
+
+.item-slider h5 {
     color: var(--color-primary);
 }
 
@@ -762,6 +786,70 @@ a {
 
 .agenda-home .swiper-pagination .swiper-pagination-bullet-active {
     background-color: var(--color-secondary);
+}
+
+/*--------------------------------------------------------------
+# Agenda, Pengumuman, Galery Foto Section
+--------------------------------------------------------------*/
+.article-bg {
+    background-color: #ffff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.blog .posts-list article {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.blog .posts-list .post-img {
+    max-height: 240px;
+    margin: -30px -30px 15px -30px;
+    overflow: hidden;
+    object-fit: cover;
+}
+
+.blog .posts-list .post-category {
+    font-size: 16px;
+    color: #555555;
+    margin-bottom: 10px;
+}
+
+.blog .posts-list .title {
+    font-size: 22px;
+    font-weight: 700;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.blog .posts-list .title {
+    color: var(--color-default);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.blog .posts-list .title:hover {
+    color: var(--color-primary);
+}
+
+.blog .posts-list .post-author-img {
+    width: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.blog .posts-list .post-author-list {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.blog .posts-list .post-date {
+    font-size: 14px;
+    color: #3c3c3c;
+    margin-bottom: 0;
 }
 
 /*--------------------------------------------------------------
@@ -889,29 +977,51 @@ a {
 }
 
 /*--------------------------------------------------------------
-# Our Services Section
+# Kegiatan, Prestasi, Sejarah Section
 --------------------------------------------------------------*/
-.services {
-    padding: 60px 0;
+.kegiatan,
+.prestasi,
+.sejarah {
+    margin-top: -30px;
 }
 
-.services .service-item {
+.kegiatan .kegiatan-item,
+.prestasi .prestasi-item {
     background: #fff;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.08);
     border-radius: 10px;
     overflow: hidden;
 }
 
-.services .service-item .image img {
+.kegiatan .kegiatan-item .image img,
+.prestasi .prestasi-item .image img {
     height: 300px;
+    object-fit: cover;
+    overflow: hidden;
+    transition: transform 0.5s ease-in-out; /* Menambahkan transisi yang halus */
+}
+
+.kegiatan .kegiatan-show .image img,
+.prestasi .prestasi-show .image img {
+    width: 100%;
+    max-height: 550px;
+    border-radius: 10px 10px 0 0;
     object-fit: cover;
     overflow: hidden;
 }
 
-.services .service-item .content {
+.kegiatan .kegiatan-item:hover .image img,
+.prestasi .prestasi-item:hover .image img {
+    transform: scale(1.1);
+}
+
+.kegiatan .kegiatan-item .content,
+.prestasi .prestasi-item .content {
     padding: 25px;
 }
 
-.services .service-item h3 {
+.kegiatan .kegiatan-item h3,
+.prestasi .prestasi-item h3 {
     color: var(--color-default);
     font-weight: 700;
     padding-bottom: 8px;
@@ -921,19 +1031,22 @@ a {
     transition: 0.3s;
 }
 
-.services .service-item p {
+.kegiatan .kegiatan-item p,
+.prestasi .prestasi-item p {
     line-height: 24px;
     font-size: 14px;
     margin-bottom: 0;
 }
 
-.services .service-item .readmore {
+.kegiatan .kegiatan-item .readmore,
+.prestasi .prestasi-item .readmore {
     margin-top: 15px;
     display: inline-block;
     color: var(--color-primary);
 }
 
-.services .service-item:hover h3 {
+.kegiatan .kegiatan-item:hover h3,
+.prestasi .prestasi-item:hover h3 {
     color: var(--color-primary);
 }
 
@@ -946,16 +1059,17 @@ a {
     padding: 8px; /* Padding dalam date card */
     border-radius: 5px; /* Border radius untuk membulatkan sudut */
     color: gold; /* Warna teks */
+    cursor: pointer;
 }
 
 /*--------------------------------------------------------------
-# Testimonials Section
+# Pengumuman Section
 --------------------------------------------------------------*/
-.testimonials .testimonial-wrap {
+.pengumumans .pengumuman-wrap {
     padding-left: 10px;
 }
 
-.testimonials .testimonial-item {
+.pengumumans .pengumuman-item {
     box-sizing: content-box;
     padding: 30px;
     margin: 30px 10px;
@@ -965,87 +1079,57 @@ a {
     border-radius: 10px;
 }
 
-.testimonials .testimonial-item .testimonial-img {
-    width: 90px;
+.pengumumans .pengumuman-item .pengumuman-img {
+    width: 100px;
     border-radius: 50px;
     margin-right: 15px;
 }
 
-.testimonials .testimonial-item h3 {
+.pengumumans .pengumuman-item h3 {
     font-size: 18px;
     font-weight: bold;
     margin: 10px 0 5px 0;
-    color: #000;
+    color: var(--color-primary);
 }
 
-.testimonials .testimonial-item h4 {
-    font-size: 14px;
+.pengumumans .pengumuman-item span {
+    font-size: 12px;
     color: #999;
     margin: 0;
 }
 
-.testimonials .testimonial-item .stars {
-    margin: 10px 0;
-}
-
-.testimonials .testimonial-item .stars i {
-    color: #ffc107;
-    margin: 0 1px;
-}
-
-.testimonials .testimonial-item .quote-icon-left,
-.testimonials .testimonial-item .quote-icon-right {
-    color: #009d8b;
-    font-size: 26px;
-    line-height: 0;
-}
-
-.testimonials .testimonial-item .quote-icon-left {
-    display: inline-block;
-    left: -5px;
-    position: relative;
-}
-
-.testimonials .testimonial-item .quote-icon-right {
-    display: inline-block;
-    right: -5px;
-    position: relative;
-    top: 10px;
-    transform: scale(-1, -1);
-}
-
-.testimonials .testimonial-item p {
+.pengumumans .pengumuman-item p {
     font-style: italic;
     margin: 15px auto 15px auto;
 }
 
-.testimonials .swiper-pagination {
+.pengumumans .swiper-pagination {
     margin-top: 20px;
     position: relative;
 }
 
-.testimonials .swiper-pagination .swiper-pagination-bullet {
+.pengumumans .swiper-pagination .swiper-pagination-bullet {
     width: 12px;
     height: 12px;
     background-color: rgba(0, 0, 0, 0.2);
     opacity: 1;
 }
 
-.testimonials .swiper-pagination .swiper-pagination-bullet-active {
+.pengumumans .swiper-pagination .swiper-pagination-bullet-active {
     background-color: var(--color-primary);
 }
 
 @media (max-width: 767px) {
-    .testimonials .testimonial-wrap {
+    .pengumumans .pengumuman-wrap {
         padding-left: 0;
     }
 
-    .testimonials .testimonial-item {
+    .pengumumans .pengumuman-item {
         padding: 30px;
         margin: 15px;
     }
 
-    .testimonials .testimonial-item .testimonial-img {
+    .pengumumans .pengumuman-item .pengumuman-img {
         position: static;
         left: auto;
     }
@@ -1313,48 +1397,69 @@ a {
 }
 
 /*--------------------------------------------------------------
-# Our Team Section
+# Guru Section
 --------------------------------------------------------------*/
-.team .member {
+.guru .member {
     text-align: center;
-    background: #fff;
     border-radius: 10px;
     padding: 15px;
     overflow: hidden;
-    box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+    max-width: 260px;
+    transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out; /* Menambahkan transisi yang halus */
 }
 
-.team .member img {
+.guru .member:hover {
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffff;
+}
+
+.guru .member .card-img {
     border-radius: 10px;
+    overflow: hidden;
+    object-fit: cover;
+    height: 231px;
+    width: 231px;
+}
+
+.img-guru .member {
+    position: relative;
     overflow: hidden;
 }
 
-.team .member .member-content {
-    padding: 0 20px 30px 20px;
+.img-guru .member .badge-guru {
+    background-color: #008374;
+    color: #fff;
+    font-size: 0.7rem;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 5px 10px;
+    border-radius: 10px 0 10px 0; /* Membuat sisi kiri badge persegi dan sisi kanan membulat */
 }
 
-.team .member h4 {
+.guru .member h4 {
     font-weight: 700;
     margin-top: 16px;
     margin-bottom: 2px;
     font-size: 20px;
 }
 
-.team .member span {
+.guru .member span {
     font-style: italic;
     display: block;
     font-size: 14px;
     color: #6c757d;
 }
 
-.team .member p {
+.guru .member p {
     padding-top: 10px;
     font-size: 14px;
     font-style: italic;
     color: #6c757d;
 }
 
-.team .member .social {
+.guru .member .social {
     margin-top: 15px;
     margin-bottom: 10px;
     display: flex;
@@ -1362,7 +1467,7 @@ a {
     justify-content: space-around;
 }
 
-.team .member .social a {
+.guru .member .social a {
     color: #a2a2a2;
     transition: 0.3s;
     border-radius: 50%;
@@ -1374,14 +1479,83 @@ a {
     border: 1px solid #bbbbbb;
 }
 
-.team .member .social a:hover {
+.guru .member .social a:hover {
     color: var(--color-primary);
     border-color: var(--color-primary);
 }
 
-.team .member .social i {
+.guru .member .social i {
     font-size: 18px;
     margin: 0 2px;
+}
+
+/*--------------------------------------------------------------
+# Fasilitas, Sejarah Section
+--------------------------------------------------------------*/
+.fasilitas {
+    margin-top: -30px;
+}
+
+.fasilitas .card {
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out; /* Menambahkan transisi yang halus */
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.fasilitas .card:hover {
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+.fasilitas .card-img-top {
+    height: 300px;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 10px 10px 0 0;
+    position: relative;
+}
+
+.fasilitas .card-img-top-show {
+    width: 100%;
+    max-height: 550px;
+    border-radius: 10px;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.deskripsi-fasilitas,
+.deskripsi-sejarah,
+.deskripsi-galery {
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+.deskripsi-fasilitas::first-letter,
+.deskripsi-sejarah::first-letter {
+    font-size: 2rem;
+    font-weight: bold;
+    float: left;
+    margin-right: 10px;
+    line-height: 1;
+}
+
+.fasilitas .badge-fasilitas {
+    background-color: #008374;
+    color: #fff;
+    font-size: 0.7rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 7px 12px;
+    border-radius: 10px 0 10px 0;
+    /* Membuat sisi kiri badge persegi dan sisi kanan membulat */
+}
+
+.fasilitas .card-title {
+    font-weight: bold;
+    color: #003399;
 }
 
 /*--------------------------------------------------------------
@@ -1601,65 +1775,79 @@ a {
 }
 
 /*--------------------------------------------------------------
-# Recent Blog Posts Section
+# Ekstrakurikuler Section
 --------------------------------------------------------------*/
-.recent-posts article {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    padding: 30px;
+.eskul {
+    margin-top: -30px;
+}
+
+.eskul article {
+    margin: 10px;
+    padding: 8px;
     height: 100%;
     border-radius: 10px;
     overflow: hidden;
+    transition: transform 0.5s, box-shadow 0.5s, background-color 0.5s;
 }
 
-.recent-posts .post-img {
-    max-height: 240px;
-    margin: -30px -30px 15px -30px;
+.eskul article:hover {
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transform: translateY(-5px);
+}
+
+.eskul .eskul-item {
+    margin: 0;
+    box-shadow: 0px 0.5px 2px rgba(0, 0, 0, 0.1);
+}
+
+.eskul .eskul-img {
+    position: relative;
     overflow: hidden;
 }
 
-.recent-posts .post-category {
-    font-size: 16px;
-    color: #6f6f6f;
-    margin-bottom: 10px;
+.eskul .eskul-show .card-img-top {
+    width: 100%;
+    max-height: 550px;
+    border-radius: 10px;
+    object-fit: cover;
+    overflow: hidden;
 }
 
-.recent-posts .title {
-    font-size: 22px;
+.eskul .badge-eskul {
+    background-color: #008374;
+    color: #fff;
+    font-size: 0.7rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 7px 12px;
+    border-radius: 10px 0 10px 0; /* Membuat sisi kiri badge persegi dan sisi kanan membulat */
+}
+
+.eskul .eskul-img .img {
+    object-fit: cover;
+    overflow: hidden;
+    height: 250px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.eskul .title {
+    font-size: 18px;
     font-weight: 700;
     padding: 0;
     margin: 0 0 20px 0;
-}
-
-.recent-posts .title a {
-    color: var(--color-default);
-    transition: 0.3s;
-}
-
-.recent-posts .title a:hover {
     color: var(--color-primary);
-}
-
-.recent-posts .post-author-img {
-    width: 50px;
-    border-radius: 50%;
-    margin-right: 15px;
-}
-
-.recent-posts .post-author {
-    font-weight: 600;
-    margin-bottom: 5px;
-}
-
-.recent-posts .post-date {
-    font-size: 14px;
-    color: #3c3c3c;
-    margin-bottom: 0;
 }
 
 /*--------------------------------------------------------------
 # Contact Section
 --------------------------------------------------------------*/
+.contact {
+    margin-top: -90px;
+}
+
 .contact .info-container {
     background-color: var(--color-primary);
     height: 100%;
@@ -1894,7 +2082,7 @@ a {
 }
 
 .hero .icon-boxes {
-    padding-bottom: 60px;
+    padding-bottom: 20px;
 }
 
 @media (min-width: 1200px) {
@@ -1910,7 +2098,7 @@ a {
 }
 
 .hero .icon-box {
-    padding: 60px 30px;
+    padding: 40px 30px;
     position: relative;
     overflow: hidden;
     background: #008d7d;
@@ -1923,13 +2111,28 @@ a {
     text-align: center;
 }
 
+/* Umum border diterapkan pada semua elemen anak mulai dari elemen kedua hingga yang terakhir */
+.hero .icon-box .box-data > div:nth-child(n + 2):not(:last-child) {
+    border-left: 2px solid #fff; /* Warna border sesuai keinginan */
+}
+
+@media (max-width: 991px) {
+    .hero .icon-box .box-data > div:nth-child(3):not(:last-child) {
+        border: none;
+    }
+
+    .hero .icon-box .box-data > div:nth-child(n + 4):not(:last-child) {
+        margin-top: 10px;
+    }
+}
+
 .hero .icon-box .title {
     font-weight: 700;
     margin-bottom: 15px;
     font-size: 24px;
 }
 
-.hero .icon-box .title a {
+.hero .icon-box a {
     color: #fff;
     transition: 0.3s;
 }
@@ -1994,63 +2197,96 @@ a {
 }
 
 /*--------------------------------------------------------------
-# Blog Posts List
+# Blog Posts List, Galery
 --------------------------------------------------------------*/
-.blog .posts-list article {
+.galery-show {
+    margin-top: -30px;
+}
+
+.galery-show .gallery-photo {
+    width: 270px;
+    height: 270px;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+}
+
+.galery article {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    padding: 30px;
+    padding: 0; /* Remove padding */
     border-radius: 10px;
     overflow: hidden;
+    position: relative;
 }
 
-.blog .posts-list .post-img {
-    max-height: 240px;
-    margin: -30px -30px 15px -30px;
+.galery .post-img {
+    margin: 0; /* Remove margin */
     overflow: hidden;
     object-fit: cover;
+    position: relative;
+    height: 100%; /* Ensure the image fills the container */
+    width: 100%; /* Ensure the image fills the container */
 }
 
-.blog .posts-list .post-category {
+.galery .post-img .full-image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover; /* Ensure the image covers the container */
+}
+
+.galery .post-img .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.galery .post-img:hover .overlay {
+    opacity: 1;
+}
+
+.galery .post-img .overlay-top-left {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.galery .post-img .overlay-center {
+    margin: auto;
+}
+
+.galery .post-img .overlay-bottom {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 20px);
+}
+
+.galery .overlay-center p {
     font-size: 16px;
-    color: #555555;
-    margin-bottom: 10px;
-}
-
-.blog .posts-list .title {
-    font-size: 22px;
     font-weight: 700;
     padding: 0;
-    margin: 0 0 20px 0;
+    margin: 10px 0;
 }
 
-.blog .posts-list .title a {
-    color: var(--color-default);
-    transition: 0.3s;
-    cursor: pointer;
-}
-
-.blog .posts-list .title a:hover {
-    color: var(--color-primary);
-}
-
-.blog .posts-list .post-author-img {
-    width: 50px;
-    border-radius: 50%;
-    margin-right: 15px;
-}
-
-.blog .posts-list .post-author-list {
-    font-weight: 600;
-    margin-bottom: 5px;
-}
-
-.blog .posts-list .post-date {
+.galery .overlay-bottom p {
     font-size: 14px;
-    color: #3c3c3c;
-    margin-bottom: 0;
 }
 
-/*--------------------------------------------------------------
+/* --------------------------------------------------------------
 # Blog Details
 --------------------------------------------------------------*/
 .blog .blog-details {
@@ -2244,19 +2480,47 @@ a {
     border-radius: 10px;
 }
 
+.sidebar-item .sidebar-post .img {
+    width: 100%;
+    height: 250px;
+    border-radius: 10px;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.sidebar-post .head {
+    font-size: 12px;
+}
+
+.sidebar-post span {
+    font-size: 12px;
+}
+
 .blog .sidebar .sidebar-title {
     font-size: 20px;
     font-weight: 700;
-    padding: 0;
-    margin: 0;
+    padding-bottom: 0.6rem;
+    position: relative;
     color: var(--color-default);
+}
+
+.sidebar-header .sidebar-title:after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 2.5rem;
+    height: 0.1rem;
+    background: var(--color-primary);
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .blog .sidebar .sidebar-item + .sidebar-item {
     margin-top: 40px;
 }
 
-.blog .sidebar .search-form form {
+.search .search-form form {
     background: #fff;
     border: 1px solid rgba(34, 34, 34, 0.3);
     padding: 5px 10px;
@@ -2264,18 +2528,18 @@ a {
     border-radius: 50px;
 }
 
-.blog .sidebar .search-form form input[type="text"] {
+.search .search-form form input[type="text"] {
     border: 0;
     padding: 4px;
     border-radius: 50px;
     width: calc(100% - 60px);
 }
 
-.blog .sidebar .search-form form input[type="text"]:focus {
+.search .search-form form input[type="text"]:focus {
     outline: none;
 }
 
-.blog .sidebar .search-form form button {
+.search .search-form form button {
     position: absolute;
     top: 0;
     right: 0;
@@ -2292,11 +2556,11 @@ a {
     line-height: 0;
 }
 
-.blog .sidebar .search-form form button i {
+.search .search-form form button i {
     line-height: 0;
 }
 
-.blog .sidebar .search-form form button:hover {
+.search .search-form form button:hover {
     background: rgba(0, 131, 116, 0.8);
 }
 
@@ -2582,8 +2846,6 @@ a {
 
 .footer .footer-links ul li {
     padding: 10px 0;
-    display: flex;
-    align-items: center;
 }
 
 .footer .footer-links ul li:first-child {

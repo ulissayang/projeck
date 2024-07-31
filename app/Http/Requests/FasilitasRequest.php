@@ -21,11 +21,18 @@ class FasilitasRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'nama' => 'required|min:3|max:255|string',
             'deskripsi' => 'nullable|required',
-            'image' => 'nullable|image|file|max:1024',
             'keterangan' => 'nullable|min:3',
         ];
+
+        if ($this->isMethod('put')) {
+            $rules['image'] = 'nullable|image|file|max:2048';
+        } elseif ($this->isMethod('post')) {
+            $rules['image'] = 'required|image|file|max:2048';
+        }
+
+        return $rules;
     }
 }

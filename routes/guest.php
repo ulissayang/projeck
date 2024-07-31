@@ -10,6 +10,8 @@ use App\Http\Controllers\Guest\PengumumanController as GuestPengumumanController
 use App\Http\Controllers\Guest\GaleryController as GuestGaleryController;
 use App\Http\Controllers\Guest\PrestasiController as GuestPrestasiController;
 use App\Http\Controllers\Guest\KontakController as GuestKontakController;
+use App\Http\Controllers\Guest\EskulController as GuestEskulController;
+use App\Http\Controllers\Guest\SejarahController as GuestSejarahController;
 
 Route::get('/visi-misi-sekolah', [GuestVisiMisiController::class, 'index'])->name('visi-misi-sekolah');
 Route::get('/data-guru', [GuestGuruController::class, 'index'])->name('guru');
@@ -29,8 +31,13 @@ Route::get('/prestasi-ak/{slug}', [GuestPrestasiController::class, 'show'])->nam
 
 Route::get('/galery-foto-sekolah', [GuestGaleryController::class, 'foto'])->name('galery-foto-sekolah');
 
-Route::get('/galery-foto-sekolah/{slug}', [GuestGaleryController::class, 'show'])->name('galery-foto-show');
 Route::get('/galery-video-sekolah', [GuestGaleryController::class, 'video'])->name('galery-video-sekolah');
+Route::get('/galery-foto-sekolah/{slug}', [GuestGaleryController::class, 'show'])->name('galery-foto-show');
+
+Route::get('/eskul-sekolah', [GuestEskulController::class, 'index'])->name('eskul-sekolah');
+Route::get('/eskul-sekolah/{slug}', [GuestEskulController::class, 'show'])->name('eskul-sekolah-show');
+
+Route::get('/sejarah-sekolah', [GuestSejarahController::class, 'index'])->name('sejarah-sekolah');
 
 Route::get('/kontak-sekolah', [GuestKontakController::class, 'index'])->name('kontak-sekolah');
 

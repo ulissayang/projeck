@@ -24,11 +24,12 @@
           </div>
 
           <div class="mb-3">
-            <label for="image" class="form-label">Foto</label>
+            <label for="image" class="form-label">Foto<span class="text-danger">*</span></label>
 
             <img id="image-preview" class="img-preview img-fluid col-sm-2 py-2 d-block" loading="lazy" style="display: none;">
 
             <input type="file" class="form-control" name="image" id="image" accept="image/*" onchange="previewImage()">
+            <span class="text-muted small ms-2">Ukuran file maksimal 2 MB</span>
           </div>
 
 

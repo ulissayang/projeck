@@ -2,60 +2,98 @@
     <main id="main">
 
         {{-- start heading --}}
-        <x-guest.heading title="Kegiatan" linkText="Kegiatan" content="{{ $kegiatan->title }}" link="{{ url('/kegiatan-sekolah') }}" show="{{ $kegiatan->title }}" />
+        <x-guest.heading title="Kegiatan" linkText="Kegiatan" content="{{ $keg->title }}"
+            link="{{ url('/kegiatan-sekolah') }}" show="{{ $keg->title }}" />
         {{-- End heading --}}
 
-        <section class="blog services">
+        <section class="blog kegiatan">
             <div class="container" data-aos="fade-up">
 
                 <div class="row g-5">
 
                     <!-- ======= Content Section ======= -->
                     <div class="col-lg-8">
-                        <div class="row gy-4">
+                        <article class="article-bg pb-5">
+                            <div class="row gy-4">
 
-                            {{-- Kegiatan terbaru --}}
-                            <div class="col-md-12">
-                                <div class="service-item ">
-                                    <div class="image text-center">
-                                        {{-- kalau ada image --}}
-                                        @if ($kegiatan->image != null)
-                                        <img src="{{ asset('storage/' . $kegiatan->image) }}" alt="Kegiatan"
-                                            class="card-img">
-                                        @else
-                                        <img src="{{ asset('guest/assets/img/keg-sekolah.svg') }}"
-                                            alt="Kegiatan Sekolah">
-                                        @endif
-                                    </div>
-
-                                    <div class="content">
-                                        <div class="d-flex float-end">
-                                            <span class=" text-muted small me-3"><i class="text-warning bi bi-geo-alt"></i> {{
-                                                $kegiatan->location }}</span>
-                                            <span class=" text-muted small"><i class="text-warning bi bi-calendar2-event-fill"></i>
-                                                {{ (new \Carbon\Carbon($kegiatan->date_time))->format('d F, Y')
-                                                }}</span>
+                                {{-- Kegiatan terbaru --}}
+                                <div class="col-md-12">
+                                    <div class="kegiatan-show">
+                                        <div class="image text-center">
+                                            {{-- kalau ada image --}}
+                                            @if ($keg->image != null)
+                                            <img src="{{ asset('storage/' . $keg->image) }}" alt="Kegiatan"
+                                                class="card-img">
+                                            @else
+                                            <img src="{{ asset('guest/assets/img/keg-sekolah.svg') }}"
+                                                alt="Kegiatan Sekolah">
+                                            @endif
                                         </div>
 
-                                        <p class="py-4 mt-2">{!! $kegiatan->description !!}</p>
+                                        <div class="card-body px-4">
+                                            <div class="pt-2 mt-2">
+                                                <span class="small text-muted me-4"><i
+                                                        class="bi bi-person-circle text-success me-2"></i>Oleh : {{
+                                                    $keg->user->name
+                                                    }}</span>
+                                                <span class=" text-muted small"><i
+                                                        class="text-success me-2 bi bi-calendar-check"></i>Tanggal
+                                                    Posting
+                                                    :
+                                                    {{ (new \Carbon\Carbon($keg->created_at))->format('d F, Y')
+                                                    }}</span>
+                                            </div>
+                                            <div class="pt-3 border-bottom">
+                                                <p class="fw-bold"><i
+                                                        class="text-success me-2 bi bi-calendar-event"></i>Pelaksanaan :
+                                                    <span>{{ (new
+                                                        \Carbon\Carbon($keg->date_time))->format('d F, Y')
+                                                        }}</span>
+                                                </p>
+                                                <p class="fw-bold"><i class="text-success me-2 bi bi-clock"></i>Waktu :
+                                                    <span>{{ (new
+                                                        \Carbon\Carbon($keg->date_time))->format('H:i')
+                                                        }} WIT</span>
+                                                </p>
+                                                <p class="fw-bold"><i
+                                                        class="text-success me-2 bi bi-geo-alt-fill"></i>Lokasi :
+                                                    <span>{{
+                                                        $keg->location }}</span>
+                                                </p>
+                                            </div>
+                                            <p class="mt-2 deskripsi-kegiatan">{!! $keg->description !!}</p>
 
-                                        <span class="small text-muted border-top py-2 d-block"><i
-                                                class="text-warning bi bi-person"></i> {{ $kegiatan->user->name }}</span>
+                                        </div>
                                     </div>
+
                                 </div>
 
                             </div>
-                        </div>
+                        </article>
                     </div>
                     {{-- end content section --}}
 
                     {{-- sidebar start --}}
                     <div class="col-lg-4">
-                        <x-guest.sidebar />
+                        {{-- include sidebar / modal kegiatan --}}
+                        <x-guest.sidebar :kegiatan="$kegiatan" :agenda="$agenda" :pengumuman="$pengumuman" />
+                        {{-- include modal agenda --}}
+                        @foreach ($agenda as $item)
+                        <x-guest.modal :title="$item->title" :dateTime="$item->date_time"
+                            :description="$item->description" :location="$item->location" type="agenda" :id="$item->id"
+                            :author="$item->user->name" :created_at="$item->created_at" />
+                        @endforeach
+
+                        {{-- include modal pengumuman --}}
+                        @foreach ($pengumuman as $item)
+                        <x-guest.modal :title="$item->title" :description="$item->body" :created_at="$item->created_at"
+                            type="announcement" :id="$item->id" :author="$item->user->name" />
+                        @endforeach
                     </div>
                     {{-- sidebar end --}}
 
                 </div>
+
             </div>
         </section>
 

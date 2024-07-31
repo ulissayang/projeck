@@ -1,89 +1,116 @@
 <div class="sidebar">
 
-  <div class="sidebar-item search-form">
-    <h3 class="sidebar-title">Search</h3>
-    <form action="" class="mt-3">
-      <input type="text">
-      <button type="submit"><i class="bi bi-search"></i></button>
-    </form>
-  </div><!-- End sidebar search formn-->
-
-  <div class="sidebar-item categories">
-    <h3 class="sidebar-title">Categories</h3>
-    <ul class="mt-3">
-      <li><a href="#">General <span>(25)</span></a></li>
-      <li><a href="#">Lifestyle <span>(12)</span></a></li>
-      <li><a href="#">Travel <span>(5)</span></a></li>
-      <li><a href="#">Design <span>(22)</span></a></li>
-      <li><a href="#">Creative <span>(8)</span></a></li>
-      <li><a href="#">Educaion <span>(14)</span></a></li>
-    </ul>
-  </div><!-- End sidebar categories-->
-
-  <div class="sidebar-item recent-posts">
-    <h3 class="sidebar-title">Recent Posts</h3>
-
-    <div class="mt-3">
-
-      <div class="post-item mt-3">
-        <img src="assets/img/blog/blog-recent-1.jpg" alt="">
-        <div>
-          <h4><a href="blog-details.html">Nihil blanditiis at in nihil autem</a></h4>
-          <time datetime="2020-01-01">Jan 1, 2020</time>
-        </div>
-      </div><!-- End recent post item-->
-
-      <div class="post-item">
-        <img src="assets/img/blog/blog-recent-2.jpg" alt="">
-        <div>
-          <h4><a href="blog-details.html">Quidem autem et impedit</a></h4>
-          <time datetime="2020-01-01">Jan 1, 2020</time>
-        </div>
-      </div><!-- End recent post item-->
-
-      <div class="post-item">
-        <img src="assets/img/blog/blog-recent-3.jpg" alt="">
-        <div>
-          <h4><a href="blog-details.html">Id quia et et ut maxime similique occaecati ut</a></h4>
-          <time datetime="2020-01-01">Jan 1, 2020</time>
-        </div>
-      </div><!-- End recent post item-->
-
-      <div class="post-item">
-        <img src="assets/img/blog/blog-recent-4.jpg" alt="">
-        <div>
-          <h4><a href="blog-details.html">Laborum corporis quo dara net para</a></h4>
-          <time datetime="2020-01-01">Jan 1, 2020</time>
-        </div>
-      </div><!-- End recent post item-->
-
-      <div class="post-item">
-        <img src="assets/img/blog/blog-recent-5.jpg" alt="">
-        <div>
-          <h4><a href="blog-details.html">Et dolores corrupti quae illo quod dolor</a></h4>
-          <time datetime="2020-01-01">Jan 1, 2020</time>
-        </div>
-      </div><!-- End recent post item-->
-
+  <div class="slides-1 swiper sidebar-item">
+    <div class="d-flex justify-content-between align-items-center sidebar-header">
+      <h3 class="sidebar-title">Agenda</h3>
+      <a href="{{ url('agenda-sekolah') }}" class="btn btn-sm btn-outline-success">
+        Lihat Semua
+      </a>
     </div>
+    <div class="mt-3 swiper-wrapper pb-4 pt-4">
+      @foreach ( $agenda as $data)
+      <div class="swiper-slide sidebar-post px-2 mb-3">
+        <div class="card overflow-hidden" style="width:16rem;">
+          <a href="#" data-bs-toggle="modal" class="card-text" data-bs-target="#modalagenda{{ $data->id }}">
+            <div class="card-body">
+              <div class="d-flex justify-content-between head">
+                <span class="small mb-2 text-body-secondary"><i class="me-2 text-success bi bi-calendar3"></i>{{
+                  \Carbon\Carbon::parse($data->date_time)->isoFormat('D/MM/YYYY') }}</span>
+                <span class="small mb-2 text-body-secondary"><i class="me-2 text-success bi bi-clock"></i>{{
+                  \Carbon\Carbon::parse($data->date_time)->format('H:i') }} WIT - Selesai</span>
+              </div>
+              <h3 class="pt-2 small text-dark">
+                {{-- batasi hanya 33 karakter dari title --}}
+                {{ \Illuminate\Support\Str::limit($data->title, 20) }}
+              </h3>
+              <span class="small text-muted mt-3"><i class="me-2 text-success bi bi-geo-alt-fill"></i>{{
+                $data->location
+                }}</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      @endforeach
+    </div>
+    <div class="swiper-pagination pt-5"></div>
+  </div><!-- End sidebar agenda-->
 
-  </div><!-- End sidebar recent posts-->
+  <hr class="pb-3">
 
-  <div class="sidebar-item tags">
-    <h3 class="sidebar-title">Tags</h3>
-    <ul class="mt-3">
-      <li><a href="#">App</a></li>
-      <li><a href="#">IT</a></li>
-      <li><a href="#">Business</a></li>
-      <li><a href="#">Mac</a></li>
-      <li><a href="#">Design</a></li>
-      <li><a href="#">Office</a></li>
-      <li><a href="#">Creative</a></li>
-      <li><a href="#">Studio</a></li>
-      <li><a href="#">Smart</a></li>
-      <li><a href="#">Tips</a></li>
-      <li><a href="#">Marketing</a></li>
-    </ul>
-  </div><!-- End sidebar tags-->
+  <div class="slides-1 swiper sidebar-item">
+    <div class="d-flex justify-content-between align-items-center sidebar-header">
+      <h3 class="sidebar-title">Kegiatan</h3>
+      <a href="{{ url('kegiatan-sekolah') }}" class="btn btn-sm btn-outline-success">
+        Lihat Semua
+      </a>
+    </div>
+    <div class="mt-3 swiper-wrapper pt-4">
+      @foreach ( $kegiatan as $data)
+      <div class="swiper-slide sidebar-post px-2 position-relative mb-3">
+        <div class="image position-relative">
+
+          <div class="date-card position-absolute bg-dark-transparent rounded">
+            <div class="position-relative text-center text-white">
+              <div class="hari fs-4 fw-bold" style="font-size: 0.4rem;">{{ (new
+                \Carbon\Carbon($data->created_at))->format('d') }}</div>
+              <div class="bulan" style="font-size: 0.7rem;">{{ (new \Carbon\Carbon($data->created_at))->format('F,
+                Y') }}</div>
+            </div>
+          </div>
+
+          @if ($data->image != null)
+          <img src="{{ asset('storage/' . $data->image) }}" alt="{{ $data->title }}" class="img" loading="lazy">
+          @else
+          <img src="{{ asset('guest/assets/img/keg-sekolah.svg') }}" class="img" alt="no data" loading="lazy">
+          @endif
+        </div>
+        <div class="py-3">
+          <h5 class="fw-bold small">{{ $data->title }}</h5>
+
+          <a href="{{ route('kegiatan-sekolah-show', $data->slug) }}"
+            class="readmore stretched-link text-end d-block"></a>
+        </div>
+      </div>
+      @endforeach
+    </div>
+    <div class="swiper-pagination pt-5"></div>
+  </div><!-- End sidebar kegiatan -->
+
+  <hr class="pb-3">
+
+  <!-- sidebar pengumuman -->
+  <div class="slides-1 swiper sidebar-item">
+    <div class="d-flex justify-content-between align-items-center sidebar-header">
+      <h3 class="sidebar-title">Pengumuman</h3>
+      <a href="{{ url('pengumuman-sekolah') }}" class="btn btn-sm btn-outline-success">
+        Lihat Semua
+      </a>
+    </div>
+    <div class="mt-3 swiper-wrapper pb-4 pt-4">
+      @foreach ( $pengumuman as $data)
+      <div class="swiper-slide sidebar-post px-2 mb-3">
+        <div class="pengumuman-wrap">
+          <div class="pengumuman-item">
+            <div class="d-flex align-items-center">
+              <div>
+                <h5 class="fw-bold small">{{ $data->title }}</h5>
+              </div>
+            </div>
+            <span class="pt-4 d-block small"> <i class="bi bi-info-circle-fill me-1 text-primary"></i> Detail
+              Pengumuman</span>
+            <p class="text-muted small pt-2">{{ $data->excerpt }}</p>
+            <div>
+              <a data-bs-toggle="modal" data-bs-target="#modalannouncement{{ $data->id }}">
+                <button type="button" class="btn btn-sm btn-outline-primary"><i
+                    class="bi bi-eye-fill me-1"></i>Lihat</button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      @endforeach
+    </div>
+    <div class="swiper-pagination pt-5"></div>
+  </div><!-- End sidebar pengumuman-->
 
 </div><!-- End Blog Sidebar -->

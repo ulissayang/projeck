@@ -15,8 +15,9 @@
   </title>
 
   <!-- Favicons -->
-  <link href="{{ asset('guest/assets/img/favicon.png') }}" rel="icon">
-  <link href="{{ asset('guest/assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+  @if($pengaturan && $pengaturan->favicon)
+  <link href="{{ asset('storage/' . $pengaturan->favicon) }}" rel="icon">
+  @endif
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,16 +34,29 @@
   <link href="{{ asset('guest/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link rel="stylesheet" href="{{ asset('guest/assets/css/style1.css') }}">
+  <link rel="stylesheet" href="{{ asset('guest/assets/css/style.css') }}">
+
+  @stack('link')
 </head>
 
 <body class="font-sans antialiased ">
 
+  {{-- ketika di bagian login tidak usah menampilkan --}}
+  @if (Request::segment(1) != 'login' && Request::segment(1) != 'register' && Request::segment(1) != 'forgot-password'
+  && Request::segment(1) != 'reset-password' && Request::segment(1) != 'verify-email' && Request::segment(1) !=
+  'confirm-password')
   <x-navbar />
+  @endif
 
+  {{-- content --}}
   {{ $slot }}
+  {{-- end content --}}
 
+  @if (Request::segment(1) != 'login' && Request::segment(1) != 'register' && Request::segment(1) != 'forgot-password'
+  && Request::segment(1) != 'reset-password' && Request::segment(1) != 'verify-email' && Request::segment(1) !=
+  'confirm-password')
   <x-guest.footer />
+  @endif
 
 
   <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-rocket"></i></a>
@@ -59,15 +73,18 @@
   <script src="{{ asset('guest/assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
   <script src="{{ asset('guest/assets/vendor/php-email-form/validate.js') }}"></script>
 
+  @stack('script')
   <!-- Template Main JS File -->
   <script src="{{ asset('guest/assets/js/main.js') }}"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+  {{-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
     integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
-  </script>
+  </script> --}}
+
+
 
 </body>
 

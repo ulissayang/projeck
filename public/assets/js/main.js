@@ -414,3 +414,43 @@ $(document).ready(function () {
         ],
     });
 });
+
+// sidebar add/remove = active & collapse
+document.addEventListener("DOMContentLoaded", function () {
+    var currentUrl = window.location.href;
+    var links = document.querySelectorAll(".sidebar-nav a");
+
+    links.forEach(function (link) {
+        var linkUrl = link.href;
+        if (currentUrl === linkUrl) {
+            link.classList.add("active");
+
+            // Mengatur parent menu collapse untuk menampilkan menu yang aktif
+            var parentNav = link.closest(".nav-content");
+            if (parentNav) {
+                var parentLink = link
+                    .closest(".nav-item")
+                    .querySelector('a[data-bs-toggle="collapse"]');
+                if (parentLink) {
+                    parentLink.classList.remove("collapsed");
+                    parentNav.classList.add("show");
+                    parentLink.setAttribute("aria-expanded", "true");
+                }
+            }
+        }
+    });
+
+    // Menambahkan logika untuk item-menu collapsed
+    var menuLinks = document.querySelectorAll(
+        '.sidebar-nav .nav-link[data-bs-toggle="collapse"]'
+    );
+    menuLinks.forEach(function (menuLink) {
+        var target = document.querySelector(
+            menuLink.getAttribute("data-bs-target")
+        );
+        if (target && !target.classList.contains("show")) {
+            menuLink.classList.add("collapsed");
+            menuLink.setAttribute("aria-expanded", "false");
+        }
+    });
+});

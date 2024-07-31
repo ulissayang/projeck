@@ -20,12 +20,13 @@ return new class extends Migration
             $table->string('email');
             $table->string('jam_kerja');
             $table->text('alamat');
+            $table->text('deskripsi');
             $table->string('logo');
             $table->string('favicon');
             $table->string('banner');
             $table->string('background');
             $table->string('ig')->nullable();
-            $table->string('map');
+            $table->text('map');
             $table->string('akreditas');
             $table->string('youtube')->nullable();
             $table->string('facebook')->nullable();

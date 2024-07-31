@@ -37,6 +37,7 @@ class PengaturanController extends Controller
             $pengaturan->email = $validated['email'];
             $pengaturan->telp = $validated['telp'];
             $pengaturan->alamat = $validated['alamat'];
+            $pengaturan->deskripsi = $validated['deskripsi'];
             $pengaturan->jam_kerja = $validated['jam_kerja'];
             $pengaturan->ig = $validated['ig'];
             $pengaturan->youtube = $validated['youtube'];

@@ -11,8 +11,9 @@
     <title>{{ isset($title) ? $title . ' / ' . config('app.name', 'Laravel') : config('app.name', 'Laravel') }}</title>
 
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    @if($pengaturan && $pengaturan->favicon)
+    <link href="{{ asset('storage/' . $pengaturan->favicon) }}" rel="icon">
+    @endif
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -43,9 +44,7 @@
     <!-- End Header -->
 
     <!-- ======= Sidebar ======= -->
-    <x-back.sidebar>
-
-    </x-back.sidebar>
+    <x-back.sidebar />
     <!-- End Sidebar-->
 
     {{-- page content --}}

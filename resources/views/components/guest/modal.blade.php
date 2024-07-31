@@ -1,35 +1,43 @@
 <!-- resources/views/components/guest/modal.blade.php -->
-@props(['title', 'dateTime' => null, 'description', 'location' => null, 'type', 'id'])
+@props(['title', 'dateTime' => null, 'description', 'location' => null, 'type', 'id', 'author', 'created_at'])
 
-<div class="modal fade" id="modal{{ $type . $id }}" tabindex="-1" aria-labelledby="modalLabel{{ $type . $id }}"
-    aria-hidden="true">
-    <div class="modal-dialog modal-md modal-dialog-scrollable modal-dialog-centered">
+<div class="modal fade" id="modal{{ $type . $id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="modalLabel{{ $type . $id }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content p-4">
             <div class="m-auto">
                 <h1 class="modal-title fs-5 fw-bold text-success" id="modalLabel{{ $type . $id }}">{{ $title }}</h1>
             </div>
             <div class="modal-body">
-                @if ($type === 'agenda')
-                <div class="row">
-                    <div class="col">
-                        <strong><i class="text-warning me-2 bi bi-clock"></i>Waktu</strong>
-                        <p class="small ms-4">{{ \Carbon\Carbon::parse($dateTime)->format('H:i') }} WIT - Selesai</p>
-                    </div>
-                    <div class="pb-3 col">
-                        <strong><i class="text-warning me-2 bi bi-calendar2-check"></i>Tanggal</strong>
-                        <p class="small ms-4">{{ \Carbon\Carbon::parse($dateTime)->isoFormat('dddd, D MMMM YYYY') }}</p>
-                    </div>
+                <div class="mb-4 row border-bottom pb-2">
+                    <span class="small text-muted col-12 col-lg-6"><i
+                            class="text-success bi bi-person-circle me-2"></i>Oleh : {{ $author }}</span>
+                    <span class="small text-muted col-12 col-lg-6"><i
+                            class="text-success bi bi-calendar3 me-2"></i>Tanggal Posting : {{
+                    \Carbon\Carbon::parse($created_at)->isoFormat('D/MM/YYYY') }}</span>
                 </div>
-                <span class="small text-muted"><i class="text-primary bi bi-exclamation-circle"></i> Detail
+                @if ($type === 'agenda')
+                <span class="small text-muted"><i class="text-primary bi bi-info-circle-fill"></i> Detail
                     agenda</span>
                 <p class="py-2 text-muted small text-secondary">{!! $description !!}</p>
-                <i class="text-warning bi bi-geo-alt me-2"></i><strong>Tempat Pelaksanaan</strong>
-                <p class="ms-4">{{ $location }}</p>
+                <div class="row">
+                    <div class="col-lg-4 col-md-12">
+                        <strong><i class="text-success me-2 bi bi-clock"></i>Waktu</strong>
+                        <p class="small ms-4">{{ \Carbon\Carbon::parse($dateTime)->format('H:i') }} WIT - Selesai</p>
+                    </div>
+                    <div class="col-lg-4 col-md-12">
+                        <strong><i class="text-success me-2 bi bi-calendar2-check"></i>Tanggal</strong>
+                        <p class="small ms-4">{{ \Carbon\Carbon::parse($dateTime)->isoFormat('dddd, D MMMM YYYY') }}</p>
+                    </div>
+                    <div class="pb-3 col-lg-4 col-md-12">
+                        <strong><i class="text-success me-2 bi bi-geo-alt-fill"></i>Tempat Pelaksanaan</strong>
+                        <p class="small ms-4">{{ $location }}</p>
+                    </div>
+                </div>
                 @elseif ($type === 'announcement')
-                <span class="pb-3 d-block"><i class="text-warning bi bi-calendar2-check"></i> {{ \Carbon\Carbon::parse($dateTime)->isoFormat('dddd, D MMMM YYYY') }}</span>
-                <span class="small text-muted d-block"><i class="text-primary bi bi-exclamation-circle"></i> Detail
+                <span class="small text-muted d-block"><i class="text-primary bi bi-info-circle-fill"></i> Detail
                     Pengumuman</span>
-                <p class="text-muted small text-secondary">{!! $description !!}</p>
+                <p class="text-muted small text-secondary pt-3">{!! $description !!}</p>
                 @endif
             </div>
             <div class="m-auto">

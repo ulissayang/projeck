@@ -21,10 +21,16 @@ class GuruRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'nama' => 'required|min:3|max:255|string',
-            'jabatan' => 'required',
-            'image' => 'nullable|image|file|max:1024',
+            'jabatan' => 'required'
         ];
+
+        if ($this->isMethod('post')) {
+            $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+        } elseif ($this->isMethod('put')) {
+            $rules['image'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+        }
+        return $rules;
     }
 }

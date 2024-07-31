@@ -25,10 +25,11 @@
           </div>
 
           <div class="mb-3">
-            <label for="image" class="form-label">Gambar</label>
+            <label for="image" class="form-label">Foto<span class="text-danger">*</span></label>
             <div id="image-preview-container" class="py-2 d-flex gap-2 align-items-center flex-wrap"></div>
             <input type="file" class="form-control" name="image[]" id="image" accept="image/*" multiple
               onchange="previewImage()">
+            <span class="text-muted small ms-2">Ukuran file maksimal 2 MB</span>
           </div>
 
           <div class="float-end">

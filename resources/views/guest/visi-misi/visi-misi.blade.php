@@ -22,23 +22,12 @@
 
               <h2 class="title text-center">{{ $visi->jenis }}</h2>
 
-              {{-- <div class="meta-top">
-                <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-details.html">John
-                      Doe</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-details.html"><time
-                        datetime="2020-01-01">Jan 1, 2022</time></a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-details.html">12
-                      Comments</a></li>
-                </ul>
-              </div><!-- End meta top --> --}}
-
               <div class="content">
                 <blockquote>
                   <p>
                     {!! $visi->deskripsi !!}
                   </p>
-                  <span class="text-end text-muted small fst-italic d-block pt-5">&tilde; 
+                  <span class="text-end text-muted small fst-italic d-block pt-5">&tilde;
                     {{ $visi->updated_at->format('d - m - Y') }} &tilde;
                   </span>
                 </blockquote>
@@ -48,19 +37,11 @@
                   <p>
                     {!! $misi->deskripsi !!}
                   </p>
-                  <span class="text-end text-muted small fst-italic d-block pt-5">&tilde; 
+                  <span class="text-end text-muted small fst-italic d-block pt-5">&tilde;
                     {{ $misi->updated_at->format('d - m - Y') }} &tilde;
                   </span>
                 </blockquote>
-
-
-
               </div><!-- End post content -->
-
-              {{-- <div class="meta-bottom">
-                <i class="bi bi-person"></i>
-                <span class="tags">{{ $visi->user->name }}</span>
-              </div><!-- End meta bottom --> --}}
 
             </article><!-- End blog post -->
 
@@ -69,7 +50,20 @@
 
           {{-- sidebar start --}}
           <div class="col-lg-4">
-            <x-guest.sidebar />
+            {{-- include sidebar / modal kegiatan --}}
+            <x-guest.sidebar :kegiatan="$kegiatan" :agenda="$agenda" :pengumuman="$pengumuman" />
+            {{-- include modal agenda --}}
+            @foreach ($agenda as $item)
+            <x-guest.modal :title="$item->title" :dateTime="$item->date_time" :description="$item->description"
+              :location="$item->location" type="agenda" :id="$item->id" :author="$item->user->name"
+              :created_at="$item->created_at" />
+            @endforeach
+
+            {{-- include modal pengumuman --}}
+            @foreach ($pengumuman as $item)
+            <x-guest.modal :title="$item->title" :description="$item->body" :created_at="$item->created_at"
+              type="announcement" :id="$item->id" :author="$item->user->name" />
+            @endforeach
           </div>
           {{-- sidebar end --}}
 
