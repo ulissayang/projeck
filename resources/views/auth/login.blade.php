@@ -68,7 +68,7 @@
                                 <p class="text-center small">Masukan email dan kata sandi anda</p>
                             </div>
 
-                            <form method="POST" action="{{ route('login') }}" class="row g-3" id="login-form">
+                            <form method="POST" action="{{ route('login') }}" class="row g-3" id="form">
                                 @csrf
                                 <!-- Email Address -->
                                 <div class="col-12">
@@ -106,7 +106,7 @@
                                     </a>
                                     @endif
 
-                                    <x-button id="login-button" type="submit">
+                                    <x-button id="button" type="submit">
                                         {{ __('Log in') }}
                                     </x-button>
                                     <x-button id="loading-button" type="button" style="display: none;" disabled>
@@ -125,8 +125,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('login-form');
-            const loginButton = document.getElementById('login-button');
+            const form = document.getElementById('form');
+            const loginButton = document.getElementById('button');
             const loadingButton = document.getElementById('loading-button');
 
             form.addEventListener('submit', function(event) {
@@ -136,4 +136,5 @@
             });
         });
     </script>
+
 </x-guest.app-layout>

@@ -8,18 +8,17 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Pengumuman extends Model
+class PPDB extends Model
 {
     use HasFactory, Sluggable;
 
-    protected $table = 'pengumuman';
+    protected $table = 'ppdb';
 
     protected $fillable = [
-        'title',
+        'name',
+        'image',
         'slug',
-        'excerpt',
-        'body',
-        'file'
+        'deskripsi',
     ];
 
     public function user(): BelongsTo
@@ -31,7 +30,7 @@ class Pengumuman extends Model
     {
         return [
             'slug' => [
-                'source' => 'title',
+                'source' => 'name',
                 'unique' => true,
                 'onUpdate' => true,
                 'separator' => '-',
@@ -44,18 +43,4 @@ class Pengumuman extends Model
             ]
         ];
     }
-      // Definisikan scope untuk pencarian di sisi user
-      public function scopeSearch($query, $search)
-      {
-          if ($search) {
-              return $query->where(function ($query) use ($search) {
-                  $query->where('title', 'like', '%' . $search . '%')
-                      ->orWhere('excerpt', 'like', '%' . $search . '%')
-                      ->orWhere('body', 'like', '%' . $search . '%')
-                      ->orWhere('created_at', 'like', '%' . $search . '%');
-              });
-          }
-  
-          return $query;
-      }
 }

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers;
+use App\Http\Controllers\Controller;
+use Illuminate\Mail\Mailables\Content;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [Controllers\Guest\HomeController::class, 'index'])->name('home');
@@ -42,7 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/visi-misi', Controllers\Back\VisiMisiController::class)->except(['show', 'edit', 'destroy', 'create']);
     Route::delete('/visi-misi/{visi_misi:slug}', [Controllers\Back\VisiMisiController::class, 'destroy'])->name('visi-misi.destroy');
     Route::get('/visi-misi/{visi_misi:slug}/edit', [Controllers\Back\VisiMisiController::class, 'edit'])->name('visi-misi.edit');
-    
+
     Route::resource('/sejarah', Controllers\Back\SejarahController::class)->except(['show', 'edit', 'destroy', 'create']);
     Route::delete('/sejarah/{sejarah:slug}', [Controllers\Back\SejarahController::class, 'destroy'])->name('sejarah.destroy');
     Route::get('/sejarah/{sejarah:slug}', [Controllers\Back\SejarahController::class, 'show'])->name('sejarah.show');
@@ -78,12 +80,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/galery-video/{galery_video:slug}/edit', [Controllers\Back\GaleryVideoController::class, 'edit'])->name('galery-video.edit');
     Route::post('/galery-video/bulk-delete',  [Controllers\Back\GaleryVideoController::class, 'bulkDelete'])->name('galery-video.bulk_delete');
 
-    Route::resource('/pengaturan', Controllers\Back\PengaturanController::class)->except(['show', 'edit', 'destroy', 'create']);
-    Route::delete('/pengaturan/{pengaturan:slug}', [Controllers\Back\PengaturanController::class, 'destroy'])->name('pengaturan.destroy');
-    Route::get('/pengaturan/{pengaturan:slug}', [Controllers\Back\PengaturanController::class, 'show'])->name('pengaturan.show');
-    Route::get('/pengaturan/{pengaturan:slug}/edit', [Controllers\Back\PengaturanController::class, 'edit'])->name('pengaturan.edit');
+    Route::get('/pengaturan', [Controllers\Back\PengaturanController::class, 'index'])->name('pengaturan.index');
+    Route::put('/pengaturan/{pengaturan}', [Controllers\Back\PengaturanController::class, 'update'])->name('pengaturan.update');
 
-    Route::resource('/thnakademik', Controllers\Back\TahunAkademikController::class)->except(['show', 'destroy']);
+    Route::resource('/ppdb', Controllers\Back\PPDBController::class)->except(['show', 'edit', 'destroy', 'create']);
+    Route::delete('/ppdb/{ppdb:slug}', [Controllers\Back\PPDBController::class, 'destroy'])->name('ppdb.destroy');
+    Route::get('/ppdb/{ppdb:slug}', [Controllers\Back\PPDBController::class, 'show'])->name('ppdb.show');
+    Route::get('/ppdb/{ppdb:slug}/edit', [Controllers\Back\PPDBController::class, 'edit'])->name('ppdb.edit');
+
+    // Route::resource('/thnakademik', Controllers\Back\TahunAkademikController::class)->except(['show', 'destroy']);
 });
 
 require __DIR__ . '/auth.php';

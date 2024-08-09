@@ -32,7 +32,7 @@ class KegiatanController extends Controller
 
         // Query untuk agenda dan pengumuman
         $agenda = Agenda::select('id', 'title', 'user_id', 'description', 'location', 'date_time', 'created_at')->with('user')->latest()->take(6)->get();
-        $pengumuman = Pengumuman::select('id', 'title', 'user_id', 'body', 'excerpt', 'created_at')->with('user')->latest()->take(6)->get();
+        $pengumuman = Pengumuman::select('id', 'title', 'user_id', 'body', 'file', 'excerpt', 'created_at')->with('user')->latest()->take(6)->get();
 
         // Query untuk kegiatan lainnya kecuali yang sesuai dengan slug
         $kegiatan = Kegiatan::select('title', 'user_id', 'excerpt', 'image', 'location', 'created_at', 'slug')

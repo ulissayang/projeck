@@ -9,10 +9,7 @@
 
     <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
-
-
-
-            <li class="nav-item me-4">
+            <li class="nav-item me-4 d-none d-md-block">
                 <div id="live-clock" class="text-muted" style="font-size: smaller;">
                     <script>
                         function updateClock() {

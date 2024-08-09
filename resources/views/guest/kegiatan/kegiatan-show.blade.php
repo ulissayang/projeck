@@ -1,4 +1,4 @@
-<x-guest.app-layout title="Kegiatan">
+<x-guest.app-layout title="Kegiatan - {{ $keg->title }}">
     <main id="main">
 
         {{-- start heading --}}
@@ -26,18 +26,18 @@
                                                 class="card-img">
                                             @else
                                             <img src="{{ asset('guest/assets/img/keg-sekolah.svg') }}"
-                                                alt="Kegiatan Sekolah">
+                                                alt="Kegiatan Sekolah" class="card-img">
                                             @endif
                                         </div>
 
                                         <div class="card-body px-4">
                                             <div class="pt-2 mt-2">
                                                 <span class="small text-muted me-4"><i
-                                                        class="bi bi-person-circle text-success me-2"></i>Oleh : {{
+                                                        class="bi bi-person-circle icons me-2"></i>Oleh : {{
                                                     $keg->user->name
                                                     }}</span>
                                                 <span class=" text-muted small"><i
-                                                        class="text-success me-2 bi bi-calendar-check"></i>Tanggal
+                                                        class="icons me-2 bi bi-calendar-check"></i>Tanggal
                                                     Posting
                                                     :
                                                     {{ (new \Carbon\Carbon($keg->created_at))->format('d F, Y')
@@ -45,18 +45,18 @@
                                             </div>
                                             <div class="pt-3 border-bottom">
                                                 <p class="fw-bold"><i
-                                                        class="text-success me-2 bi bi-calendar-event"></i>Pelaksanaan :
+                                                        class="icons me-2 bi bi-calendar-event"></i>Pelaksanaan :
                                                     <span>{{ (new
                                                         \Carbon\Carbon($keg->date_time))->format('d F, Y')
                                                         }}</span>
                                                 </p>
-                                                <p class="fw-bold"><i class="text-success me-2 bi bi-clock"></i>Waktu :
+                                                <p class="fw-bold"><i class="icons me-2 bi bi-clock"></i>Waktu :
                                                     <span>{{ (new
                                                         \Carbon\Carbon($keg->date_time))->format('H:i')
                                                         }} WIT</span>
                                                 </p>
                                                 <p class="fw-bold"><i
-                                                        class="text-success me-2 bi bi-geo-alt-fill"></i>Lokasi :
+                                                        class="icons me-2 bi bi-geo-alt-fill"></i>Lokasi :
                                                     <span>{{
                                                         $keg->location }}</span>
                                                 </p>
@@ -86,7 +86,7 @@
 
                         {{-- include modal pengumuman --}}
                         @foreach ($pengumuman as $item)
-                        <x-guest.modal :title="$item->title" :description="$item->body" :created_at="$item->created_at"
+                        <x-guest.modal :title="$item->title" :description="$item->body" :file="$item->file" :created_at="$item->created_at"
                             type="announcement" :id="$item->id" :author="$item->user->name" />
                         @endforeach
                     </div>

@@ -106,4 +106,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Sejarah::class);
     }
+
+    public function ppdb(): HasMany
+    {
+        return $this->hasMany(PPDB::class);
+    }
 }

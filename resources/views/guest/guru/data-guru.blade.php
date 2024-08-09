@@ -33,9 +33,9 @@
               @foreach ($guru as $data)
               <div class="col-md-3 d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
                 <div class="member">
-                  <a href="{{ asset('storage/guru-images/'. $data->image)  }}" data-fancybox="gallery"
+                  <a href="{{ asset('storage/guru-images/'. $data->image)  }}" data-fancybox="guru"
                     data-caption="{{ $data->nama }}">
-                    <img src="{{ asset('storage/guru-images/thumbnail/'. $data->image)  }}" class="card-img"
+                    <img src="{{ asset('storage/guru-images/thumbnail/'. $data->image)  }}" class="guru-photo card-img"
                       alt="{{ $data->nama }}" loading="lazy">
                   </a>
                   <h4>{{ $data->nama }}</h4>

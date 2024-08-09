@@ -12,8 +12,8 @@
             <section class="contact">
               <div class="container" data-aos="fade-up">
                 <div class="section-header">
-                  <h2>Kontak</h2>
-                  <p>Kontak Sekolah</p>
+                  <h2>Hubungi Kami</h2>
+                  <p>Silahkan kirimkan saran atau kritik di bawah ini</p>
                 </div>
 
                 <div class="row gx-lg-0 gy-4 mb-5">
@@ -77,13 +77,18 @@
                         <div class="loading">Loading</div>
                         <div class="sent-message">Your message has been sent. Thank you!</div>
                       </div>
-                      <div class="text-center"><button type="submit">Kirim Kritik/Masukan</button></div>
+                      <div class="text-center"><button type="submit">Kirim Pesan</button></div>
                     </form>
                   </div><!-- End Contact Form -->
 
                 </div>
 
+                <div class="section-header">
+                  <h2>Peta Lokasi</h2>
+                  <p>Lokasi Sekolah Dasar Negeri 260 Maluku Tengah</p>
+                </div>
                 <div class="row overflow-hidden rounded-3 shadow mx-md-0 mx-2">
+                  <!-- Google Maps -->
                   <iframe class="px-0 mx-0" src="{{ $kontak['map'] }}" frameborder="0"
                     style="border:0; width: 100%; height: 384px;" allowfullscreen></iframe>
                 </div>

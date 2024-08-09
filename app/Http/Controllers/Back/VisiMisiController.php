@@ -22,7 +22,7 @@ class VisiMisiController extends Controller
 
         try {
             // Eager load relasi jika ada
-            $visiMisi = auth()->user()->visi_misi()->with('user')->latest()->get();
+            $visiMisi = VisiMisi::with('user')->latest()->get();
 
             return view('back.visi-misi.visi-misi', [
                 'title' => 'Tabel Visi Misi',

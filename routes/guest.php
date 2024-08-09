@@ -12,6 +12,7 @@ use App\Http\Controllers\Guest\PrestasiController as GuestPrestasiController;
 use App\Http\Controllers\Guest\KontakController as GuestKontakController;
 use App\Http\Controllers\Guest\EskulController as GuestEskulController;
 use App\Http\Controllers\Guest\SejarahController as GuestSejarahController;
+use App\Http\Controllers\Guest\PPDBController as GuestPPDBController;
 
 Route::get('/visi-misi-sekolah', [GuestVisiMisiController::class, 'index'])->name('visi-misi-sekolah');
 Route::get('/data-guru', [GuestGuruController::class, 'index'])->name('guru');
@@ -40,6 +41,8 @@ Route::get('/eskul-sekolah/{slug}', [GuestEskulController::class, 'show'])->name
 Route::get('/sejarah-sekolah', [GuestSejarahController::class, 'index'])->name('sejarah-sekolah');
 
 Route::get('/kontak-sekolah', [GuestKontakController::class, 'index'])->name('kontak-sekolah');
+
+Route::get('/ppdb-sekolah', [GuestPPDBController::class, 'index'])->name('ppdb-sekolah');
 
 // Route::get('/home', function () {
 //   return view('layouts.guest.home');

@@ -4,37 +4,62 @@
   <link href="DataTables/datatables.min.css" rel="stylesheet">
   @endpush
 
-  @slot('title', 'Prestasi')
+  @slot('title', 'Visi Misi')
   <main id="main" class="main">
 
-    <x-back.breadcrumb :title="$title" :breadcrumbs="$breadcrumbs" />
+    <x-back.breadcrumb :title="$title" :breadcrumbs="$breadcrumbs" /><!-- End Page Title -->
 
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
 
           <div class="card">
-            <div class="card-body overflow-x-auto">
+            <div class="card-body ">
               <div class="card-title">
                 <x-button onclick="showModal()" class="btn-sm" title="Tambah Data">
                   <i class="bi bi-patch-plus"></i> Tambah Data
                 </x-button>
               </div>
 
-              <!-- Tombol Hapus Terpilih -->
-              <form id="bulk-delete-form" action="#" method="POST" data-url="{{ route('prestasi.bulk_delete') }}"
-                style="display: none;">
-                @csrf
-                @method('DELETE')
-                <input type="hidden" id="bulk-delete-ids" name="ids">
-                <x-button id="delete-selected" class="btn-sm btn-danger mb-3"><i class="bi bi-trash"></i>Hapus
-                  Terpilih
-                </x-button>
-              </form>
+              <!-- Table -->
+              <table class="table table-striped datatable table-responsive table-hover">
+                <thead class="text-center">
+                  <tr>
+                    <th>#</th>
+                    <th>Judul</th>
+                    <th>Deskripsi</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach ( $ppdb as $data )
+                  <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $data->name }}</td>
+                    <td>{{ Str::limit(strip_tags($data->deskripsi), 50) }}</td>
 
-              {{-- data tabel start --}}
-              {{ $dataTable->table(['class' => 'table table-striped table-hover', 'style' => 'width:100%']) }}
-              {{-- data tabel end --}}
+                    <td style="width: 120px">
+                      <x-button as="a" href="{{ route('ppdb.show', $data->slug) }}" class="btn-sm btn-success"
+                        title="Detail">
+                        <i class="bi bi-eye"></i>
+                      </x-button>
+
+                      <x-button as="a" href="#" data-slug="{{ $data->slug }}" onclick="confirmEdit(this)"
+                        class="btn-sm btn-warning" title="Sunting">
+                        <i class="bi bi-pencil-square"></i>
+                      </x-button>
+
+                      <x-button as="button" data-slug="{{ $data->slug }}" onclick="confirmDelete(this)"
+                        class="btn-sm btn-danger" title="Hapus">
+                        <i class="bi bi-trash3"></i>
+                      </x-button>
+
+                    </td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+              <!-- End Table -->
 
             </div>
           </div>
@@ -42,7 +67,7 @@
         </div>
       </div>
 
-      @include('back.prestasi.prestasi-form')
+      @include('back.ppdb.ppdb-form')
 
     </section>
   </main><!-- End #main -->
@@ -60,7 +85,7 @@
 
   <!-- Laravel Javascript Validation -->
   <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-  {!! JsValidator::formRequest('App\Http\Requests\prestasiRequest', '#modalForm') !!}
+  {!! JsValidator::formRequest('App\Http\Requests\PPDBRequest', '#modalForm') !!}
 
   <!-- Sweet Alert2 -->
   <script type="text/javascript" src="{{ asset('assets/vendor/sweetalert/sweetalert2.js') }}"></script>
@@ -74,10 +99,11 @@
   <!-- Datatables -->
   <script type="text/javascript" src="{{ asset('DataTables/datatables.min.js') }}"> </script>
 
-
-  {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
-
   <script>
+    $(document).ready(function() {
+          $('table').DataTable();
+      });
+      
     @if (session('success'))
             window.sessionStorage.setItem("successMessage", "{{ session('success') }}");
         @endif
@@ -86,10 +112,7 @@
             window.sessionStorage.setItem("errorMessage", "{{ session('error') }}");
             @endif
 
-        var bulkDeleteUrl = "{{ route('prestasi.bulk_delete') }}";
-
         let save_method;
-
 
         function resetForm() {
             $('#modalForm')[0].reset();
@@ -115,11 +138,11 @@
 
             const formData = new FormData(this);
             let url, method;
-            url = 'prestasi';
+            url = 'ppdb';
             method = 'POST';
 
             if (save_method === 'update') {
-                url = 'prestasi/' + $('#slug').val();
+                url = 'ppdb/' + $('#slug').val();
                 formData.append('_method', 'PUT');
             }
 
@@ -134,7 +157,8 @@
                 contentType: false,
                 success: function(response) {
                     $('#dataModal').modal('hide');
-                    $('.table').DataTable().ajax.reload();
+                    // Reload halaman sepenuhnya
+                    location.reload();
                     Swal.fire({
                         icon: "success",
                         title: "Sukses",
@@ -166,15 +190,11 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "GET",
-                url: '{{ route("prestasi.edit", ":slug") }}'.replace(':slug', slug),
+                url: '{{ url("ppdb") }}/' + slug + '/edit',
                 success: function(response) {
                     let result = response.data;
-                    $('#title').val(result.title);
-                    $('#nama').val(result.nama);
-                    $('#summernote').summernote('code', result.description); // Set Summernote content
-                    $('#date').val(result.date);
-                    $('#jenis').val(result.jenis);
-                    $('#location').val(result.location);
+                    $('#name').val(result.name);
+                    $('#summernote').summernote('code', result.deskripsi); // Set Summernote content
                     $('#slug').val(result.slug);
 
                     // Tampilkan gambar yang ada
@@ -184,7 +204,6 @@
                 } else {
                     $('#image-preview').hide();
                 }
-
 
                     $('#dataModal').modal('show'); // Show modal after data is loaded
                     $('.btnSubmit').text('Simpan');
@@ -221,11 +240,10 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         type: "DELETE",
-                        url: '{{ route("prestasi.destroy", ":slug") }}'.replace(':slug', slug),
-                        dataType: 'json',
+                        url: '{{ url("ppdb") }}/' + slug,
                         success: function(response) {
-                            $('#dataModal').modal('hide');
-                            $('.table').DataTable().ajax.reload();
+                            // Reload halaman sepenuhnya
+                            location.reload();
                             Swal.fire({
                                 icon: "success",
                                 title: "Sukses",
@@ -247,8 +265,8 @@
                 }
             });
         }
+
+ 
   </script>
-
   @endpush
-
 </x-app-layout>

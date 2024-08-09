@@ -1,4 +1,4 @@
-<x-guest.app-layout title="prestasi">
+<x-guest.app-layout title="Prestasi">
     <main id="main">
 
         {{-- start heading --}}
@@ -29,14 +29,16 @@
                             <div class="col-md-4 ">
                                 <div class="prestasi-item position-relative">
                                     <div class="image position-relative">
-                                        {{-- kalau ada image --}}
-                                        @if ($data->image != null)
-                                        <img src="{{ asset('storage/' . $data->image) }}" alt="{{ $data->title }}"
-                                            class="card-img" loading="lazy">
-                                        @else
-                                        <img src="{{ asset('guest/assets/img/prestasi-bg.svg') }}"
-                                            alt="{{ $data->title }}" class="card-img" loading="lazy">
-                                        @endif
+                                        <div class="card-img">
+                                            {{-- kalau ada image --}}
+                                            @if ($data->image != null)
+                                            <img src="{{ asset('storage/' . $data->image) }}" alt="{{ $data->title }}"
+                                                class="card-img" loading="lazy">
+                                            @else
+                                            <img src="{{ asset('guest/assets/img/prestasi-bg.svg') }}"
+                                                alt="{{ $data->title }}" class="card-img" loading="lazy">
+                                            @endif
+                                        </div>
                                     </div>
                                     <div class="content">
                                         <h3>{{ $data->title }}</h3>
@@ -46,11 +48,11 @@
                                             class="readmore stretched-link"></a>
                                         <div class="d-flex justify-content-between">
                                             <span class="text-muted small mt-2"><i
-                                                    class="text-success me-2 bi bi-person-fill"></i> {{
+                                                    class="icons me-2 bi bi-person-fill"></i> {{
                                                 $data->user->name
                                                 }}</span>
                                             <span class="text-muted small mt-2"><i
-                                                    class="text-success me-2 bi bi-calendar-check"></i> {{
+                                                    class="icons me-2 bi bi-calendar-check"></i> {{
                                                 \Carbon\Carbon::parse($data->created_at)->isoFormat('D MMMM YYYY')
                                                 }}</span>
                                         </div>

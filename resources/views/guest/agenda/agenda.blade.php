@@ -27,18 +27,18 @@
                 <a href="#" data-bs-toggle="modal" data-bs-target="#modalagenda{{ $item->id }}">
                   <article class="text-dark">
                     <div class="d-flex justify-content-between">
-                      <span class="small"><i class="me-2 text-success bi bi-calendar3"></i>{{
+                      <span class="small"><i class="me-2 icons bi bi-calendar3"></i>{{
                         \Carbon\Carbon::parse($item->date_time)->isoFormat('D/MM/YYYY') }}</span>
-                      <span class="small"><i class="me-2 text-success bi bi-clock"></i> {{
+                      <span class="small"><i class="me-2 icons bi bi-clock"></i> {{
                         \Carbon\Carbon::parse($item->date_time)->format('H:i') }} WIT - Selesai</span>
                     </div>
                     <h2 class="title pt-3">
                       {{ $item->title }}
                     </h2>
                     <div class="row justify-content-between">
-                      <div class="small col-6"><i class="me-2 text-success bi bi-geo-fill"></i>{{ $item->location }}
+                      <div class="small col-6"><i class="me-2 icons bi bi-geo-fill"></i>{{ $item->location }}
                       </div>
-                      <div class="small col-6"><i class="me-2 text-success bi bi-person-circle"></i>{{ $item->user->name
+                      <div class="small col-6"><i class="me-2 icons bi bi-person-circle"></i>{{ $item->user->name
                         }}</div>
                     </div>
                   </article>

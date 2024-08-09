@@ -33,24 +33,6 @@ class AgendaController extends Controller
         }
     }
 
-    // /**
-    //  * Show the form for creating a new resource.
-    //  */
-    // public function create(Agenda $agenda)
-    // {
-    //     try {
-    //         return view('back.agenda.agenda-form', [
-    //             'agenda' => $agenda,
-    //             'name' => 'Tambah Agenda',
-    //             'title' => 'Tambah Agenda',
-    //             'method' => 'post',
-    //             'route' => route('agenda.store')
-    //         ]);
-    //     } catch (Exception $e) {
-    //         return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
-    //     }
-    // }
-
     /**
      * Store a newly created resource in storage.
      */

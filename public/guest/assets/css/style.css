@@ -10,7 +10,10 @@
 /* Colors */
 :root {
     --color-default: #222222;
-    --color-primary: #008374;
+    --color-primary: #2a7ae4; /* Biru lebih muda */
+    --color-info: #4a90e2; /* Biru muda */
+    --color-info-light: #6ab5f5; /* Biru muda lebih terang */
+    --color-gold-light: #f4b942; /* Kuning emas muda */
     --color-secondary: #f85a40;
 }
 
@@ -34,7 +37,7 @@ a {
 }
 
 a:hover {
-    color: #00b6a1;
+    color: var(--color-info);
     text-decoration: none;
 }
 
@@ -45,6 +48,10 @@ h4,
 h5,
 h6 {
     font-family: var(--font-primary);
+}
+
+.icons {
+    color: var(--color-secondary);
 }
 
 /*--------------------------------------------------------------
@@ -69,7 +76,7 @@ section {
     font-weight: 700;
     text-align: center;
     color: var(--color-primary);
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Courier New", Courier, monospace;
 }
 
 .sections-bg {
@@ -173,7 +180,7 @@ section {
     opacity: 0;
     right: 0.9375rem;
     bottom: -0.9375rem;
-    z-index: 99999;
+    z-index: 995;
     background: var(--color-secondary);
     width: 2.75rem;
     height: 2.75rem;
@@ -206,33 +213,29 @@ section {
     inset: 0;
     z-index: 999999;
     overflow: hidden;
-    background: #fff;
+    background: var(--color-info);
     transition: all 0.6s ease-out;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
 }
 
-#preloader:before {
-    content: "";
-    position: fixed;
-    top: calc(50% - 1.875rem);
-    top: calc(50% - 1.875em);
-    left: calc(50% - 1.875em);
-    border: 0.375em solid #fff;
-    border-color: var(--color-primary) transparent var(--color-primary)
-        transparent;
-    border-radius: 50%;
-    width: 3.75em;
-    height: 3.75em;
-    animation: animate-preloader 1.5s linear infinite;
-}
-
-@keyframes animate-preloader {
+@keyframes blink {
     0% {
-        transform: rotate(0deg);
+        opacity: 1;
     }
-
+    50% {
+        opacity: 0;
+    }
     100% {
-        transform: rotate(360deg);
+        opacity: 1;
     }
+}
+
+#preloader h1 {
+    animation: blink 1s infinite; /* Menambahkan animasi berkedip */
 }
 
 /*--------------------------------------------------------------
@@ -248,7 +251,7 @@ section {
 # Header
 --------------------------------------------------------------*/
 .topbar {
-    background: #00796b;
+    background: var(--color-info);
     height: 2.5em;
     font-size: 0.875em;
     transition: all 0.5s;
@@ -444,7 +447,7 @@ a {
         font-size: 15px;
         text-transform: none;
         font-weight: 600;
-        color: #006a5d;
+        color: var(--color-info);
     }
 
     .navbar .dropdown ul a i {
@@ -454,6 +457,14 @@ a {
     .navbar .dropdown ul a:hover,
     .navbar .dropdown ul .active:hover,
     .navbar .dropdown ul li:hover > a {
+        color: var(--color-secondary);
+    }
+
+    .navbar .dropdown ul li .active {
+        color: var(--color-secondary);
+    }
+
+    .navbar .dropdown span .active {
         color: var(--color-secondary);
     }
 
@@ -512,7 +523,7 @@ a {
         inset: 0;
         padding: 50px 0 10px 0;
         margin: 0;
-        background: rgba(0, 131, 116, 0.9);
+        background: var(--color-primary);
         overflow-y: auto;
         transition: 0.3s;
         z-index: 9998;
@@ -563,8 +574,8 @@ a {
         padding: 10px 0;
         margin: 10px 20px;
         transition: all 0.5s ease-in-out;
-        background-color: #007466;
-        border: 1px solid #006459;
+        background-color: var(--color-info);
+        border: 1px solid var(--color-primary);
     }
 
     .navbar .dropdown > .dropdown-active,
@@ -606,7 +617,7 @@ a {
         content: "";
         position: fixed;
         inset: 0;
-        background: rgba(0, 106, 93, 0.8);
+        background: rgba(106, 181, 245, 0.8);
         z-index: 9996;
     }
 }
@@ -752,7 +763,7 @@ a {
 --------------------------------------------------------------*/
 .agenda-home {
     padding: 40px 0;
-    background-color: var(--color-primary);
+    background-color: var(--color-info);
 }
 
 .item-slider .card-text {
@@ -993,16 +1004,16 @@ a {
     overflow: hidden;
 }
 
-.kegiatan .kegiatan-item .image img,
-.prestasi .prestasi-item .image img {
+.kegiatan .kegiatan-item .card-img,
+.prestasi .prestasi-item .card-img {
     height: 300px;
     object-fit: cover;
     overflow: hidden;
     transition: transform 0.5s ease-in-out; /* Menambahkan transisi yang halus */
 }
 
-.kegiatan .kegiatan-show .image img,
-.prestasi .prestasi-show .image img {
+.kegiatan .kegiatan-show .card-img,
+.prestasi .prestasi-show .card-img {
     width: 100%;
     max-height: 550px;
     border-radius: 10px 10px 0 0;
@@ -1051,15 +1062,29 @@ a {
 }
 
 .image .date-card {
-    bottom: 4px; /* Posisi dari bawah */
-    left: 4px; /* Posisi dari kiri */
-    z-index: 10; /* Pastikan berada di atas gambar */
-    margin: 8px; /* Margin opsional */
-    background-color: #008374bd; /* Background transparan */
-    padding: 8px; /* Padding dalam date card */
-    border-radius: 5px; /* Border radius untuk membulatkan sudut */
-    color: gold; /* Warna teks */
+    position: relative;
+    bottom: 4px;
+    left: 4px;
+    z-index: 10;
+    margin: 8px;
+    padding: 8px;
+    border-radius: 5px;
+    color: #fff; /* Ganti dengan warna kontras yang sesuai */
     cursor: pointer;
+    overflow: hidden;
+}
+
+.image .date-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-info);
+    opacity: 0.8; /* Adjust transparency */
+    z-index: -1; /* Place behind content */
+    border-radius: 5px;
 }
 
 /*--------------------------------------------------------------
@@ -1083,6 +1108,8 @@ a {
     width: 100px;
     border-radius: 50px;
     margin-right: 15px;
+    background: var(--color-secondary);
+    color: white;
 }
 
 .pengumumans .pengumuman-item h3 {
@@ -1428,7 +1455,7 @@ a {
 }
 
 .img-guru .member .badge-guru {
-    background-color: #008374;
+    background-color: var(--color-info);
     color: #fff;
     font-size: 0.7rem;
     position: absolute;
@@ -1542,7 +1569,7 @@ a {
 }
 
 .fasilitas .badge-fasilitas {
-    background-color: #008374;
+    background-color: var(--color-info);
     color: #fff;
     font-size: 0.7rem;
     position: absolute;
@@ -1815,7 +1842,7 @@ a {
 }
 
 .eskul .badge-eskul {
-    background-color: #008374;
+    background-color: var(--color-info);
     color: #fff;
     font-size: 0.7rem;
     position: absolute;
@@ -1858,7 +1885,7 @@ a {
 
 .contact .info-item {
     width: 100%;
-    background-color: #009282;
+    background-color: var(--color-info);
     margin-bottom: 20px;
     padding: 20px;
     border-radius: 10px;
@@ -1931,7 +1958,7 @@ a {
 .contact .php-email-form .sent-message {
     display: none;
     color: #fff;
-    background: #059652;
+    background: var(--color-primary);
     text-align: center;
     padding: 15px;
     font-weight: 600;
@@ -1951,7 +1978,7 @@ a {
     width: 24px;
     height: 24px;
     margin: 0 10px -6px 0;
-    border: 3px solid #059652;
+    border: 3px solid var(--color-info);
     border-top-color: #fff;
     animation: animate-loading 1s linear infinite;
 }
@@ -1989,7 +2016,7 @@ a {
 }
 
 .contact .php-email-form button[type="submit"]:hover {
-    background: rgba(0, 131, 116, 0.8);
+    background: var(--color-info);
 }
 
 @keyframes animate-loading {
@@ -2008,103 +2035,102 @@ a {
 .hero {
     width: 100%;
     position: relative;
-    background: var(--color-primary);
-    padding: 60px 0 0 0;
+    padding: 3.75rem 0 0 0; /* 60px */
 }
 
-@media (min-width: 1365px) {
-    .hero {
-        background-attachment: fixed;
+.hero .img-hero {
+    width: 100%;
+    max-height: 600px;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    /* 768px */
+    .hero .text-content {
+        margin: auto;
+        margin-top: -20px;
+    }
+
+    .hero .img-hero {
+        width: auto;
+        min-height: 40%;
+    }
+
+    .hero .tombol {
+        font-size: 0.2rem; /* 12px */
+        padding: 0.5rem 1.5rem; /* 8px 24px */
     }
 }
 
 .hero h2 {
-    font-size: 48px;
+    font-size: 3rem; /* 48px */
     font-weight: 700;
-    margin-bottom: 20px;
     color: #fff;
 }
 
 .hero p {
-    color: rgba(255, 255, 255, 0.6);
+    color: #fff;
     font-weight: 400;
-    margin-bottom: 30px;
 }
 
-.hero .btn-get-started {
+.hero .tombol {
     font-family: var(--font-primary);
-    font-weight: 500;
-    font-size: 15px;
-    letter-spacing: 1px;
+    font-weight: 700;
+    font-size: 0.9375rem; /* 15px */
+    letter-spacing: 0.0625rem; /* 1px */
     display: inline-block;
-    padding: 14px 40px;
-    border-radius: 50px;
+    padding: 0.875rem 2.5rem; /* 14px 40px */
+    border-radius: 3.125rem; /* 50px */
     transition: 0.3s;
     color: #fff;
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    margin-top: 2em;
+    background: var(--color-gold-light);
+    box-shadow: 0 0 0.9375rem rgba(0, 0, 0, 0.08); /* 15px */
+    border: 0.125rem solid rgba(255, 255, 255, 0.1); /* 2px */
 }
 
-.hero .btn-get-started:hover {
+.hero .tombol:hover {
     border-color: rgba(255, 255, 255, 0.5);
 }
 
-.hero .btn-watch-video {
-    font-size: 16px;
-    transition: 0.5s;
-    margin-left: 25px;
-    color: #fff;
-    font-weight: 600;
-}
-
-.hero .btn-watch-video i {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 32px;
-    transition: 0.3s;
-    line-height: 0;
-    margin-right: 8px;
-}
-
-.hero .btn-watch-video:hover i {
-    color: #fff;
-}
-
-@media (max-width: 640px) {
+@media (max-width: 900px) {
+    /* 900px */
     .hero h2 {
-        font-size: 36px;
+        font-size: 1.5625rem; /* 25px */
     }
 
-    .hero .btn-get-started,
-    .hero .btn-watch-video {
-        font-size: 14px;
+    .hero .tombol {
+        font-size: 0.875rem; /* 14px */
+        margin-top: 0;
+        padding: 0.5rem 1.5rem; /* 8px 24px */
     }
 }
 
 .hero .icon-boxes {
-    padding-bottom: 20px;
+    padding-bottom: 1.25rem; /* 20px */
 }
 
 @media (min-width: 1200px) {
+    /* 1200px */
     .hero .icon-boxes:before {
         content: "";
         position: absolute;
         bottom: 0;
         left: 0;
         right: 0;
-        height: calc(50% + 20px);
+        height: calc(50% + 1.25rem); /* 20px */
         background-color: #fff;
     }
 }
 
 .hero .icon-box {
-    padding: 40px 30px;
+    padding: 2.5rem 1.875rem; /* 40px 30px */
     position: relative;
     overflow: hidden;
-    background: #008d7d;
-    box-shadow: 0 0 29px 0 rgba(0, 0, 0, 0.08);
+    background: var(--color-primary);
+    box-shadow: 0 0 1.8125rem 0 rgba(0, 0, 0, 0.08); /* 29px */
     transition: all 0.3s ease-in-out;
-    border-radius: 8px;
+    border-radius: 0.5rem; /* 8px */
     z-index: 1;
     height: 100%;
     width: 100%;
@@ -2113,23 +2139,24 @@ a {
 
 /* Umum border diterapkan pada semua elemen anak mulai dari elemen kedua hingga yang terakhir */
 .hero .icon-box .box-data > div:nth-child(n + 2):not(:last-child) {
-    border-left: 2px solid #fff; /* Warna border sesuai keinginan */
+    border-left: 0.125rem solid #fff; /* 2px */
 }
 
 @media (max-width: 991px) {
+    /* 991px */
     .hero .icon-box .box-data > div:nth-child(3):not(:last-child) {
         border: none;
     }
 
     .hero .icon-box .box-data > div:nth-child(n + 4):not(:last-child) {
-        margin-top: 10px;
+        margin-top: 0.625rem; /* 10px */
     }
 }
 
 .hero .icon-box .title {
     font-weight: 700;
-    margin-bottom: 15px;
-    font-size: 24px;
+    margin-bottom: 0.9375rem; /* 15px */
+    font-size: 1.5rem; /* 24px */
 }
 
 .hero .icon-box a {
@@ -2138,17 +2165,17 @@ a {
 }
 
 .hero .icon-box .icon {
-    margin-bottom: 20px;
-    padding-top: 10px;
+    margin-bottom: 1.25rem; /* 20px */
+    padding-top: 0.625rem; /* 10px */
     display: inline-block;
     transition: all 0.3s ease-in-out;
-    font-size: 48px;
+    font-size: 3rem; /* 48px */
     line-height: 1;
     color: rgba(255, 255, 255, 0.6);
 }
 
 .hero .icon-box:hover {
-    background: #009786;
+    background: var(--color-info);
 }
 
 .hero .icon-box:hover .title a,
@@ -2561,7 +2588,7 @@ a {
 }
 
 .search .search-form form button:hover {
-    background: rgba(0, 131, 116, 0.8);
+    background: var(--color-info);
 }
 
 .blog .sidebar .categories ul {

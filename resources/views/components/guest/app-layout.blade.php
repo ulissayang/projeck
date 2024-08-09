@@ -8,9 +8,9 @@
 
   <title>
     @isset($title)
-    {{ $title }} | sdn 260 malteng
+    {{ $title }} | SDN 260 Malteng
     @else
-    sdn 260 malteng
+    SDN 260 Malteng
     @endisset
   </title>
 
@@ -61,7 +61,9 @@
 
   <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-rocket"></i></a>
 
-  {{-- <div id="preloader"></div> --}}
+  <div id="preloader" class="d-flex justify-content-center align-item-center">
+    <h1 class="fw-bold">SDN Negeri 260 Malteng</h1>
+  </div>
 
 
   <!-- Vendor JS Files -->
@@ -74,8 +76,8 @@
   <script src="{{ asset('guest/assets/vendor/php-email-form/validate.js') }}"></script>
 
   @stack('script')
-  <!-- Template Main JS File -->
   <script src="{{ asset('guest/assets/js/main.js') }}"></script>
+  <!-- Template Main JS File -->
 
   {{-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">

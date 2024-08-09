@@ -39,8 +39,8 @@
                           <i class="bi bi-play-circle-fill"></i>
                         </h2>
                         <div class="d-flex justify-content-between overlay-bottom">
-                          <p class="small"><i class="text-success bi bi-person-circle"></i> {{ $data->user->name }}</p>
-                          <p class="small"><i class="text-success bi bi-calendar3"></i> {{ (new \Carbon\Carbon($data->created_at))->format('d F Y') }}</p>
+                          <p class="small"><i class="icons bi bi-person-circle"></i> {{ $data->user->name }}</p>
+                          <p class="small"><i class="icons bi bi-calendar3"></i> {{ (new \Carbon\Carbon($data->created_at))->format('d F Y') }}</p>
                         </div>
                       </div>
                     </div>

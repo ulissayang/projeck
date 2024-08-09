@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pengumuman', function (Blueprint $table) {
+        Schema::create('ppdb', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->string('title');
+            $table->string('name');
+            $table->string('image');
             $table->string('slug');
-            $table->string('excerpt');
-            $table->text('body');
-            $table->string('file')->nullable();
+            $table->text('deskripsi');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pengumuman');
+        Schema::dropIfExists('ppdb');
     }
 };

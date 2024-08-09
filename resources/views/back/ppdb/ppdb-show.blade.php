@@ -1,5 +1,5 @@
 <x-app-layout>
-  @slot('title', 'Show Pengumuman')
+  @slot('title', 'Show PPDB')
   <main id="main" class="main">
 
     <x-back.breadcrumb :title="$title" :breadcrumbs="$breadcrumbs" /><!-- End Page Title -->
@@ -9,13 +9,13 @@
         <div class="col-lg-12">
 
           <x-back.show-data :data="[
-            'pengumuman' => $pengumuman->title,
-            'deskripsi' => $pengumuman->body,
-            'penulis' => $pengumuman->user->name,
-            'file' => $pengumuman->file,
-            'created_at' => $pengumuman->created_at,
-            'updated_at' => $pengumuman->updated_at,
-            ]" :backRoute="route('pengumuman.index')" />
+            'Title' => $ppdb->name,
+            'deskripsi' => $ppdb->deskripsi,
+            'penulis' => $ppdb->user->name,
+            'foto' => $ppdb->image,
+            'created_at' => $ppdb->created_at,
+            'updated_at' => $ppdb->updated_at,
+            ]" :backRoute="route('ppdb.index')" :imagePathPrefix="'storage/' . $ppdb->imagePathPrefix" />
         </div>
       </div>
     </section>

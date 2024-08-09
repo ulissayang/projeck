@@ -45,10 +45,10 @@
 
                     <div class="d-flex justify-content-between">
 
-                      <p class="small text-muted"><i class="me-2 text-success bi bi-person-fill"></i>{{
+                      <p class="small text-muted"><i class="me-2 icons bi bi-person-fill"></i>{{
                         $data->user->name
                         }}</p>
-                      <p class="small text-muted"><i class="me-2 text-success bi bi-calendar-date"></i>
+                      <p class="small text-muted"><i class="me-2 icons bi bi-calendar-date"></i>
                         {{ \Carbon\Carbon::parse($data->created_at)->isoFormat('D MMMM YYYY') }}
                       </p>
 

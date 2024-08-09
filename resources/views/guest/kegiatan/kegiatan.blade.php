@@ -18,9 +18,11 @@
 
           <!-- ======= Content Section ======= -->
           <div class="col-lg-12">
-            
+
             <div class="row gy-4">
               {{-- Kegiatan terbaru --}}
+
+              {{-- kalau ga ada data --}}
               @if ($kegiatan->count() == 0)
               <img src="{{ asset('assets/img/not-data.png') }}" class="img-fluid m-auto" style="max-width: 40%"
                 alt="no data">
@@ -39,13 +41,15 @@
                       </div>
                     </div>
                     {{-- kalau ada image --}}
-                    @if ($data->image != null)
-                    <img src="{{ asset('storage/' . $data->image) }}" alt="{{ $data->title }}" class="card-img"
-                      loading="lazy">
-                    @else
-                    <img src="{{ asset('guest/assets/img/keg-sekolah.svg') }}" class="card-img" alt="no data"
-                      loading="lazy">
-                    @endif
+                    <div class="card-img">
+                      @if ($data->image != null)
+                      <img src="{{ asset('storage/' . $data->image) }}" alt="{{ $data->title }}" class="card-img"
+                        loading="lazy">
+                      @else
+                      <img src="{{ asset('guest/assets/img/keg-sekolah.svg') }}" class="card-img" alt="no data"
+                        loading="lazy">
+                      @endif
+                    </div>
                   </div>
                   <div class="content">
                     <h3>{{ $data->title }}</h3>
@@ -55,9 +59,9 @@
                       class="readmore stretched-link text-end d-block"></a>
 
                     <div class="row justify-content-between border-top pt-2 mt-2">
-                      <div class="text-muted col-6 small"><i class="text-success bi bi-geo-fill"></i> {{ $data->location
+                      <div class="text-muted col-6 small"><i class="icons bi bi-geo-fill"></i> {{ $data->location
                         }}</div>
-                      <div class="text-muted col-6 small"><i class="text-success bi bi-person-fill"></i> {{
+                      <div class="text-muted col-6 small"><i class="icons bi bi-person-fill"></i> {{
                         $data->user->name
                         }}</div>
                     </div>

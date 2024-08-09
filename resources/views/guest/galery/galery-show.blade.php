@@ -36,11 +36,11 @@
                                 <p class="py-4 deskripsi-galery">{!! $foto->deskripsi !!}</p>
                                 <div class="pt-3 border-top">
                                     <span class="small text-muted me-4"><i
-                                            class="bi bi-person-circle text-success me-2"></i>Oleh : {{
+                                            class="bi bi-person-circle icons me-2"></i>Oleh : {{
                                         $foto->user->name
                                         }}</span>
                                     <span class=" text-muted small"><i
-                                            class="text-success me-2 bi bi-calendar-check"></i>Tanggal Posting
+                                            class="icons me-2 bi bi-calendar-check"></i>Tanggal Posting
                                         :
                                         {{ (new \Carbon\Carbon($foto->created_at))->format('d F, Y')
                                         }}</span>

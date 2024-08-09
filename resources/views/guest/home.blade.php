@@ -8,46 +8,6 @@
   {{-- Main --}}
   <main id="main">
 
-    <!-- ======= About Us Section ======= -->
-    {{-- <section class="about">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-header">
-          <h2>Sejarah dan Informasi Sekolah</h2>
-          <p>SD Negeri 260 Maluku Tengah merupakan sekolah dasar yang berlokasi di Desa Haria, Kecamatan Saparua,
-            Kabupaten Maluku Tengah, Provinsi Maluku. Didirikan pada tanggal 2 Oktober 1970, sekolah ini berstatus
-            negeri dan dimiliki oleh Pemerintah Daerah.</p>
-        </div>
-
-        <div class="row gy-4">
-          <div class="col-lg-6">
-
-            <img src="{{ asset('guest/assets/img/banner-sekolah.jpeg') }}" class="img-fluid rounded-4 mb-4" alt="">
-
-          </div>
-          <div class="col-lg-6">
-            <div class="content ps-0 ps-lg-5">
-              <p>Sekolah Dasar Negeri 260 Maluku Tengah, yang berlokasi di Desa Haria, Kecamatan Saparua, Kabupaten
-                Maluku
-                Tengah, Provinsi Maluku, didirikan berdasarkan SK Pendirian pada tanggal 2 Oktober 1970. Sekolah ini
-                memiliki NPSN 60100674 dan berstatus negeri, dimiliki oleh Pemerintah Daerah.</p>
-              <p class="fst-italic">
-                Dengan status kepemilikan oleh Pemerintah Daerah, sekolah ini memperoleh izin operasional melalui SK
-                Izin Operasional nomor 421-112 Tahun 2021 yang diterbitkan pada 20 Januari 2021.
-              </p>
-              <ul>
-                <li><i class="bi bi-check-circle-fill"></i> Alamat: Desa Haria, RT/RW: 0/0, Kode Pos: 97592</li>
-                <li><i class="bi bi-check-circle-fill"></i> Kelurahan: Haria, Kecamatan: Saparua</li>
-                <li><i class="bi bi-check-circle-fill"></i> Kabupaten/Kota: Maluku Tengah, Provinsi: Maluku</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section> --}}
-    <!-- End About Us Section -->
-
     <!-- ======= Kegiatan Section ======= -->
     <section id="kegiatan" class="kegiatan ">
       <div class="container" data-aos="fade-up">
@@ -60,7 +20,7 @@
             <p class="small">Berbagai kegiatan dari SD Negeri 260 Maluku Tengah</p>
           </div>
           <div class="col-md-4 text-md-end">
-            <a href="{{ url('kegiatan-sekolah') }}" class="btn btn-sm btn-outline-success">
+            <a href="{{ url('kegiatan-sekolah') }}" class="btn btn-sm btn-outline-primary">
               Lihat Semua Kegiatan
             </a>
           </div>
@@ -87,12 +47,14 @@
                   </div>
                 </div>
                 {{-- kalau ada image --}}
-                @if ($data->image != null)
-                <img src="{{ 'storage/' . $data->image }}" alt="{{ $data->title }}" class="card-img" loading="lazy">
-                @else
-                <img src="{{ asset('guest/assets/img/keg-sekolah.svg') }}" alt="Kegiatan Sekolah" class="card-img"
-                  loading="lazy">
-                @endif
+                <div class="card-img">
+                  @if ($data->image != null)
+                  <img src="{{ 'storage/' . $data->image }}" alt="{{ $data->title }}" class="card-img" loading="lazy">
+                  @else
+                  <img src="{{ asset('guest/assets/img/keg-sekolah.svg') }}" alt="Kegiatan Sekolah" class="card-img"
+                    loading="lazy">
+                  @endif
+                </div>
               </div>
               <div class="content">
                 <h3>{{ $data->title }}</h3>
@@ -102,9 +64,9 @@
                   class="readmore stretched-link text-end d-block"></a>
 
                 <div class="row justify-content-between border-top pt-2 mt-2">
-                  <div class="text-muted col-6 small"><i class="text-success bi bi-geo-fill"></i> {{ $data->location }}
+                  <div class="text-muted col-6 small"><i class="icons bi bi-geo-fill"></i> {{ $data->location }}
                   </div>
-                  <div class="text-muted col-6 small"><i class="text-success bi bi-person-fill"></i> {{
+                  <div class="text-muted col-6 small"><i class="icons bi bi-person-fill"></i> {{
                     $data->user->name
                     }}</div>
                 </div>
@@ -151,16 +113,16 @@
                 <a data-bs-toggle="modal" class="card-text" data-bs-target="#modalagenda{{ $data->id }}">
                   <div class="card-body">
                     <div class="d-flex justify-content-between head">
-                      <span class="small mb-2 text-body-secondary"><i class="me-2 text-success bi bi-calendar3"></i>{{
+                      <span class="small mb-2 text-body-secondary"><i class="me-2 icons bi bi-calendar3"></i>{{
                         \Carbon\Carbon::parse($data->date_time)->format('d F Y') }}</span>
-                      <span class="small mb-2 text-body-secondary"><i class="me-2 text-success bi bi-clock"></i>{{
+                      <span class="small mb-2 text-body-secondary"><i class="me-2 icons bi bi-clock"></i>{{
                         \Carbon\Carbon::parse($data->date_time)->format('H:i') }} WIT - Selesai</span>
                     </div>
                     <h5 class="pt-2">
                       {{-- batasi hanya 33 karakter dari title --}}
                       {{ \Illuminate\Support\Str::limit($data->title, 20) }}
                     </h5>
-                    <p class="small text-body-secondary mt-3"><i class="me-2 text-success bi bi-geo-alt-fill"></i>{{
+                    <p class="small text-body-secondary mt-3"><i class="me-2 icons bi bi-geo-alt-fill"></i>{{
                       $data->location
                       }}</p>
                   </div>
@@ -197,7 +159,7 @@
             <p class="small">Menyajikan Publikasi Pengumuman dari SD Negeri 260 Maluku Tengah</p>
           </div>
           <div class="col-md-4 text-md-end">
-            <a href="{{ url('pengumuman-sekolah') }}" class="btn btn-sm btn-outline-success">
+            <a href="{{ url('pengumuman-sekolah') }}" class="btn btn-sm btn-outline-primary">
               Lihat Semua Pengumuman
             </a>
           </div>
@@ -215,10 +177,9 @@
               <div class="pengumuman-wrap">
                 <div class="pengumuman-item">
                   <div class="d-flex align-items-center">
-                    <img src="{{ asset('guest/assets/img/pengumuman-logo.svg') }}" class="pengumuman-img flex-shrink-0"
-                      alt="{{ $data->title }}" loading="lazy">
+                    <span><i class="bi bi-megaphone-fill fs-4 pengumuman-img p-2"></i></span>
                     <div>
-                      <h3>{{ $data->title }}</h3>
+                      <h3>{{ \Illuminate\Support\Str::limit($data->title, 30) }}</h3>
                     </div>
                   </div>
                   <span class="pt-4 d-block"> <i class="bi bi-info-circle-fill me-1 text-primary"></i> Detail
@@ -226,11 +187,17 @@
                   <p class="text-muted small">
                     {{ $data->excerpt }}
                   </p>
-                  <div>
+                  <div class="d-flex justify-content-between">
                     <a data-bs-toggle="modal" data-bs-target="#modalannouncement{{ $data->id }}">
                       <button type="button" class="btn btn-sm btn-outline-primary"><i
                           class="bi bi-eye-fill me-1"></i>Lihat</button>
                     </a>
+                    @if ($data->file)
+                    <a href="{{ asset('storage/'.$data->file) }}" download>
+                      <button type="button" class="btn btn-sm btn-primary"><i
+                          class="bi bi-download me-1"></i>Unduh</button>
+                    </a>
+                    @endif
                   </div>
                 </div>
               </div>
@@ -244,7 +211,7 @@
 
         {{-- include modal --}}
         @foreach ($pengumuman as $item)
-        <x-guest.modal :title="$item->title" :description="$item->body" :created_at="$item->created_at"
+        <x-guest.modal :title="$item->title" :description="$item->body" :file="$item->file" :created_at="$item->created_at"
           type="announcement" :id="$item->id" :author="$item->user->name" />
         @endforeach
 
@@ -263,7 +230,7 @@
             <p class="small">Kegiatan Ekstrakurikuler yang ada di SD Negeri 260 Maluku Tengah</p>
           </div>
           <div class="col-md-4 text-md-end">
-            <a href="{{ url('eskul-sekolah') }}" class="btn btn-sm btn-outline-success">
+            <a href="{{ url('eskul-sekolah') }}" class="btn btn-sm btn-outline-primary">
               Lihat Semua
             </a>
           </div>
@@ -325,6 +292,7 @@
               <div class="member">
                 <span class="badge badge-guru text-white"><i class="bi bi-person-fill-check"></i> {{ $data->jabatan
                   }}</span>
+
                 <img src="{{ 'storage/guru-images/thumbnail/'. $data->image  }}" class="card-img"
                   alt="{{ $data->nama }}" loading="lazy">
                 <h4>{{ $data->nama }}</h4>
@@ -337,7 +305,7 @@
         </div>
 
         <div class="text-center py-4 my-4">
-          <a href="{{ url('data-guru') }}" class="btn btn-sm btn-outline-success">Lihat Semua Guru <i
+          <a href="{{ url('data-guru') }}" class="btn btn-sm btn-outline-primary">Lihat Semua Guru <i
               class="bi bi-arrow-right"></i></a>
         </div>
 
@@ -346,4 +314,5 @@
     <!-- End Data Guru Section -->
 
   </main><!-- End #main -->
+
 </x-guest.app-layout>

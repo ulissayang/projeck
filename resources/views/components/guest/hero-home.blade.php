@@ -1,100 +1,19 @@
 <section id="hero" class="hero">
-
-  {{-- <div class="container position-relative">
-    <div class="row gy-5" data-aos="fade-in">
-      <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
-        <h4 class="text-warning fw-bold fst-italic">Back to👋</h4>
-        <h2>{{ $title }}</h2>
-        <p>{{ $home }}</p>
-        <div class="d-flex justify-content-center justify-content-lg-start">
-          <a href="#kegiatan" class="btn-get-started">Get Started</a>
+  <div class="hero-banner">
+    <img src="{{ asset('storage/' . $banner) }}"
+      class="img-fluid img-hero position-absolute top-0 start-0 w-100" loading="lazy" alt="">
+    <div class="container position-relative py-4 my-4 z-2">
+      <div class="row gy-5" data-aos="fade-in">
+        <div class="col-12 d-flex flex-column justify-content-center text-start text-content">
+          <h4 class="text-warning fw-bold fst-italic">Selamat Datang👋</h4>
+          <h2>{{ $title }}</h2>
+          <p>{{ $home }}</p>
+          <div class="d-flex justify-content-start">
+            <a href="{{ url('ppdb-sekolah') }}" class="tombol">Info PPDB</a>
+          </div>
         </div>
-      </div>
-      <div class="col-lg-6 order-1 order-lg-2">
-        <img src="{{ 'storage/'. $banner  }}" class="img-fluid" loading="lazy" alt="" data-aos="zoom-out"
-          data-aos-delay="100">
       </div>
     </div>
-  </div> --}}
-
-  <!-- Carousel Wrapper -->
-  <div id="customCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-
-      <!-- Slide 1 -->
-      <div class="carousel-item active">
-        <div class="container position-relative">
-          <div class="row gy-5" data-aos="fade-in">
-            <div
-              class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
-              <h4 class="text-warning fw-bold fst-italic">Back to👋</h4>
-              <h2>{{ $title }}</h2>
-              <p>{{ $home }}</p>
-              <div class="d-flex justify-content-center justify-content-lg-start">
-                <a href="#kegiatan" class="btn-get-started">Get Started</a>
-              </div>
-            </div>
-            <div class="col-lg-6 order-1 order-lg-2">
-              <img src="{{ 'storage/'. $banner }}" class="img-fluid" loading="lazy" alt="" data-aos="zoom-out"
-                data-aos-delay="100">
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Slide 2 -->
-      <div class="carousel-item">
-        <div class="container position-relative">
-          <div class="row gy-5" data-aos="fade-in">
-            <div
-              class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
-              <h4 class="text-warning fw-bold fst-italic">Back to👋</h4>
-              <h2>{{ $title }}</h2>
-              <p>{{ $home }}</p>
-              <div class="d-flex justify-content-center justify-content-lg-start">
-                <a href="#kegiatan" class="btn-get-started">Get Started</a>
-              </div>
-            </div>
-            <div class="col-lg-6 order-1 order-lg-2">
-              <img src="{{ 'storage/'. $banner }}" class="img-fluid" loading="lazy" alt="" data-aos="zoom-out"
-                data-aos-delay="100">
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Slide 3 -->
-      <div class="carousel-item">
-        <div class="container position-relative">
-          <div class="row gy-5" data-aos="fade-in">
-            <div
-              class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
-              <h4 class="text-warning fw-bold fst-italic">Back to👋</h4>
-              <h2>{{ $title }}</h2>
-              <p>{{ $home }}</p>
-              <div class="d-flex justify-content-center justify-content-lg-start">
-                <a href="#kegiatan" class="btn-get-started">Get Started</a>
-              </div>
-            </div>
-            <div class="col-lg-6 order-1 order-lg-2">
-              <img src="{{ 'storage/'. $banner }}" class="img-fluid" loading="lazy" alt="" data-aos="zoom-out"
-                data-aos-delay="100">
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Controls -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#customCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#customCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
   </div>
 
   <div class="icon-boxes position-relative">

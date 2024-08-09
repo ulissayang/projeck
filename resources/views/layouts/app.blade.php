@@ -62,6 +62,13 @@
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
 
+    <div id="preloader" class="d-flex justify-content-center align-items-center">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+
     <!-- Vendor JS Files -->
 
     {{-- <script src="assets/vendor/apexcharts/apexcharts.min.js"></script> --}}

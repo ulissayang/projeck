@@ -1,9 +1,8 @@
 <div class="sidebar">
-
   <div class="slides-1 swiper sidebar-item">
     <div class="d-flex justify-content-between align-items-center sidebar-header">
       <h3 class="sidebar-title">Agenda</h3>
-      <a href="{{ url('agenda-sekolah') }}" class="btn btn-sm btn-outline-success">
+      <a href="{{ url('agenda-sekolah') }}" class="btn btn-sm btn-outline-primary">
         Lihat Semua
       </a>
     </div>
@@ -14,16 +13,16 @@
           <a href="#" data-bs-toggle="modal" class="card-text" data-bs-target="#modalagenda{{ $data->id }}">
             <div class="card-body">
               <div class="d-flex justify-content-between head">
-                <span class="small mb-2 text-body-secondary"><i class="me-2 text-success bi bi-calendar3"></i>{{
+                <span class="small mb-2 text-body-secondary"><i class="me-2 icons bi bi-calendar3"></i>{{
                   \Carbon\Carbon::parse($data->date_time)->isoFormat('D/MM/YYYY') }}</span>
-                <span class="small mb-2 text-body-secondary"><i class="me-2 text-success bi bi-clock"></i>{{
+                <span class="small mb-2 text-body-secondary"><i class="me-2 icons bi bi-clock"></i>{{
                   \Carbon\Carbon::parse($data->date_time)->format('H:i') }} WIT - Selesai</span>
               </div>
               <h3 class="pt-2 small text-dark">
                 {{-- batasi hanya 33 karakter dari title --}}
                 {{ \Illuminate\Support\Str::limit($data->title, 20) }}
               </h3>
-              <span class="small text-muted mt-3"><i class="me-2 text-success bi bi-geo-alt-fill"></i>{{
+              <span class="small text-muted mt-3"><i class="me-2 icons bi bi-geo-alt-fill"></i>{{
                 $data->location
                 }}</span>
             </div>
@@ -40,7 +39,7 @@
   <div class="slides-1 swiper sidebar-item">
     <div class="d-flex justify-content-between align-items-center sidebar-header">
       <h3 class="sidebar-title">Kegiatan</h3>
-      <a href="{{ url('kegiatan-sekolah') }}" class="btn btn-sm btn-outline-success">
+      <a href="{{ url('kegiatan-sekolah') }}" class="btn btn-sm btn-outline-primary">
         Lihat Semua
       </a>
     </div>
@@ -82,7 +81,7 @@
   <div class="slides-1 swiper sidebar-item">
     <div class="d-flex justify-content-between align-items-center sidebar-header">
       <h3 class="sidebar-title">Pengumuman</h3>
-      <a href="{{ url('pengumuman-sekolah') }}" class="btn btn-sm btn-outline-success">
+      <a href="{{ url('pengumuman-sekolah') }}" class="btn btn-sm btn-outline-primary">
         Lihat Semua
       </a>
     </div>
@@ -99,11 +98,16 @@
             <span class="pt-4 d-block small"> <i class="bi bi-info-circle-fill me-1 text-primary"></i> Detail
               Pengumuman</span>
             <p class="text-muted small pt-2">{{ $data->excerpt }}</p>
-            <div>
+            <div class="d-flex justify-content-between">
               <a data-bs-toggle="modal" data-bs-target="#modalannouncement{{ $data->id }}">
                 <button type="button" class="btn btn-sm btn-outline-primary"><i
                     class="bi bi-eye-fill me-1"></i>Lihat</button>
               </a>
+              @if ($data->file)
+              <a href="{{ asset('storage/'.$data->file) }}" download>
+                <button type="button" class="btn btn-sm btn-primary"><i class="bi bi-download me-1"></i>Unduh</button>
+              </a>
+              @endif
             </div>
           </div>
         </div>

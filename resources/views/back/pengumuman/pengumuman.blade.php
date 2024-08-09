@@ -93,13 +93,17 @@
 
 
      // Function to reset form and clear validation errors
-    function resetForm() {
+     function resetForm() {
         $('#modalForm')[0].reset();
-        $('#summernote').summernote('code', ''); // Clear Summernote content
-        $('.is-invalid').removeClass('is-invalid'); // Remove validation error classes
-        $('.is-valid').removeClass('is-valid'); // Remove validation succes classes
-        $('span.invalid-feedback').remove(); // Remove validation error messages
+        $('#file').val(''); // Reset file input agar kosong
+        $('#file-preview a').remove(); // Hapus tag a jika ada
+        $('#summernote').summernote('code', '');           
+        $('.is-invalid').removeClass('is-invalid'); 
+        $('.is-valid').removeClass('is-valid'); 
+        $('span.invalid-feedback').remove(); 
     }
+
+
 
     // Function to show modal for creating new data
     function showModal() {
@@ -159,38 +163,49 @@
 
     // Function to show edit modal and load data
     function confirmEdit(e) {
-        resetForm(); // Reset form and clear validation errors
+    resetForm(); // Reset form and clear validation errors
 
-        let slug = e.getAttribute('data-slug');
-        save_method = 'update';
+    let slug = e.getAttribute('data-slug');
+    save_method = 'update';
 
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: "GET",
-            url: '{{ route("pengumuman.edit", ":slug") }}'.replace(':slug', slug),
-            success: function(response) {
-                let result = response.data;
-                $('#title').val(result.title);
-                $('#summernote').summernote('code', result.body); // Set Summernote content
-                $('#slug').val(result.slug);
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "GET",
+        url: '{{ route("pengumuman.edit", ":slug") }}'.replace(':slug', slug),
+        success: function(response) {
+            let result = response.data;
+            $('#title').val(result.title);
+            $('#summernote').summernote('code', result.body); // Set Summernote content
+            $('#slug').val(result.slug);
 
-                $('#dataModal').modal('show'); // Show modal after data is loaded
-                $('.btnSubmit').text('Simpan');
-                $('.modal-title').text('Ubah Data');
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                Swal.fire({
-                    icon: "info",
-                    title: "Peringatan!",
-                    text: jqXHR.responseJSON.message || jqXHR.responseText,
-                    showConfirmButton: false,
-                    timer: 3000,
-                });
+           // Tampilkan file yang ada
+            if (result.file) {
+                let fileName = result.file.split('/').pop(); // Mengambil nama file dari path
+                $('#file-preview').html(`<a href="/storage/file-pengumuman/${fileName}" target="_blank">${fileName}</a>`).show(); // Tampilkan nama file sebagai tautan
+                $('input[name="oldFile"]').val(result.file);
+            } else {
+                $('#file-preview').hide();
             }
-        });
-    }
+
+
+            $('#dataModal').modal('show'); // Show modal after data is loaded
+            $('.btnSubmit').text('Simpan');
+            $('.modal-title').text('Ubah Data');
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Swal.fire({
+                icon: "info",
+                title: "Peringatan!",
+                text: jqXHR.responseJSON.message || jqXHR.responseText,
+                showConfirmButton: false,
+                timer: 3000,
+            });
+        }
+    });
+}
+
 
     // Function to confirm delete action
     function confirmDelete(e) {
@@ -238,8 +253,6 @@
             }
         });
     }
-
-
     </script>
     @endpush
 </x-app-layout>

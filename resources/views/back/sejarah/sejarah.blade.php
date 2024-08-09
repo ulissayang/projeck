@@ -38,7 +38,7 @@
                     <td><img src="{{ asset('storage/'.$data->image) }}" width="100px"></td>
                     <td>{{ $data->excerpt }}</td>
 
-                    <td>
+                    <td style="width: 125px">
                       {{-- show data detail --}}
                       <x-button as="a" href="{{ route('sejarah.show', $data->slug) }}" class="btn-sm btn-success">
                         <i class="bi bi-eye"></i>

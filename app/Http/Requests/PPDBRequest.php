@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PengumumanRequest extends FormRequest
+class PPDBRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,9 @@ class PengumumanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|min:3',
-            'body' => 'required|min:3',
-            'file' => 'nullable|file|mimes:pdf,doc,docx,excel,xlsx,xls,ppt,pptx|max:10240',
+            'name' => 'required|min:3',
+            'image' => 'nullable|image|file|max:5048',
+            'deskripsi' => 'required|min:3',
         ];
     }
 }

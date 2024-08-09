@@ -1,4 +1,4 @@
-<x-guest.app-layout title="Prestasi">
+<x-guest.app-layout title="Prestasi - {{ $prestasi->title }}">
     <style>
         .card-img-top {
             max-height: 700px;
@@ -63,11 +63,11 @@
                             <div class="card-body px-4">
                                 <div class="pt-2 mt-2">
                                     <span class="small text-muted me-4"><i
-                                            class="bi bi-person-circle text-success me-2"></i>Oleh : {{
+                                            class="bi bi-person-circle icons me-2"></i>Oleh : {{
                                         $prestasi->user->name
                                         }}</span>
                                     <span class=" text-muted small"><i
-                                            class="text-success me-2 bi bi-calendar-check"></i>Tanggal Posting
+                                            class="icons me-2 bi bi-calendar-check"></i>Tanggal Posting
                                         :
                                         {{ (new \Carbon\Carbon($prestasi->created_at))->format('d F, Y')
                                         }}</span>
@@ -76,17 +76,17 @@
                                 <p class="deskripsi-prestasi mt-3">{!! $prestasi->description !!}</p>
                                 <div class="row pt-3 border-top">
                                     <div class="col-md-4">
-                                        <strong><i class="text-success me-2 bi bi-person"></i>Nama</strong>
+                                        <strong><i class="icons me-2 bi bi-person"></i>Nama</strong>
                                         <p class="small ms-4">{{ $prestasi->nama }}</p>
                                     </div>
                                     <div class="pb-3 col-md-4">
-                                        <strong><i class="text-success me-2 bi bi-calendar2-check"></i>Tanggal</strong>
+                                        <strong><i class="icons me-2 bi bi-calendar2-check"></i>Tanggal</strong>
                                         <p class="small ms-4">{{ \Carbon\Carbon::parse($prestasi->date)->isoFormat('D
                                             MMMM
                                             YYYY') }}</p>
                                     </div>
                                     <div class="pb-3 col-md-4">
-                                        <strong><i class="text-success me-2 bi bi-award"></i>Prestasi</strong>
+                                        <strong><i class="icons me-2 bi bi-award"></i>Prestasi</strong>
                                         <p class="small ms-4">{{ ($prestasi->jenis) }}</p>
                                     </div>
                                 </div>

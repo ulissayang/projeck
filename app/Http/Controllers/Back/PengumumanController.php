@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\DataTables\PengumumanDataTable;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\PengumumanRequest;
 
 class PengumumanController extends Controller
@@ -40,16 +41,22 @@ class PengumumanController extends Controller
         try {
             $data = $request->validated();
 
-             // Buat excerpt dari body
-             $data['excerpt'] = Str::limit(strip_tags($request->body), 150);
+            // Simpan file jika ada
+            if ($request->hasFile('file')) {
+                $data['file'] = $request->file('file')->store('file-pengumuman');
+            }
+
+            // Buat excerpt dari body
+            $data['excerpt'] = Str::limit(strip_tags($request->body), 150);
 
             $request->user()->pengumuman()->create($data);
 
             return response()->json(['message' => 'Data Berhasil Ditambahkan'], 201);
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
     }
+
 
     /**
      * Display the specified resource.
@@ -88,8 +95,15 @@ class PengumumanController extends Controller
         try {
             $data = $request->validated();
 
-             // Buat excerpt dari body
-             $data['excerpt'] = Str::limit(strip_tags($request->body), 150);
+            if ($request->hasFile('file')) {
+                if ($request->oldFile) {
+                    Storage::delete($request->oldFile);
+                }
+                $data['file'] = $request->file('file')->store('file-pengumuman');
+            }
+
+            // Buat excerpt dari body
+            $data['excerpt'] = Str::limit(strip_tags($request->body), 150);
 
             Pengumuman::where('slug', $slug)->update($data);
 
@@ -105,6 +119,12 @@ class PengumumanController extends Controller
     public function destroy(Pengumuman $pengumuman)
     {
         try {
+            // Cek jika ada file yang terkait dengan data
+            if ($pengumuman->file) {
+                // Hapus file dari penyimpanan
+                Storage::delete($pengumuman->file);
+            }
+
             $pengumuman->delete();
             return response()->json(['message' => 'Data Berhasil Di Hapus'], 201);
         } catch (Exception $e) {
@@ -118,15 +138,26 @@ class PengumumanController extends Controller
         try {
             $pengumumanIds = $request->input('ids');
 
+            // Ambil data pengumuman yang akan dihapus
+            $pengumumans = Pengumuman::whereIn('slug', $pengumumanIds)->get();
+
+            // Hapus file terkait terlebih dahulu
+            foreach ($pengumumans as $pengumuman) {
+                if ($pengumuman->file) {
+                    Storage::delete($pengumuman->file);
+                }
+            }
+
+            // Setelah file dihapus, hapus data pengumuman
             $deleted = Pengumuman::whereIn('slug', $pengumumanIds)->delete();
 
             if ($deleted) {
-                return response()->json(['success' => true, 'message' => 'Data berhasil dihapus.', 'icon' => 'success'], 201);
+                return response()->json(['success' => true, 'message' => 'Data berhasil dihapus.', 'icon' => 'success']);
             } else {
                 return response()->json(['error' => 'Gagal menghapus data.']);
             }
         } catch (Exception $e) {
-            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
     }
 }

@@ -1,4 +1,4 @@
-<x-guest.app-layout title="Ekstrakurikuler">
+<x-guest.app-layout title="Ekstrakurikuler - {{ $eskul->eskul }}">
     <main id="main">
 
         {{-- start heading --}}
@@ -6,7 +6,7 @@
             content="{{ $eskul->eskul }}" show="{{ $eskul->eskul }}" />
         {{-- End heading --}}
 
-        <section class="blog eskul">
+        <section class="blog">
             <div class="container" data-aos="fade-up">
 
                 <div class="row g-5">
@@ -20,11 +20,11 @@
 
                                 <div class="pt-2 mt-2 pb-3">
                                     <span class="small text-muted me-4"><i
-                                            class="bi bi-person-circle text-success me-2"></i>Oleh : {{
+                                            class="bi bi-person-circle icons me-2"></i>Oleh : {{
                                         $eskul->user->name
                                         }}</span>
                                     <span class=" text-muted small"><i
-                                            class="text-success me-2 bi bi-calendar-check"></i>Tanggal Posting
+                                            class="icons me-2 bi bi-calendar-check"></i>Tanggal Posting
                                         :
                                         {{ (new \Carbon\Carbon($eskul->created_at))->format('d F, Y')
                                         }}</span>
@@ -36,11 +36,11 @@
                                 <p class="text-secondary text-muted mx-4">{!! $eskul->deskripsi !!}</p>
                                 <div class="row mt-4 pt-3 m-2 border-top">
                                     <div class="col-md-4">
-                                        <strong><i class="text-success me-2 bi bi-calendar"></i>Hari</strong>
+                                        <strong><i class="icons me-2 bi bi-calendar"></i>Hari</strong>
                                         <p class="small ms-4">{{ $eskul->hari }}</p>
                                     </div>
                                     <div class="pb-3 col-md-4">
-                                        <strong><i class="text-success me-2 bi bi-person"></i>Pendamping</strong>
+                                        <strong><i class="icons me-2 bi bi-person"></i>Pendamping</strong>
                                         <p class="small ms-4">{{ $eskul->pendamping }}</p>
                                     </div>
                                 </div>

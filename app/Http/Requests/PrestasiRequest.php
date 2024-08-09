@@ -24,9 +24,9 @@ class PrestasiRequest extends FormRequest
         return [
             'title' => 'required|min:3|max:255|string',
             'nama' => 'required|min:3|max:255|string',
-            'description' => 'required',
+            'description' => 'required|min:3',
             'date' => 'required',
-            'jenis' => 'required',
+            'jenis' => 'required|min:3',
             'image' => 'nullable|image|file|max:1024',
         ];
     }

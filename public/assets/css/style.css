@@ -1231,3 +1231,19 @@ h6 {
 .note-editor .dropdown-toggle::after {
     display: none;
 }
+
+#preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: #ffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.3em;
+}

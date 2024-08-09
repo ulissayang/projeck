@@ -35,9 +35,9 @@
                     </h2>
                     <p>{{ $item->excerpt }}</p>
                     <div class="d-flex justify-content-between">
-                      <p class="small"><i class="me-2 text-success bi bi-calendar3"></i>{{
+                      <p class="small"><i class="me-2 icons bi bi-calendar3"></i>{{
                         \Carbon\Carbon::parse($item->updated_at)->locale('id')->diffForHumans() }}</p>
-                    <p class="small"><i class="me-2 text-success bi bi-person-circle"></i>{{ $item->user->name }}</p>
+                    <p class="small"><i class="me-2 icons bi bi-person-circle"></i>{{ $item->user->name }}</p>
                   </div>
                 </article>
               </a>
@@ -51,19 +51,13 @@
 
             </div><!-- End pagination -->
           </div>
-          {{-- end content section --}}
-          {{-- sidebar start --}}
-          {{-- <div class="col-lg-4">
-            <x-guest.sidebar />
-          </div> --}}
-          {{-- sidebar end --}}
         </div>
       </div>
     </section>
 
     {{-- include modal --}}
     @foreach ($pengumuman as $item)
-    <x-guest.modal :title="$item->title" :description="$item->body" :created_at="$item->created_at" :author="$item->user->name" type="announcement"
+    <x-guest.modal :title="$item->title" :description="$item->body" :file="$item->file" :created_at="$item->created_at" :author="$item->user->name" type="announcement"
       :id="$item->id" />
     @endforeach
   </main><!-- End #main -->

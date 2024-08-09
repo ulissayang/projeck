@@ -1,4 +1,4 @@
-<x-guest.app-layout title="{{ $sejarah->title }}">
+<x-guest.app-layout title="Sejarah">
     <main id="main">
 
         {{-- start heading --}}
@@ -17,11 +17,11 @@
                             <div class="card-body px-4">
                                 <div class="pt-2 mt-2">
                                     <span class="small text-muted me-4"><i
-                                            class="bi bi-person-circle text-success me-2"></i>Oleh : {{
+                                            class="bi bi-person-circle icons me-2"></i>Oleh : {{
                                         $sejarah->user->name
                                         }}</span>
                                     <span class=" text-muted small"><i
-                                            class="text-success me-2 bi bi-calendar-check"></i>Tanggal Posting
+                                            class="icons me-2 bi bi-calendar-check"></i>Tanggal Posting
                                         :
                                         {{ (new \Carbon\Carbon($sejarah->created_at))->format('d F, Y')
                                         }}</span>
