@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Guest;
 
 use App\Models\Pengaturan;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class KontakController extends Controller
 {
@@ -22,5 +24,30 @@ class KontakController extends Controller
         ];
 
         return view('guest.kontak', compact('kontak'));
+    }
+
+    public function sendEmail(Request $request)
+    {
+        // Validasi form
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string',
+        ]);
+
+        $toEmail = 'ulissleksmart@gmail.com'; // Email tujuan
+        $fromEmail = config('mail.from.address'); // Email pengirim yang terverifikasi
+        $fromName = $validatedData['name']; // Nama pengirim dari input pengguna
+
+        Mail::send([], [], function ($message) use ($validatedData, $toEmail, $fromEmail, $fromName) {
+            $message->to($toEmail)
+                    ->subject($validatedData['subject'])
+                    ->from($fromEmail, config('app.name')) // Email default terverifikasi
+                    ->replyTo($validatedData['email'], $fromName) // Reply-to menggunakan email pengguna
+                    ->html($validatedData['message']);
+        });
+
+        return back()->with('success', 'Pesan Telah Terkirim!');
     }
 }

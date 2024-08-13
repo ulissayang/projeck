@@ -4,7 +4,7 @@
   <link href="DataTables/datatables.min.css" rel="stylesheet">
   @endpush
 
-  @slot('title', 'Visi Misi')
+  @slot('title', 'PPDB')
   <main id="main" class="main">
 
     <x-back.breadcrumb :title="$title" :breadcrumbs="$breadcrumbs" /><!-- End Page Title -->

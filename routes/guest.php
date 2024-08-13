@@ -41,6 +41,7 @@ Route::get('/eskul-sekolah/{slug}', [GuestEskulController::class, 'show'])->name
 Route::get('/sejarah-sekolah', [GuestSejarahController::class, 'index'])->name('sejarah-sekolah');
 
 Route::get('/kontak-sekolah', [GuestKontakController::class, 'index'])->name('kontak-sekolah');
+Route::post('/kontak-sekolah', [GuestKontakController::class, 'sendEmail'])->name('kontak-send');
 
 Route::get('/ppdb-sekolah', [GuestPPDBController::class, 'index'])->name('ppdb-sekolah');
 

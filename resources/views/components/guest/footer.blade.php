@@ -5,7 +5,7 @@
     <div class="row gy-4">
       <div class="col-lg-5 col-md-12 footer-info">
         <a href="index.html" class="logo d-flex align-items-center">
-          <span>Sdn 260 Malteng</span>
+          <span>SDN 260 Malteng</span>
         </a>
 
         <p>{{ $pengaturan->deskripsi }}</p>

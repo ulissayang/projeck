@@ -103,7 +103,7 @@
             </a>
         </li><!-- End PPDB -->
 
-        <li class="nav-heading">Pages</li>
+        <li class="nav-heading">Setting</li>
 
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('pengaturan*') ? '' : 'collapsed' }}" href="{{ route('pengaturan.index') }}">
