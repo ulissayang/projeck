@@ -11,11 +11,14 @@
         class="small {{ request()->routeIs('ppdb-sekolah') ? 'text-white' : '' }}">Info PPDB</a>
       <a href="{{ url('eskul-sekolah') }}"
         class="small {{ request()->routeIs('eskul-sekolah') ? 'text-white' : '' }}">Ekstrakurikuler</a>
-        
+
+      {{-- Cek apakah sudah login --}}
       @if (Auth::check())
-      <a href="{{ url('dashboard') }}"> <span class="badge text-bg-warning text-white p-2 ms-2"><i class="bi bi-person-circle me-1"></i>Dashboard</span></a>
+      <a href="{{ url('dashboard') }}"> <span class="badge text-bg-warning text-white p-2 ms-2"><i
+            class="bi bi-person-circle me-1"></i>Dashboard</span></a>
       @else
-      <a href="{{ url('login') }}"><span class="badge text-bg-warning text-white p-2 ms-2"><i class="bi bi-box-arrow-in-right me-1"></i>Login</span></a>
+      <a href="{{ url('login') }}"><span class="badge text-bg-warning text-white p-2 ms-2"><i
+            class="bi bi-box-arrow-in-right me-1"></i>Login</span></a>
       @endif
     </div>
   </div>
@@ -29,12 +32,6 @@
     </a>
     <nav id="navbar" class="navbar">
       <ul>
-        {{-- ketika sudah login --}}
-        {{-- @if (Auth::check())
-        <li><a href="{{ url('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
-        </li>
-        @endif --}}
-
         <li><a href="{{ url('/') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">Home</a></li>
 
         <li class="dropdown">
@@ -81,7 +78,19 @@
         </li>
 
         <li><a href="{{ url('kontak-sekolah') }}"
-            class="{{ request()->routeIs('kontak-sekolah') ? 'active' : '' }}">Kontak</a></li>
+            class="{{ request()->routeIs('kontak-sekolah') ? 'active' : '' }}">Kontak</a>
+        </li>
+
+        <li class="d-md-none d-sm-block">
+          @if (Auth::check())
+          <a href="{{ url('dashboard') }}"> <span class="badge text-bg-warning text-white p-2 ms-2"><i
+                class="bi bi-person-circle me-1"></i>Dashboard</span></a>
+          @else
+          <a href="{{ url('login') }}"><span class="badge text-bg-warning text-white p-2 ms-2"><i
+                class="bi bi-box-arrow-in-right me-1"></i>Login</span></a>
+          @endif
+        </li>
+
       </ul>
     </nav><!-- .navbar -->
 
