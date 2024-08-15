@@ -34,7 +34,7 @@
   <link href="{{ asset('guest/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link rel="stylesheet" href="{{ asset('guest/assets/css/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('guest/assets/css/style1.css') }}">
 
   @stack('link')
 </head>

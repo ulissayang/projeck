@@ -53,33 +53,37 @@
               </div>
             </div>
 
-            {{-- Tangkap sesion success --}}
-            @if (Session::has('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-              {{ Session::get('success') }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            @endif
+
 
             <div class="col-lg-7">
-              <form action="{{ route('kontak-send') }}" method="POST" class="php-email-form">
+              <form action="{{ route('kontak-send') }}" method="POST" class="email-form">
                 @csrf
                 <div class="row">
-                    <div class="form-group">
-                        <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
-                    </div>
-                    <div class="form-group mt-3">
-                        <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-                    </div>
+                  <div class="form-group">
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                  </div>
+                  <div class="form-group mt-3">
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                  </div>
                 </div>
                 <div class="form-group mt-3">
-                    <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+                  <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
                 </div>
                 <div class="form-group mt-3">
-                    <textarea class="form-control" name="message" rows="7" placeholder="Message" required></textarea>
+                  <textarea class="form-control" name="message" rows="7" placeholder="Message" required></textarea>
                 </div>
-                <div class="text-center"><button type="submit">Kirim Pesan</button></div>
-            </form>
+                <div class="text-center">
+                  {{-- Tangkap sesion success --}}
+                  @if (Session::has('success'))
+                  <span class="alert alert-success alert-dismissible fade show col-6 small m-auto d-block my-2"
+                    role="alert">
+                    {{ Session::get('success') }}
+                    <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></span>
+                  </span>
+                  @endif
+                  <button type="submit" >Kirim Pesan</button>
+                </div>
+              </form>
             </div><!-- End Contact Form -->
 
           </div>

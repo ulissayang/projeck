@@ -11,7 +11,7 @@ class PPDBController extends Controller
 
     public function index()
     {
-        $ppdb = PPDB::with('user')->first();
+        $ppdb = PPDB::with('user')->get();
     
         return view('guest.ppdb.ppdb', compact('ppdb'));
     }

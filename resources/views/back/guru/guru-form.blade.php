@@ -19,7 +19,7 @@
           </div>
 
           <div class="mb-3">
-            <label for="jabatan" class="form-label">Jabatan<span class="text-danger">*</span></label>
+            <label for="jabatan" class="form-label">Jenis PTK<span class="text-danger">*</span></label>
             <input type="text" class="form-control" id="jabatan" name="jabatan" value="{{ old('jabatan') }}" required>
           </div>
 

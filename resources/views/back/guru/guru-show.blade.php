@@ -10,7 +10,7 @@
         <div class="col-lg-12">
           <x-back.show-data :data="[
                           'nama' => $guru->nama,
-                          'jabatan' => $guru->jabatan,
+                          'jenis PTK' => $guru->jabatan,
                           'penulis' => $guru->user->name,
                           'foto' => $guru->image,
                           'created_at' => $guru->created_at,

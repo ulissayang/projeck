@@ -14,7 +14,7 @@
 
       {{-- Cek apakah sudah login --}}
       @if (Auth::check())
-      <a href="{{ url('dashboard') }}"> <span class="badge text-bg-warning text-white p-2 ms-2"><i
+      <a href="{{ url('dashboard') }}"><span class="badge text-bg-warning text-white p-2 ms-2"><i
             class="bi bi-person-circle me-1"></i>Dashboard</span></a>
       @else
       <a href="{{ url('login') }}"><span class="badge text-bg-warning text-white p-2 ms-2"><i

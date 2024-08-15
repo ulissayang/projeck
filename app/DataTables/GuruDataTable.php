@@ -121,7 +121,7 @@ class GuruDataTable extends DataTable
                     }
                 }),
             Column::make('nama')->title('Nama'),
-            Column::make('jabatan')->title('Jabatan'),
+            Column::make('jabatan')->title('Jenis PTK'),
             Column::make('foto')->title('Foto'),
             Column::computed('aksi')
                 ->exportable(false)

@@ -1,5 +1,4 @@
 <x-guest.app-layout>
-
     <section class="section-login min-vh-100 d-flex flex-column align-items-center justify-content-center py-0 my-0">
         <div class="container">
             <div class="row justify-content-evenly">
@@ -14,7 +13,7 @@
                                 <h1 class="title">{{ config('app.name') }}</h1>
                             </a>
                             <div class="pb-2">
-                                <h5 class="card-title text-center pb-0 fs-4">Login dengan Akun Anda</h5>
+                                <h5 class="card-title text-center pb-0 fs-4">Login Admin</h5>
                                 <p class="text-center small">Masukan email dan kata sandi anda</p>
                             </div>
 
